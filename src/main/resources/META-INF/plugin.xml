@@ -1,18 +1,18 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.fredysierra.backbaseservicestoolkit</id>
+    <id>com.backbase.backbaseservicestoolkit</id>
     <name>backbase-services-toolkit</name>
-    <vendor>fredysierra</vendor>
+    <vendor>Backbase</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.fredysierra.backbaseservicestoolkit.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.fredysierra.backbaseservicestoolkit.services.MyProjectService"/>
+        <applicationService serviceImplementation="com.backbase.backbaseservicestoolkit.services.MyApplicationService"/>
+        <projectService serviceImplementation="com.backbase.backbaseservicestoolkit.services.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.fredysierra.backbaseservicestoolkit.listeners.MyProjectManagerListener"
+        <listener class="com.backbase.backbaseservicestoolkit.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>

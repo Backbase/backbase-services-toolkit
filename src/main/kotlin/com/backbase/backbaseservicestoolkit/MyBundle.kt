@@ -1,4 +1,4 @@
-package com.github.fredysierra.backbaseservicestoolkit
+package com.backbase.backbaseservicestoolkit
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

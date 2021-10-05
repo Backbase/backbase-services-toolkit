@@ -1,9 +1,9 @@
-package com.github.fredysierra.backbaseservicestoolkit.listeners
+package com.backbase.backbaseservicestoolkit.listeners
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManagerListener
-import com.github.fredysierra.backbaseservicestoolkit.services.MyProjectService
+import com.backbase.backbaseservicestoolkit.services.MyProjectService
 
 internal class MyProjectManagerListener : ProjectManagerListener {
 

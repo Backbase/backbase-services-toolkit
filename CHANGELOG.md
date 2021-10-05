@@ -5,3 +5,5 @@
 ## [Unreleased]
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Changing pluginGroup, plugin ID and fixing package name
+

@@ -1,7 +1,7 @@
-package com.github.fredysierra.backbaseservicestoolkit.services
+package com.backbase.backbaseservicestoolkit.services
 
 import com.intellij.openapi.project.Project
-import com.github.fredysierra.backbaseservicestoolkit.MyBundle
+import com.backbase.backbaseservicestoolkit.MyBundle
 
 class MyProjectService(project: Project) {
 
