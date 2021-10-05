@@ -5,6 +5,15 @@
     <vendor>Backbase</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+    <depends>com.intellij.java</depends>
+
+    <actions>
+        <action id="actions.SearchGithubAction" class="com.backbase.backbaseservicestoolkit.actions.SearchGoldenSamplesAction" text="Search Golden Samples"
+            description="Search code snippets on Backbase Golden Samples repositories" >
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
+        </action>
+    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.backbase.backbaseservicestoolkit.services.MyApplicationService"/>
