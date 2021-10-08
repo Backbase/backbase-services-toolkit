@@ -1,18 +1,27 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.fredysierra.backbaseservicestoolkit</id>
+    <id>com.backbase.bst</id>
     <name>backbase-services-toolkit</name>
-    <vendor>fredysierra</vendor>
+    <vendor>Backbase</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+    <depends>com.intellij.java</depends>
+
+    <actions>
+        <action id="actions.SearchGithubAction" class="com.backbase.bst.actions.SearchGoldenSamplesAction" text="Search Golden Samples"
+            description="Search code snippets on Backbase Golden Samples repositories" >
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
+        </action>
+    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.fredysierra.backbaseservicestoolkit.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.fredysierra.backbaseservicestoolkit.services.MyProjectService"/>
+        <applicationService serviceImplementation="com.backbase.bst.services.MyApplicationService"/>
+        <projectService serviceImplementation="com.backbase.bst.services.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.fredysierra.backbaseservicestoolkit.listeners.MyProjectManagerListener"
+        <listener class="com.backbase.bst.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>
