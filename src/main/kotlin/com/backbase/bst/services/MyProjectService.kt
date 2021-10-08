@@ -1,7 +1,7 @@
-package com.backbase.backbaseservicestoolkit.services
+package com.backbase.bst.services
 
 import com.intellij.openapi.project.Project
-import com.backbase.backbaseservicestoolkit.MyBundle
+import com.backbase.bst.MyBundle
 
 class MyProjectService(project: Project) {
 

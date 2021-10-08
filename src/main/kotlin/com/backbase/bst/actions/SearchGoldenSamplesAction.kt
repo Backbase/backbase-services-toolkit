@@ -1,4 +1,4 @@
-package com.backbase.backbaseservicestoolkit.actions
+package com.backbase.bst.actions
 
 import com.intellij.ide.BrowserUtil
 import com.intellij.openapi.actionSystem.AnActionEvent

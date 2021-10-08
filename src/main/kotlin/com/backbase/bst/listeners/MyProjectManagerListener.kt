@@ -1,9 +1,9 @@
-package com.backbase.backbaseservicestoolkit.listeners
+package com.backbase.bst.listeners
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManagerListener
-import com.backbase.backbaseservicestoolkit.services.MyProjectService
+import com.backbase.bst.services.MyProjectService
 
 internal class MyProjectManagerListener : ProjectManagerListener {
 

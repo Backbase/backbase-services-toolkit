@@ -1,9 +1,5 @@
-package com.backbase.backbaseservicestoolkit.actions
+package com.backbase.bst.actions
 
-import com.intellij.ide.BrowserUtil
-import com.intellij.ide.highlighter.XmlFileType
-import com.intellij.openapi.actionSystem.ActionPlaces
-import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 

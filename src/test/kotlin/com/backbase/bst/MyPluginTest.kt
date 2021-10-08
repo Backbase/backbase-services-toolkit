@@ -1,4 +1,4 @@
-package com.backbase.backbaseservicestoolkit
+package com.backbase.bst
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile

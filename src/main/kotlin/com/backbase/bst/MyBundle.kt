@@ -1,4 +1,4 @@
-package com.backbase.backbaseservicestoolkit
+package com.backbase.bst
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
