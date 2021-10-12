@@ -1,11 +1,11 @@
 package com.backbase.bst.services
 
 import com.intellij.openapi.project.Project
-import com.backbase.bst.MyBundle
+import com.backbase.bst.BackbaseBundle
 
 class MyProjectService(project: Project) {
 
     init {
-        println(MyBundle.message("projectService", project.name))
+        println(BackbaseBundle.message("projectService", project.name))
     }
 }

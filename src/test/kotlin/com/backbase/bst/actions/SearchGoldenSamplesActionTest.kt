@@ -9,15 +9,12 @@ internal class SearchGoldenSamplesActionTest : BasePlatformTestCase() {
     fun testActionGoingToBrowser(){
 
         val txt = "updateScrollParent"
-        val psiFile = myFixture.configureByText("txt", txt)
+        myFixture.configureByText("txt", txt)
 
         val action = SearchGoldenSamplesAction()
 
-//        val e = AnActionEvent.createFromDataContext(ActionPlaces.EDITOR_GUTTER, null, );
-
-
         myFixture.editor.caretModel.currentCaret.setSelection(0,txt.length)
-        val presentation = myFixture.testAction(action)
+        myFixture.testAction(action)
     }
 
 

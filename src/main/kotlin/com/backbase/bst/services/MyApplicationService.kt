@@ -1,10 +1,10 @@
 package com.backbase.bst.services
 
-import com.backbase.bst.MyBundle
+import com.backbase.bst.BackbaseBundle
 
 class MyApplicationService {
 
     init {
-        println(MyBundle.message("applicationService"))
+        println(BackbaseBundle.message("applicationService"))
     }
 }

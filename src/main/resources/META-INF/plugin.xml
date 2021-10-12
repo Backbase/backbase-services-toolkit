@@ -18,6 +18,11 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.backbase.bst.services.MyApplicationService"/>
         <projectService serviceImplementation="com.backbase.bst.services.MyProjectService"/>
+
+        <moduleBuilder builderClass="com.backbase.bst.wizard.BackbaseProjectWizard"
+            id="BACKBASE_STEP"
+            order="first"/>
+        <moduleType implementationClass="com.backbase.bst.common.BackbaseSSDKModuleType" id="BackbaseSSDKModuleType"/>
     </extensions>
 
     <applicationListeners>
