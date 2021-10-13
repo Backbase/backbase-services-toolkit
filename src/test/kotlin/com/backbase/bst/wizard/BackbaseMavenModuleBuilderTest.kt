@@ -35,27 +35,12 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
         assertPom(psiPom)
 
-        println("Prooject name " + project.name)
-        println(project.name.toLowerCase())
-        println(root.findChild("src")!!.findChild("main")!!
-            .findChild("java")!!
-            .findChild("com")!!.findChild("backbase")!!)
-        println(root.findChild("src")!!.findChild("main")!!
-            .findChild("java")!!
-            .findChild("com")!!.findChild("backbase")!!
-            .findChild(project.name.toLowerCase()))
-        println(root.findChild("src")!!.findChild("main")!!
-            .findChild("java")!!
-            .findChild("com")!!.findChild("backbase")!!
-            .findChild(project.name.toLowerCase())
-            !!.findChild("Application.java")!!)
-        val applicationJavaFile = root.findChild("src")!!.findChild("main")!!
+       val applicationJavaFile = root.findChild("src")!!.findChild("main")!!
             .findChild("java")!!
             .findChild("com")!!.findChild("backbase")!!
             .findChild(project.name.toLowerCase())!!.findChild("Application.java")!!
 
         TestCase.assertNotNull(applicationJavaFile)
-
     }
 
     private fun assertPom(psiPom: @Nullable PsiFile?) {
