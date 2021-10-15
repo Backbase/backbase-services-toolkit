@@ -5,5 +5,7 @@
 ## [Unreleased]
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
-- Changing pluginGroup, plugin ID and fixing package name
+- Adding Golden Samples Action  
+- Adding Wizard Create Backbase Service
+- Adding Persistence Support Action
 
