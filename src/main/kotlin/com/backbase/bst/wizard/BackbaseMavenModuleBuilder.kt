@@ -32,9 +32,8 @@ import org.jetbrains.idea.maven.utils.MavenUtil
 import java.io.IOException
 import java.util.*
 
-class BackbaseMavenModuleBuilder(val myProjectId: MavenId) {
+class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: MavenId) {
 
-    private val myParentId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
     private val newProjectCommandName = BackbaseBundle.message("wizard.project.command.name")
 
     fun configure(project: Project, root: VirtualFile, isInteractive: Boolean) {

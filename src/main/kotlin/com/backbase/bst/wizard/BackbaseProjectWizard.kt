@@ -34,6 +34,8 @@ class BackbaseProjectWizard : ModuleBuilder(){
 
     var myProjectId: MavenId? = null
 
+    var ssdkMavenId : MavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
+
     override fun getNodeIcon(): Icon = BackbaseIcons.BACKBASE_PROJECT_LOGO
 
     override fun getModuleType(): ModuleType<*>? = BackbaseSSDKModuleType()
@@ -106,7 +108,7 @@ class BackbaseProjectWizard : ModuleBuilder(){
             rootModel.inheritSdk()
         }
         MavenUtil.runWhenInitialized(project, DumbAwareRunnable {
-            BackbaseMavenModuleBuilder(myProjectId!!).configure(project, root, false)
+            BackbaseMavenModuleBuilder(myProjectId!!, ssdkMavenId).configure(project, root, false)
         })
     }
 

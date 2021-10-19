@@ -58,5 +58,9 @@ class SsdkStep(val backbaseModuleWizard: BackbaseProjectWizard, val wizardContex
     override fun updateDataModel() {
         panel.apply();
         backbaseModuleWizard.myProjectId = MavenId(projectId.groupId, projectId.artifactId, projectId.version)
+        backbaseModuleWizard.ssdkMavenId = MavenId(backbaseModuleWizard.ssdkMavenId.groupId,
+            backbaseModuleWizard.ssdkMavenId.artifactId,
+            projectId.ssdkVersion
+        )
     }
 }
