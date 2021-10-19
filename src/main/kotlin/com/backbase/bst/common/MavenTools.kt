@@ -8,6 +8,8 @@ import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.idea.maven.dom.MavenDomUtil
 import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency
+import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
+import org.jetbrains.idea.maven.indices.MavenArtifactSearcher
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.utils.MavenUtil
@@ -44,5 +46,14 @@ object MavenTools {
         return file
     }
 
+    fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
+        val searcher = MavenArtifactSearcherMod()
+
+        val result = searcher.search(project, "$groupId:$artifactId:", 1000)
+
+
+
+        return result.filter { it -> it.searchResults.artifactId =="service-sdk-starter-core" }.first()
+    }
 
 }
