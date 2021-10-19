@@ -5,7 +5,7 @@
 ## [Unreleased]
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
-- Adding Golden Samples Action  
-- Adding Wizard Create Backbase Service
-- Adding Persistence Support Action
+- Golden Samples Action  
+- Wizard Create Backbase Service
+- Persistence Support Action
 
