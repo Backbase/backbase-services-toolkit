@@ -22,7 +22,8 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
     fun testCreateProject() {
         val myProjectId = MavenId(GROUP_ID,project.name,VERSION)
-        val builder = BackbaseMavenModuleBuilder(myProjectId)
+        var ssdkMavenId : MavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
+        val builder = BackbaseMavenModuleBuilder(myProjectId, ssdkMavenId)
         val root: VirtualFile? = createAndGetContentEntry()
 
         builder.configure(project, root!!, false);
