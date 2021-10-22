@@ -1,0 +1,14 @@
+{
+  "${DS}schema": "http://json-schema.org/draft-04/schema#",
+  "destination": "queue-destination-custom-name",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "data of created resource",
+      "type": "string"
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

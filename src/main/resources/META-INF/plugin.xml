@@ -23,6 +23,11 @@
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
         </action>
 
+        <action class="com.backbase.bst.actions.DefineEventAction" id="actions.DefineEventAction" description="Define an event spec"
+            text="Define Event" icon="/icons/0095-database-add.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+        </action>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
