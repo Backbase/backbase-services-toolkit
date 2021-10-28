@@ -1,0 +1,9 @@
+<templateSet group="backbase">
+  <template name="emitevent" value="private final com.backbase.buildingblocks.backend.communication.event.proxy.EventBus eventBus;&#10;private final com.backbase.buildingblocks.backend.communication.context.OriginatorContextUtil originatorContextUtil;&#10;&#10;    public $CLASS_NAME$(com.backbase.buildingblocks.backend.communication.event.proxy.EventBus eventBus, com.backbase.buildingblocks.backend.communication.context.OriginatorContextUtil originatorContextUtil) {&#10;    this.eventBus = eventBus;&#10;    this.originatorContextUtil = originatorContextUtil;&#10;    }&#10;public void exampleEmitEvent(com.backbase.buildingblocks.backend.internalrequest.InternalRequest&lt;?&gt; request) {&#10;&#10;    var event = new $EVENT_CLASS$();&#10;    event.setData(&quot;some data&quot;); //TODO fill event based on the request. &#10;&#10;    var envelopedEvent = new com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent&lt;$EVENT_CLASS$&gt;();&#10;    envelopedEvent.setEvent(event);&#10;    envelopedEvent.setOriginatorContext(originatorContextUtil.create(request.getInternalRequestContext()));&#10;    eventBus.emitEvent(envelopedEvent);&#10;}" description="Method to emit an event" toReformat="true" toShortenFQNames="true">
+    <variable name="CLASS_NAME" expression="className()" defaultValue="" alwaysStopAt="false" />
+    <variable name="EVENT_CLASS" expression="subtypes(&quot;com.backbase.buildingblocks.persistence.model.Event&quot;)" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_CODE" value="true" />
+    </context>
+  </template>
+</templateSet>

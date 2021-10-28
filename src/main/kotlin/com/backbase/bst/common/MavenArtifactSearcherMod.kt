@@ -24,7 +24,7 @@ class MavenArtifactSearcherMod : MavenSearcher<MavenArtifactSearchResult>() {
 
         val providers = MavenCompletionProviderFactory().getProviders(project)
 
-        searchService.setProviders(providers, providers)
+        searchService.setProviders(providers, ArrayList())
 
         val asyncPromise = searchService.fulltextSearch(pattern, SearchParameters(false, false),
             Consumer { mdci: RepositoryArtifactData? ->

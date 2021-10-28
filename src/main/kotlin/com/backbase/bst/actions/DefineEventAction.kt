@@ -5,6 +5,8 @@ import com.intellij.ide.actions.CreateFileAction.MkDirs
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DataContext
@@ -54,6 +56,8 @@ class DefineEventAction : DumbAwareAction(){
 
         if(!MavenTools.findDependencyOnBom(project, file, eventArtifact)) {
             addingMavenDependencies(project, file, e)
+            Notification("Backbase notification group", "Define an Event", "Adding maven dependencies on pom.xml",
+                NotificationType.INFORMATION).notify(project)
         }
 
         addEventSpec(e, project, persistenceDialog.eventName)
@@ -61,6 +65,8 @@ class DefineEventAction : DumbAwareAction(){
         val pluginId = MavenId("com.backbase.codegen", "jsonschema-events-maven-plugin", "")
         if(!MavenTools.findPluginOnBom(project, file, pluginId)) {
             addingMavenPlugin(project, file, e)
+            Notification("Backbase notification group", "Define an Event", "Adding plugin jsonschema-events-maven-plugin on pom.xml",
+                NotificationType.INFORMATION).notify(project)
         }
 
 
@@ -132,6 +138,8 @@ class DefineEventAction : DumbAwareAction(){
         val templateChangeLogPersistence =
             FileTemplateManager.getInstance(project).getTemplate("myresourcecreatedevent")
         createFileFromTemplate("$nameEvent-event", templateChangeLogPersistence, mkdir.directory, emptyMap())
+        Notification("Backbase notification group", "Define an Event", "Creating file $nameEvent-event",
+            NotificationType.INFORMATION).notify(project)
     }
 
 
@@ -184,4 +192,13 @@ class DefineEventAction : DumbAwareAction(){
         configuration.xmlTag!!.addSubTag(createChildTag, false)
     }
 
+    override fun update(e: AnActionEvent) {
+
+        val file = MavenTools.findPomXml(e.dataContext)
+
+        if(file == null) {
+            e.presentation.isVisible = false
+            return;
+        }
+    }
 }

@@ -58,6 +58,7 @@ class BackbaseProjectWizard : ModuleBuilder(){
             "service-sdk-starter-core"
         )
 
+
        //add default versions
        ssdkArtifact.versions
            .addAll(generateSsdkVersions("13.3.1", "13.3.0", "13.2.2", "13.2.1", "13.2.0"))

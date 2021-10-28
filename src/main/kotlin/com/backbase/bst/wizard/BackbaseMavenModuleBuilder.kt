@@ -65,12 +65,15 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             val packageName = myProjectId.groupId + "." + project.name.toLowerCase()
             val directoryPath = packageName.replace(".", "/")
             val directory = VfsUtil.createDirectories(root.path + "/src/main/java/" + directoryPath)
-            val templateChangeLogPersistence = FileTemplateManager.getInstance(project).getTemplate("application")
-            val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
-            val fileTemplateManager = FileTemplateManager.getInstance(project)
-            val properties = fileTemplateManager.defaultProperties
-            properties.setProperty("PACKAGE_NAME", packageName)
-            createFileFromTemplate("Application", templateChangeLogPersistence, psiDirectory!!, properties)
+
+            WriteCommandAction.runWriteCommandAction(project) {
+                val templateChangeLogPersistence = FileTemplateManager.getInstance(project).getTemplate("application")
+                val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
+                val fileTemplateManager = FileTemplateManager.getInstance(project)
+                val properties = fileTemplateManager.defaultProperties
+                properties.setProperty("PACKAGE_NAME", packageName)
+                createFileFromTemplate("Application", templateChangeLogPersistence, psiDirectory!!, properties)
+            }
         } catch (e: IOException) {
             MavenLog.LOG.info(e)
         }
@@ -166,7 +169,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             val psiFile = FileTemplateUtil
                 .createFromTemplate(template, name, properties, dir)
                 .containingFile
-            val pointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiFile)
+
             val virtualFile = psiFile.virtualFile
             if (virtualFile != null) {
                 if (openFile) {
@@ -179,7 +182,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
                 if (defaultTemplateProperty != null) {
                     PropertiesComponent.getInstance(project).setValue(defaultTemplateProperty, template.name)
                 }
-                return pointer.element
+                return psiFile
             }
         } catch (e: ParseException) {
             throw IncorrectOperationException("Error parsing Velocity template: " + e.message, e as Throwable)

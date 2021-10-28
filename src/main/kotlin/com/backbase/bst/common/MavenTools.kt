@@ -51,8 +51,8 @@ object MavenTools {
     }
 
     fun findPomXml(dataContext: DataContext): VirtualFile? {
-        var file = CommonDataKeys.VIRTUAL_FILE.getData(dataContext) ?: return null
-        if (file.isDirectory) {
+        var file: VirtualFile? = CommonDataKeys.VIRTUAL_FILE.getData(dataContext) ?: return null
+        if (file!!.isDirectory) {
             file = MavenUtil.streamPomFiles(MavenActionUtil.getProject(dataContext), file).findFirst().orElse(null)
             if (file == null) return null
         }

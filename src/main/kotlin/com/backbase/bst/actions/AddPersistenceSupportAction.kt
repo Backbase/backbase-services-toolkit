@@ -6,37 +6,25 @@ import com.intellij.ide.actions.CreateFileAction.MkDirs
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.vfs.ReadonlyStatusHandler
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiJavaFile
-import com.intellij.psi.PsiManager
-import com.intellij.psi.codeStyle.CodeStyleManager
-import com.intellij.psi.codeStyle.JavaCodeStyleManager
-import com.intellij.psi.search.GlobalSearchScope
-import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
-import org.jetbrains.idea.maven.dom.model.MavenDomDependency
-import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
 import org.jetbrains.idea.maven.server.MavenServerManager
-import org.jetbrains.idea.maven.utils.MavenUtil
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 class AddPersistenceSupportAction : DumbAwareAction(){
 
-
+    private val title = "Adding Persistence Support."
 
     override fun actionPerformed(e: AnActionEvent) {
 
@@ -49,6 +37,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             return
         }
 
+
         if(persistenceDialog.addPomDependencies) {
             val file: VirtualFile = MavenTools.findPomXml(e.dataContext) ?: return
 
@@ -59,13 +48,19 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 
             mavenProjectManager.waitForImportFinishCompletion()
+
+            Notification("Backbase notification group", title, "Adding Maven dependencies on pom.xml",
+                NotificationType.INFORMATION).notify(project);
+
         }
 
         if(persistenceDialog.addLiquibaseFile){
             addLiquibaseFile(e, project)
+            Notification("Backbase notification group", title, "Adding Liquibase example files",
+                NotificationType.INFORMATION).notify(project);
         }
 
-        if(persistenceDialog.addLiquibaseFile){
+        if(persistenceDialog.addApplicationClassPersistenceSupport){
             JavaTools.addAnnotationToJavaClass(e.project!!,
                 "com.backbase." + project.name.toLowerCase() + ".Application",
                 listOf(
@@ -73,6 +68,8 @@ class AddPersistenceSupportAction : DumbAwareAction(){
                     "org.springframework.boot.autoconfigure.domain.EntityScan"
                 )
             )
+            Notification("Backbase notification group", title, "Adding required annotation on Application class",
+                NotificationType.INFORMATION).notify(project);
         }
     }
 
@@ -101,6 +98,16 @@ class AddPersistenceSupportAction : DumbAwareAction(){
         createFileFromTemplate("db.changelog-persistence", templateChangeLogPersistence, mkdir.directory)
         val templateChangeLog = FileTemplateManager.getInstance(project).getTemplate("changelogexample")
         createFileFromTemplate("db.changelog-1.0.0", templateChangeLog, mkdir.directory)
+    }
+
+    override fun update(e: AnActionEvent) {
+
+        val file = MavenTools.findPomXml(e.dataContext)
+
+        if(file == null) {
+            e.presentation.isVisible = false
+            return;
+        }
     }
 
 
