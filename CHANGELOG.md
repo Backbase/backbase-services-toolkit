@@ -8,4 +8,4 @@
 - Golden Samples Action  
 - Wizard Create Backbase Service
 - Persistence Support Action
-
+- Define, consume and emit events. 
