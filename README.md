@@ -15,7 +15,7 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be help you to create and maintain your own Backbase backend services.  
+This Fancy IntelliJ Platform Plugin is going to help you to create and maintain your own Backbase backend services.  
 
 It would make it easier for you to follow [Community Backbase Documentation](https://community.backbase.com/) with simple Intellij options.
 
