@@ -15,11 +15,20 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+This Fancy IntelliJ Platform Plugin is going to be help you to create and maintain your own Backbase backend services.  
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+It would make it easier for you to follow [Community Backbase Documentation](https://community.backbase.com/) with simple Intellij options.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+With this plugin you can:
+
+- Create Backbase Backend Services
+- Adding Persistence support to your Backbase Service.
+- Define, consume and emit events.
+- Quick access to Golden samples. 
+
+
+More new cool features coming soon!  
+
 <!-- Plugin description end -->
 
 ## Installation
