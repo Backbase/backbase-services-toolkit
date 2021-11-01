@@ -8,9 +8,13 @@ import com.intellij.ide.util.projectWizard.ModuleBuilder
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.SettingsStep
 import com.intellij.ide.util.projectWizard.WizardContext
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ModalityState
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.module.ModuleType
 import com.intellij.openapi.project.DefaultProjectFactory
 import com.intellij.openapi.project.DumbAwareRunnable
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModifiableRootModel
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
 import com.intellij.openapi.util.io.FileUtil
@@ -21,11 +25,10 @@ import org.apache.maven.artifact.versioning.ComparableVersion
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.idea.maven.model.MavenArtifactInfo
 import org.jetbrains.idea.maven.model.MavenId
+import org.jetbrains.idea.maven.onlinecompletion.MavenCompletionProviderFactory
 import org.jetbrains.idea.maven.project.MavenProject
 import org.jetbrains.idea.maven.utils.MavenUtil
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStream
 import javax.swing.Icon
 
 class BackbaseProjectWizard : ModuleBuilder(){
@@ -51,28 +54,43 @@ class BackbaseProjectWizard : ModuleBuilder(){
         )
     }
 
-    private fun listVersionsSsdk(): List<String> {
-        val ssdkArtifact = MavenTools.findVersionsArtifact(
-            DefaultProjectFactory.getInstance().defaultProject,
-            "com.backbase.buildingblocks",
-            "service-sdk-starter-core"
-        )
 
 
-       //add default versions
-       ssdkArtifact.versions
-           .addAll(generateSsdkVersions("13.3.1", "13.3.0", "13.2.2", "13.2.1", "13.2.0"))
+
+    private fun listVersionsSsdk(): VersionsLoaded {
 
 
-        val versionSsdkArtifact = ssdkArtifact
-            .versions
-            .distinctBy { it.version }
-            .sortedWith { a1, a2 ->
-                ComparableVersion(a2.version).compareTo(ComparableVersion(a1.version))
-            }
-            .map { a -> a.version }
 
-        return versionSsdkArtifact
+        val versionsLoaded = VersionsLoaded(ArrayList(), false)
+        WriteCommandAction.runWriteCommandAction( DefaultProjectFactory.getInstance().defaultProject) {
+            val ssdkArtifact = MavenTools.findVersionsArtifact(
+                DefaultProjectFactory.getInstance().defaultProject,
+                "com.backbase.buildingblocks",
+                "service-sdk-starter-core"
+            )
+
+
+            var listVersion = if(ssdkArtifact!= null ) {
+               ssdkArtifact.versions
+            } else ArrayList<MavenArtifactInfo>()
+           //add default versions
+
+
+            listVersion
+               .addAll(generateSsdkVersions("13.3.1", "13.3.0", "13.2.2", "13.2.1", "13.2.0"))
+
+
+            val versionSsdkArtifact = listVersion
+                .distinctBy { it.version }
+                .sortedWith { a1, a2 ->
+                    ComparableVersion(a2.version).compareTo(ComparableVersion(a1.version))
+                }
+                .map { a -> a.version }
+            versionsLoaded.versions = versionSsdkArtifact
+            versionsLoaded.loaded =true
+        }
+
+        return versionsLoaded
     }
 
     private fun generateSsdkVersions(vararg versions: String ): List<MavenArtifactInfo> {
@@ -120,5 +138,6 @@ class BackbaseProjectWizard : ModuleBuilder(){
         return LocalFileSystem.getInstance().refreshAndFindFileByPath(path)
     }
 
+    class VersionsLoaded(var versions: List<String>, var loaded: Boolean)
 
 }

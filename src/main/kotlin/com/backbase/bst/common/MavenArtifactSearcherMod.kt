@@ -6,6 +6,7 @@ import com.intellij.util.WaitFor
 import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.concurrency.Promise
 import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
+import org.jetbrains.idea.maven.indices.MavenArtifactSearcher
 import org.jetbrains.idea.maven.indices.MavenSearcher
 import org.jetbrains.idea.maven.onlinecompletion.MavenCompletionProviderFactory
 import org.jetbrains.idea.maven.onlinecompletion.model.MavenRepositoryArtifactInfo
@@ -21,6 +22,7 @@ class MavenArtifactSearcherMod : MavenSearcher<MavenArtifactSearchResult>() {
         }
         val searchResults: MutableList<MavenRepositoryArtifactInfo> = ArrayList()
         val searchService = DependencySearchService.getInstance(project)
+
 
         val providers = MavenCompletionProviderFactory().getProviders(project)
 

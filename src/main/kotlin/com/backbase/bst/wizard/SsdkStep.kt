@@ -19,8 +19,9 @@ class ProjectId {
 
 class SsdkStep(val backbaseModuleWizard: BackbaseProjectWizard, val wizardContext: WizardContext,
                private val projectId: ProjectId = ProjectId(),
-               private val ssdkVersions : List<String>) : ModuleWizardStep() {
+               private val ssdkVersionsLoaded : BackbaseProjectWizard.VersionsLoaded) : ModuleWizardStep() {
 
+    private val ssdkVersions = if(ssdkVersionsLoaded.loaded) ssdkVersionsLoaded.versions else ArrayList()
     private val panel: DialogPanel = panel {
 
         row {

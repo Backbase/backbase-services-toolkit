@@ -61,12 +61,12 @@ object MavenTools {
         return file
     }
 
-    fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
+    fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult? {
         val searcher = MavenArtifactSearcherMod()
 
         val result = searcher.search(project, "$groupId:$artifactId:", 1000)
 
-        return result.filter { it.searchResults.artifactId =="service-sdk-starter-core" }.first()
+        return result.filter { it.searchResults.artifactId =="service-sdk-starter-core" }.firstOrNull()
     }
 
 }

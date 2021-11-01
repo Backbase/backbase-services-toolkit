@@ -1,5 +1,5 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin>
+<idea-plugin require-restart="true">
     <id>com.backbase.bst</id>
     <name>backbase-services-toolkit</name>
     <vendor>Backbase</vendor>
@@ -40,6 +40,7 @@
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
+        <preloadingActivity implementation="com.backbase.bst.actions.LoadIndexesActivity"/>
         <notificationGroup id="Backbase notification group" displayType="BALLOON"/>
         <applicationService serviceImplementation="com.backbase.bst.services.MyApplicationService"/>
         <projectService serviceImplementation="com.backbase.bst.services.MyProjectService"/>
