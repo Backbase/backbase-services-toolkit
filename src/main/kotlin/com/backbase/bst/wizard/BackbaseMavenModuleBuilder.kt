@@ -18,10 +18,11 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.util.IncorrectOperationException
+import com.intellij.util.xml.DomElement
+import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.apache.velocity.runtime.parser.ParseException
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.model.MavenDomParent
-import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel
+import org.jetbrains.idea.maven.dom.model.*
 import org.jetbrains.idea.maven.model.MavenConstants
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
@@ -62,17 +63,21 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             VfsUtil.createDirectories(root.path + "/src/test/java")
 
             //Create java main file
-            val packageName = myProjectId.groupId + "." + project.name.toLowerCase()
+            val projectName = project.name.toLowerCase().replace("-", "")
+            val packageName = myProjectId.groupId + "." + projectName
             val directoryPath = packageName.replace(".", "/")
             val directory = VfsUtil.createDirectories(root.path + "/src/main/java/" + directoryPath)
 
             WriteCommandAction.runWriteCommandAction(project) {
+
                 val templateChangeLogPersistence = FileTemplateManager.getInstance(project).getTemplate("application")
                 val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
                 val fileTemplateManager = FileTemplateManager.getInstance(project)
                 val properties = fileTemplateManager.defaultProperties
                 properties.setProperty("PACKAGE_NAME", packageName)
                 createFileFromTemplate("Application", templateChangeLogPersistence, psiDirectory!!, properties)
+
+                addApplicationYaml(project, projectName, root)
             }
         } catch (e: IOException) {
             MavenLog.LOG.info(e)
@@ -89,6 +94,20 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             EditorHelper.openInEditor(getPsiFile(project, pom)!!)
 
         }
+    }
+
+    private fun addApplicationYaml(
+        project: Project,
+        applicationName: String,
+        root: VirtualFile,
+    ) {
+        val directory = VfsUtil.createDirectories(root.path + "/src/main/resources/")
+        val template = FileTemplateManager.getInstance(project).getTemplate("applicationprop")
+        val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
+        val fileTemplateManager = FileTemplateManager.getInstance(project)
+        val properties = fileTemplateManager.defaultProperties
+        properties.setProperty("APPLICATION_NAME", applicationName)
+        createFileFromTemplate("application", template, psiDirectory!!, properties)
     }
 
     private fun showError(project: Project, e: Throwable) {
@@ -108,6 +127,9 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             dep.groupId.setStringValue(dep1.groupId)
             dep.artifactId.setStringValue(dep1.artifactId)
             dep.scope.setValue("test")
+
+            createDomPlugin(model.build.plugins, project)
+
             CodeStyleManager.getInstance(project)
                 .reformat(getPsiFile(project, pom)!!)
             val pomFiles: MutableList<VirtualFile> = ArrayList(2)
@@ -193,4 +215,23 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
         }
         return null
     }
+
+    fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin? {
+        val plugin = plugins!!.addPlugin()
+        plugin!!.groupId.stringValue = "org.springframework.boot"
+        plugin.artifactId.stringValue = "spring-boot-maven-plugin"
+        val execution = plugin.executions.addExecution()
+        val goals = execution.goals
+
+        val childDescription: DomCollectionChildDescription =
+            goals.genericInfo.getCollectionChildDescription("goal")!!
+
+        val element: DomElement = childDescription.addValue(goals)
+        if (element is MavenDomGoal) {
+            element.stringValue = "build-info"
+        }
+
+         return plugin
+    }
+
 }
