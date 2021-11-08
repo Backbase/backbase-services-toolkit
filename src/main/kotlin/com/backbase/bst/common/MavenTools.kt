@@ -6,10 +6,8 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
-import org.jetbrains.idea.maven.dom.model.MavenDomDependency
+import org.jetbrains.idea.maven.dom.model.*
 import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
-import org.jetbrains.idea.maven.indices.MavenArtifactSearcher
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.utils.MavenUtil
@@ -35,9 +33,26 @@ object MavenTools {
         dependencies.forEach{dependency -> createDomDependency(mavenModel!!.dependencies, editor, dependency)}
     }
 
+    fun findDependencyOnBom(project: Project, file: VirtualFile, dependency: MavenId): Boolean {
+        val mavenModel = MavenDomUtil
+            .getMavenDomProjectModel(project, file)
+        return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.filter{
+            dependency.groupId  == it.groupId && dependency.artifactId == it.artifactId
+        }.any()
+    }
+
+
+    fun findPluginOnBom(project: Project, file: VirtualFile, plugin: MavenId): Boolean {
+        val mavenModel = MavenDomUtil
+            .getMavenDomProjectModel(project, file)
+        return MavenDomUtil.findProject(mavenModel!!)!!.plugins.filter{
+            plugin.groupId  == it.groupId && plugin.artifactId == it.artifactId
+        }.any()
+    }
+
     fun findPomXml(dataContext: DataContext): VirtualFile? {
-        var file = CommonDataKeys.VIRTUAL_FILE.getData(dataContext) ?: return null
-        if (file.isDirectory) {
+        var file: VirtualFile? = CommonDataKeys.VIRTUAL_FILE.getData(dataContext) ?: return null
+        if (file!!.isDirectory) {
             file = MavenUtil.streamPomFiles(MavenActionUtil.getProject(dataContext), file).findFirst().orElse(null)
             if (file == null) return null
         }
@@ -51,9 +66,7 @@ object MavenTools {
 
         val result = searcher.search(project, "$groupId:$artifactId:", 1000)
 
-
-
-        return result.filter { it -> it.searchResults.artifactId =="service-sdk-starter-core" }.first()
+        return result.filter { it.searchResults.artifactId =="service-sdk-starter-core" }.first()
     }
 
 }

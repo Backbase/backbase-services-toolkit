@@ -1,0 +1,14 @@
+package ${PACKAGE_NAME};
+
+import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
+import com.backbase.buildingblocks.backend.communication.event.handler.EventHandler;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ${EVENT_NAME_HANDLER} implements EventHandler<${EVENT_NAME}> {
+
+    public void handle(EnvelopedEvent<${EVENT_NAME}> envelopedEvent) {
+        var event = envelopedEvent.getEvent();
+        //TODO do something with event here ...
+    }
+}

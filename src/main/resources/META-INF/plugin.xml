@@ -9,12 +9,17 @@
     <depends>com.intellij.java</depends>
 
     <actions>
-        <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb-horizontal2.svg">
+        <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb-horizontal16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </group>
 
         <action id="actions.SearchGithubAction" class="com.backbase.bst.actions.SearchGoldenSamplesAction" text="Search Golden Samples"
-            description="Search code snippets on Backbase Golden Samples repositories" >
+            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb-horizontal16.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
+        </action>
+
+        <action id="actions.EmitEventAction" class="com.backbase.bst.actions.EmitEventAction" text="Emit an Event"
+            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb-horizontal16.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
         </action>
 
@@ -23,11 +28,23 @@
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
         </action>
 
+        <action class="com.backbase.bst.actions.DefineEventAction" id="actions.DefineEventAction" description="Define an event spec"
+            text="Define Event" icon="/icons/0911-plus-square.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+        </action>
+        <action class="com.backbase.bst.actions.ConsumeEventAction" id="actions.ConsumeEventAction" description="Consume an event"
+            text="Consume an Event" icon="/icons/0756-download.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+        </action>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Backbase notification group" displayType="BALLOON"/>
         <applicationService serviceImplementation="com.backbase.bst.services.MyApplicationService"/>
         <projectService serviceImplementation="com.backbase.bst.services.MyProjectService"/>
+
+        <defaultLiveTemplates file="/liveTemplates/emitevent.xml"/>
 
         <moduleBuilder builderClass="com.backbase.bst.wizard.BackbaseProjectWizard"
             id="BACKBASE_STEP"

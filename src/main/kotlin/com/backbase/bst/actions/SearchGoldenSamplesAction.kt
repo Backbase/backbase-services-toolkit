@@ -26,7 +26,7 @@ class SearchGoldenSamplesAction  : DumbAwareAction() {
         val editor = e.getRequiredData(CommonDataKeys.EDITOR)
         val caretModel = editor.caretModel
         val selectedText = caretModel.currentCaret.selectedText
-        if (selectedText!!.isEmpty()) {
+        if (selectedText == null || selectedText.isEmpty()) {
             e.presentation.isVisible = false
         }
     }
