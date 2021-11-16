@@ -37,6 +37,11 @@
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
         </action>
 
+        <action class="com.backbase.bst.actions.AddAnyServiceSSDKModuleAction" id="actions.AddAnyServiceSSDKModuleAction" description="Add SSDK Module"
+            text="Add SSDK Module" icon="/icons/0756-download.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+        </action>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">

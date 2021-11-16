@@ -118,6 +118,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
         WriteCommandAction.writeCommandAction(project).withName(newProjectCommandName).run<RuntimeException> {
             PsiDocumentManager.getInstance(project).commitAllDocuments()
             val model = MavenDomUtil.getMavenDomProjectModel(project, pom) ?: return@run
+            model.name.stringValue = "Backbase ::${project.name.replace("-", " ")}"
             updateMavenParent(model, myParentId)
             val dep1: MavenCoordinate = MavenId("com.backbase.buildingblocks", "service-sdk-starter-test", "")
             val dep = MavenDomUtil.createDomDependency(
@@ -128,7 +129,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             dep.artifactId.setStringValue(dep1.artifactId)
             dep.scope.setValue("test")
 
-            createDomPlugin(model.build.plugins, project)
+            //createDomPlugin(model.build.plugins, project)
 
             CodeStyleManager.getInstance(project)
                 .reformat(getPsiFile(project, pom)!!)
@@ -152,6 +153,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
         result.groupId.stringValue = parentId.groupId
         result.artifactId.stringValue = parentId.artifactId
         result.version.stringValue = parentId.version
+        result.relativePath.ensureTagExists()
         return result
     }
 
