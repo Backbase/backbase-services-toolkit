@@ -46,8 +46,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Backbase notification group" displayType="BALLOON"/>
-        <applicationService serviceImplementation="com.backbase.bst.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.backbase.bst.services.MyProjectService"/>
 
         <defaultLiveTemplates file="/liveTemplates/emitevent.xml"/>
 
@@ -58,7 +56,6 @@
     </extensions>
 
     <applicationListeners>
-        <listener class="com.backbase.bst.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+
     </applicationListeners>
 </idea-plugin>
