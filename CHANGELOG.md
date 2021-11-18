@@ -9,3 +9,4 @@
 - Wizard Create Backbase Service
 - Persistence Support Action
 - Define, consume and emit events. 
+- Add any SSDK module
