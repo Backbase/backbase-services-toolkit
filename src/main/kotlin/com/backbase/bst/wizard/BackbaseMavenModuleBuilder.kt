@@ -6,6 +6,7 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.actions.CreateFromTemplateActionBase
+import com.intellij.ide.navigationToolbar.ui.NavBarUIManager
 import com.intellij.ide.util.EditorHelper
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.application.ModalityState
@@ -13,10 +14,13 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
+import com.intellij.ui.GotItMessage
+import com.intellij.ui.awt.RelativePoint
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
@@ -94,6 +98,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             EditorHelper.openInEditor(getPsiFile(project, pom)!!)
 
         }
+
     }
 
     private fun addApplicationYaml(

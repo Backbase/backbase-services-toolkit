@@ -38,7 +38,7 @@
         </action>
 
         <action class="com.backbase.bst.actions.AddAnyServiceSSDKModuleAction" id="actions.AddAnyServiceSSDKModuleAction" description="Add SSDK Module"
-            text="Add SSDK Module" icon="/icons/0756-download.svg">
+            text="Add SSDK Module" icon="/icons/0911-plus-square.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
         </action>
 

@@ -74,13 +74,18 @@ class AddPersistenceSupportAction : DumbAwareAction(){
     }
 
     private fun actionAddPersistenceDependencies(project: Project, file: VirtualFile, dataContext: DataContext) {
+        val dependencies = listOf(
+            MavenId("com.backbase.buildingblocks", "persistence", ""),
+            MavenId("com.backbase.buildingblocks", "service-sdk-starter-mapping", ""),
+            MavenId("org.springframework.boot", "spring-boot-starter-cache", "")
+        ).filter {
+            !MavenTools.findDependencyOnBom(project, file, it)
+        }
+
         WriteCommandAction.runWriteCommandAction(project) {
                 MavenTools.writeDependenciesOnPom(project, file, dataContext,
-                    listOf(
-                        MavenId("com.backbase.buildingblocks", "persistence", ""),
-                        MavenId("com.backbase.buildingblocks", "service-sdk-starter-mapping", ""),
-                        MavenId("org.springframework.boot", "spring-boot-starter-cache", "")
-                    ))
+                    dependencies
+                )
         }
     }
 

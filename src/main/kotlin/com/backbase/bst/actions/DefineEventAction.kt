@@ -1,5 +1,6 @@
 package com.backbase.bst.actions
 
+import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.MavenTools
 import com.intellij.ide.actions.CreateFileAction.MkDirs
 import com.intellij.ide.actions.CreateFileFromTemplateAction
@@ -8,16 +9,18 @@ import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
+import com.intellij.ui.GotItMessage
+import com.intellij.ui.awt.RelativePoint
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.jetbrains.annotations.NotNull
@@ -69,7 +72,11 @@ class DefineEventAction : DumbAwareAction(){
                 NotificationType.INFORMATION).notify(project)
         }
 
+        val gotIt = GotItMessage.createMessage(
+            BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
+            BackbaseBundle.message("action.add.define.event.dialog.gotit.message"))
 
+        gotIt.show(RelativePoint.getCenterOf(FileEditorManager.getInstance(project).selectedTextEditor!!.component), Balloon.Position.above)
 
     }
 
@@ -128,7 +135,7 @@ class DefineEventAction : DumbAwareAction(){
 
     private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory, templateValues : Map<String, String>) {
         CreateFileFromTemplateAction.createFileFromTemplate(name, template, dir,
-            "", false, templateValues)
+            "", true, templateValues)
     }
 
     private fun addEventSpec(e: AnActionEvent, project: Project, nameEvent: String) {
@@ -201,4 +208,6 @@ class DefineEventAction : DumbAwareAction(){
             return;
         }
     }
+
+
 }
