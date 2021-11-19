@@ -6,7 +6,6 @@ import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
@@ -21,14 +20,8 @@ import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.codeStyle.JavaCodeStyleManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ClassInheritorsSearch
-import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.model.MavenId
-import org.jetbrains.idea.maven.project.MavenProjectsManager
-import org.jetbrains.idea.maven.server.MavenServerManager
-import org.jetbrains.idea.maven.utils.MavenUtil
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
-import java.util.HashMap
 
 
 class ConsumeEventAction : DumbAwareAction(){
@@ -119,6 +112,14 @@ class ConsumeEventAction : DumbAwareAction(){
             GlobalSearchScope.allScope(e.project!!))
 
         if( eventClass == null) {
+            e.presentation.isVisible = false
+            return;
+        }
+
+        val events = ClassInheritorsSearch.search(eventClass!!, GlobalSearchScope.allScope(e.project!!),
+            true, true, true)
+
+        if( !events.any()) {
             e.presentation.isVisible = false
             return;
         }

@@ -6,7 +6,9 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.model.*
+import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
+import org.jetbrains.idea.maven.dom.model.MavenDomDependency
+import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel
 import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
@@ -35,7 +37,7 @@ object MavenTools {
 
     fun findDependencyOnBom(project: Project, file: VirtualFile, dependency: MavenId): Boolean {
         val mavenModel = MavenDomUtil
-            .getMavenDomProjectModel(project, file)
+            .getMavenDomModel(project, file, MavenDomProjectModel::class.java)
         return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.filter{
             dependency.groupId  == it.groupId && dependency.artifactId == it.artifactId
         }.any()
