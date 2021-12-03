@@ -49,27 +49,22 @@ class AddPersistenceSupportAction : DumbAwareAction(){
 
             mavenProjectManager.waitForImportFinishCompletion()
 
-            Notification("Backbase notification group", title, "Adding Maven dependencies on pom.xml",
-                NotificationType.INFORMATION).notify(project);
-
         }
 
         if(persistenceDialog.addLiquibaseFile){
             addLiquibaseFile(e, project)
-            Notification("Backbase notification group", title, "Adding Liquibase example files",
-                NotificationType.INFORMATION).notify(project);
         }
 
         if(persistenceDialog.addApplicationClassPersistenceSupport){
             JavaTools.addAnnotationToJavaClass(e.project!!,
                 "com.backbase." + project.name.toLowerCase() + ".Application",
+                title,
                 listOf(
                     "org.springframework.data.jpa.repository.config.EnableJpaRepositories",
                     "org.springframework.boot.autoconfigure.domain.EntityScan"
                 )
             )
-            Notification("Backbase notification group", title, "Adding required annotation on Application class",
-                NotificationType.INFORMATION).notify(project);
+
         }
     }
 
@@ -82,16 +77,36 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             !MavenTools.findDependencyOnBom(project, file, it)
         }
 
-        WriteCommandAction.runWriteCommandAction(project) {
-                MavenTools.writeDependenciesOnPom(project, file, dataContext,
+        if(dependencies.isNotEmpty()) {
+            WriteCommandAction.runWriteCommandAction(project) {
+                MavenTools.writeDependenciesOnPom(
+                    project, file, dataContext,
                     dependencies
                 )
+            }
+
+            Notification(
+                "Backbase notification group", title, "Adding Maven dependencies on pom.xml",
+                NotificationType.INFORMATION
+            ).notify(project);
+        } else {
+            Notification(
+                "Backbase notification group", title, "Maven dependencies were previously on pom.xml",
+                NotificationType.WARNING
+            ).notify(project);
         }
     }
 
 
-    private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory) {
-        CreateFileFromTemplateAction.createFileFromTemplate(name, template, dir, "", false)
+    private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory, project: Project) {
+        try {
+            CreateFileFromTemplateAction.createFileFromTemplate(name, template, dir, "", false)
+        } catch (e: Exception){
+            Notification(
+                "Backbase notification group", title, "The file $name already exist",
+                NotificationType.WARNING
+            ).notify(project);
+        }
     }
 
     private fun addLiquibaseFile(e: AnActionEvent, project: Project) {
@@ -100,9 +115,9 @@ class AddPersistenceSupportAction : DumbAwareAction(){
         val mkdir = MkDirs("src/main/resources/db/changelog/tmp.xml", psiDirectory!!)
         val templateChangeLogPersistence =
             FileTemplateManager.getInstance(project).getTemplate("changelogpersistenceexample")
-        createFileFromTemplate("db.changelog-persistence", templateChangeLogPersistence, mkdir.directory)
+        createFileFromTemplate("db.changelog-persistence", templateChangeLogPersistence, mkdir.directory, project)
         val templateChangeLog = FileTemplateManager.getInstance(project).getTemplate("changelogexample")
-        createFileFromTemplate("db.changelog-1.0.0", templateChangeLog, mkdir.directory)
+        createFileFromTemplate("db.changelog-1.0.0", templateChangeLog, mkdir.directory, project)
     }
 
     override fun update(e: AnActionEvent) {

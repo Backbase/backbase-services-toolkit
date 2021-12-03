@@ -26,7 +26,6 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.MavenPluginDomUtil
 import org.jetbrains.idea.maven.dom.model.MavenDomConfiguration
 import org.jetbrains.idea.maven.dom.model.MavenDomGoal
 import org.jetbrains.idea.maven.dom.model.MavenDomPlugin
@@ -34,7 +33,6 @@ import org.jetbrains.idea.maven.dom.model.MavenDomPlugins
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
 import org.jetbrains.idea.maven.server.MavenServerManager
-import org.jetbrains.idea.maven.utils.MavenUtil
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 class DefineEventAction : DumbAwareAction(){
@@ -133,9 +131,17 @@ class DefineEventAction : DumbAwareAction(){
     }
 
 
-    private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory, templateValues : Map<String, String>) {
-        CreateFileFromTemplateAction.createFileFromTemplate(name, template, dir,
-            "", true, templateValues)
+    private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory,
+                                       templateValues : Map<String, String>, project: Project) {
+        try {
+            CreateFileFromTemplateAction.createFileFromTemplate(name, template, dir,
+                "", true, templateValues)
+            Notification("Backbase notification group", "Define an Event", "Creating file $name-event",
+                NotificationType.INFORMATION).notify(project)
+        } catch (e: Exception) {
+            Notification("Backbase notification group", "Define an Event", "Event $name-event already exist",
+                NotificationType.WARNING).notify(project)
+        }
     }
 
     private fun addEventSpec(e: AnActionEvent, project: Project, nameEvent: String) {
@@ -144,9 +150,10 @@ class DefineEventAction : DumbAwareAction(){
         val mkdir = MkDirs("src/main/resources/events/tmp.xml", psiDirectory!!)
         val templateChangeLogPersistence =
             FileTemplateManager.getInstance(project).getTemplate("myresourcecreatedevent")
-        createFileFromTemplate("$nameEvent-event", templateChangeLogPersistence, mkdir.directory, emptyMap())
-        Notification("Backbase notification group", "Define an Event", "Creating file $nameEvent-event",
-            NotificationType.INFORMATION).notify(project)
+        createFileFromTemplate("$nameEvent-event", templateChangeLogPersistence, mkdir.directory, emptyMap(),
+            project)
+
+
     }
 
 
