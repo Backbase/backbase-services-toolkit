@@ -13,7 +13,9 @@ internal class JavaToolsTest : BasePlatformTestCase() {
         val virtualFile = myFixture.copyFileToProject("com/backbase/test2w/Application.java", "/com/backbase/test2w/Application.java")
 
         WriteCommandAction.runWriteCommandAction(project) {
-            JavaTools.addAnnotationToJavaClass(project, "com.backbase.test2w.Application", listOf("org.springframework.boot.autoconfigure.domain.EntityScan"))
+            JavaTools.addAnnotationToJavaClass(project, "com.backbase.test2w.Application",
+                "Test Title",
+                listOf("org.springframework.boot.autoconfigure.domain.EntityScan"))
         }
 
         val text = PsiManager.getInstance(project).findFile(virtualFile)!!.text

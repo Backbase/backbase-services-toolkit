@@ -27,7 +27,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
         val file: VirtualFile = MavenTools.findPomXml(e.dataContext) ?: return
 
 
-        val libraries =  hashMapOf(
+        var libraries =  hashMapOf(
 
             "api" to Library("api", listOf("com.backbase.buildingblocks.api"), "Supplies consistent API functionality for your services."),
             "auxiliary-config" to Library("auxiliary-config", listOf("com.backbase.buildingblocks.auxiliary-config"),"Provides extra config required when building Docker images. "),
@@ -52,7 +52,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
             "service-sdk-web-client" to Library("service-sdk-web-client", listOf("com.backbase.buildingblocks.service-sdk-web-client"),"Supports asynchronous calls to services through reactive processing.")
         )
 
-        removeExistingModules(project, file, libraries)
+        libraries = removeExistingModules(project, file, libraries) as HashMap<String, Library>
 
         val modulesDialog = AddAnyServiceSSDKModuleDialog(project, libraries)
         modulesDialog.show()
@@ -65,8 +65,8 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
 
     }
 
-    private fun removeExistingModules(project: Project, file: VirtualFile, libraries: HashMap<String, Library>): Map<String, Library> {
-        return libraries.filter {  areAlreadyInPom(project, file, it.value.artifact )}
+    private fun removeExistingModules(project: Project, file: VirtualFile, libraries: Map<String, Library>): Map<String, Library> {
+        return libraries.filter {  !areAlreadyInPom(project, file, it.value.artifact )}
 
     }
 
