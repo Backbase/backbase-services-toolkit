@@ -47,7 +47,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             val mavenProjectManager = MavenProjectsManager.getInstance(project)
             mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 
-            mavenProjectManager.waitForImportFinishCompletion()
+            mavenProjectManager.waitForPostImportTasksCompletion()
 
         }
 
