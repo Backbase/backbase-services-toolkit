@@ -28,7 +28,7 @@ class ConsumeEventDialog(project : Project, private val events : List<String>) :
         init()
     }
 
-    var eventClass: String = "";
+    var eventClass: String = ""
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = panel {
@@ -47,6 +47,6 @@ class ConsumeEventDialog(project : Project, private val events : List<String>) :
     override fun doOKAction() {
         mainPanel!!.apply()
         eventClass = jbTable.selectedValue
-        super.doOKAction();
+        super.doOKAction()
     }
 }

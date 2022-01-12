@@ -20,7 +20,7 @@ class DefineEventDialog(project : Project) : DialogWrapper(project, true) {
         init()
     }
 
-    var eventName: String = "undefined";
+    var eventName: String = "undefined"
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = panel {
@@ -43,12 +43,12 @@ class DefineEventDialog(project : Project) : DialogWrapper(project, true) {
         }
 
 
-        return null;
+        return null
     }
 
     override fun doOKAction() {
         mainPanel!!.apply()
-        super.doOKAction();
+        super.doOKAction()
     }
 
 

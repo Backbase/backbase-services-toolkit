@@ -88,7 +88,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
     }
 
     private fun getArtifactId(artifact: String): String {
-        return artifact.substringAfterLast(".");
+        return artifact.substringAfterLast(".")
     }
 
     override fun update(e: AnActionEvent) {
@@ -97,7 +97,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
 
         if(file == null) {
             e.presentation.isVisible = false
-            return;
+            return
         }
     }
 

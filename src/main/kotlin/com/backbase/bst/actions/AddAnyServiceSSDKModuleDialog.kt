@@ -13,8 +13,6 @@ import java.awt.event.MouseMotionAdapter
 import java.awt.event.MouseMotionListener
 import javax.swing.JComponent
 import javax.swing.JPanel
-import javax.swing.JScrollPane
-
 
 class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map<String, Library>) : DialogWrapper(project, true) {
 
@@ -25,8 +23,6 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
         title = BackbaseBundle.message("action.add.modules.dialog.title")
         init()
     }
-
-    var eventClass: String = "";
 
     override fun createCenterPanel(): JComponent? {
         val keyByPairs = modules.keys.chunked(1)
@@ -71,6 +67,6 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
 
     override fun doOKAction() {
         mainPanel!!.apply()
-        super.doOKAction();
+        super.doOKAction()
     }
 }
