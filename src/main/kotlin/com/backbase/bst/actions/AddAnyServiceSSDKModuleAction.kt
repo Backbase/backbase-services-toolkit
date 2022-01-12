@@ -114,7 +114,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
         mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 
-        mavenProjectManager.waitForImportFinishCompletion()
+        mavenProjectManager.waitForPostImportTasksCompletion()
     }
 
     private fun actionEventDependencies(project: Project, file: VirtualFile, dataContext: DataContext,
