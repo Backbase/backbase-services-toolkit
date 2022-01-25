@@ -18,6 +18,7 @@ public class ${CLIENT_SERVICE_NAME_CAMELCASE}RestClientConfiguration extends Api
     }
 
     /**
+     * TODO
      * Creates a REST client.
      *
      * @return the client.
