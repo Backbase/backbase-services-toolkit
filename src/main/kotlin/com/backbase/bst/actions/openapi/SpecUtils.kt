@@ -35,20 +35,8 @@ object SpecUtils {
     fun isFileAnOpenApiSpec(event: AnActionEvent): Boolean? {
         val selectedFile = getSelectedFile(event)
         // Return false if fileType is not yaml
-        if (SpecConstants.YAML != selectedFile?.fileType?.name) return false
-        // Return false if fileName is not a valid BB spec
-        val fileName = selectedFile.virtualFile?.name
-        var isValidBBFileName = false
-        specTypesArr.forEach {
-            if (fileName != null) {
-                if (fileName.contains(it)) {
-                    isValidBBFileName = true
-                }
-            }
-        }
-        if(!isValidBBFileName) return false
-        // Check if file contains openapi
-        return selectedFile?.virtualFile?.contentsToByteArray()?.toString(Charsets.UTF_8)?.contains("openapi")
+        return SpecConstants.YAML == selectedFile?.fileType?.name
+        // Removed checks like file name contents types, because one can add direct git blob too.
     }
 
     fun createPropertiesForClientTemplate(serviceName: String, apiPackage: String): Properties {
