@@ -36,7 +36,7 @@ object SpecUtils {
         val selectedFile = getSelectedFile(event)
         // Return false if fileType is not yaml
         return SpecConstants.YAML == selectedFile?.fileType?.name
-        // Removed checks like file name contents types, because one can add direct git blob too.
+        // Removed checks like file name , contents, because one can add direct git blob too.
     }
 
     fun createPropertiesForClientTemplate(serviceName: String, apiPackage: String): Properties {
