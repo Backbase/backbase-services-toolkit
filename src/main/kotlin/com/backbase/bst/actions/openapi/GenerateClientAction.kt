@@ -98,7 +98,7 @@ class GenerateClientAction : DumbAwareAction() {
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
         mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 
-        mavenProjectManager.waitForImportFinishCompletion()
+        mavenProjectManager.waitForPostImportTasksCompletion()
 
         if (dialog.addRestClientConfiguration) {
             addRestClientConfigClass(e, project, "restClientConfiguration", dialog)
