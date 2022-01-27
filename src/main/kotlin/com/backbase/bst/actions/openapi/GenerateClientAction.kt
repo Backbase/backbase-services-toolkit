@@ -86,7 +86,7 @@ class GenerateClientAction : DumbAwareAction() {
                 if (it.id.stringValue.equals(executionId)) {
                     Notification("Backbase notification group",BackbaseBundle.message("action.add.openapi.client.title"),
                             BackbaseBundle.message("action.add.openapi.message.boat.execution.present"),
-                            NotificationType.ERROR).notify(project)
+                            NotificationType.WARNING).notify(project)
                     return
                 }
             }
