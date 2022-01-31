@@ -1,14 +1,10 @@
 package com.backbase.bst.actions.openapi
 
 import com.backbase.bst.BackbaseBundle
-import com.backbase.bst.common.FileTools
-import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.util.NlsSafe
-import com.intellij.openapi.util.text.StringUtil
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.layout.CellBuilder
 import com.intellij.ui.layout.panel

@@ -1,10 +1,8 @@
 package com.backbase.bst.actions.openapi
 
 import com.google.common.base.CaseFormat
-import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.NlsSafe
 import com.intellij.psi.PsiFile
 import java.util.*

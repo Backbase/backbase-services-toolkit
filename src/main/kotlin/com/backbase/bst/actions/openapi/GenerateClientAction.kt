@@ -3,7 +3,6 @@ package com.backbase.bst.actions.openapi
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.FileTools
 import com.backbase.bst.common.MavenTools
-import com.google.common.base.CaseFormat
 import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
