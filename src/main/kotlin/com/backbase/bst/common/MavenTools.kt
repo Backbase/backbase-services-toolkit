@@ -12,6 +12,7 @@ import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel
 import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
+import org.jetbrains.idea.maven.project.MavenProjectsManager
 import org.jetbrains.idea.maven.utils.MavenUtil
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
@@ -25,6 +26,9 @@ object MavenTools {
         val dep = MavenDomUtil.createDomDependency(dependencies!!, editor)
         dep.groupId.stringValue = id.groupId
         dep.artifactId.stringValue = id.artifactId
+        if(!id.version.isNullOrBlank()){
+            dep.version.stringValue = id.version
+        }
         return dep
     }
 
@@ -61,6 +65,11 @@ object MavenTools {
         val manager = MavenActionUtil.getProjectsManager(dataContext) ?: return null
         manager.findProject(file) ?: return null
         return file
+    }
+
+    fun findProjectPom(project: Project): VirtualFile? {
+
+        return MavenProjectsManager.getInstance(project).projectsFiles.first()
     }
 
     fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
