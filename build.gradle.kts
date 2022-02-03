@@ -26,6 +26,8 @@ repositories {
 
 dependencies{
     compileOnly("org.apache.maven:maven-artifact:3.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -62,6 +64,10 @@ tasks {
         withType<KotlinCompile> {
             kotlinOptions.jvmTarget = it
         }
+    }
+
+    test{
+        useJUnitPlatform()
     }
 
     wrapper {
