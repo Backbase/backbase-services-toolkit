@@ -80,7 +80,7 @@ class ConsumeEventAction : DumbAwareAction(){
         val properties = fileTemplateManager.defaultProperties
         properties.setProperty("PACKAGE_NAME", packageName)
         properties.setProperty("EVENT_NAME_HANDLER", eventHandlerName)
-        properties.setProperty("EVENT_NAME", eventClass);
+        properties.setProperty("EVENT_NAME", eventClass)
 
 
         val javaCodeStyleManager = JavaCodeStyleManager.getInstance(project)
@@ -105,7 +105,7 @@ class ConsumeEventAction : DumbAwareAction(){
 
         if(file == null) {
             e.presentation.isVisible = false
-            return;
+            return
         }
 
         val eventClass = JavaPsiFacade.getInstance(e.project!!).findClass("com.backbase.buildingblocks.persistence.model.Event",
@@ -113,7 +113,7 @@ class ConsumeEventAction : DumbAwareAction(){
 
         if( eventClass == null) {
             e.presentation.isVisible = false
-            return;
+            return
         }
 
         val events = ClassInheritorsSearch.search(eventClass!!, GlobalSearchScope.allScope(e.project!!),
@@ -121,7 +121,7 @@ class ConsumeEventAction : DumbAwareAction(){
 
         if( !events.any()) {
             e.presentation.isVisible = false
-            return;
+            return
         }
     }
 }

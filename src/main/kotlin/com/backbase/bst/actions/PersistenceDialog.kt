@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.layout.panel
-import org.jetbrains.idea.maven.model.MavenId
 import javax.swing.JComponent
 
 class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
@@ -17,9 +16,9 @@ class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
         init()
     }
 
-    var addPomDependencies: Boolean = false;
-    var addLiquibaseFile: Boolean = false;
-    var addApplicationClassPersistenceSupport: Boolean = false;
+    var addPomDependencies: Boolean = false
+    var addLiquibaseFile: Boolean = false
+    var addApplicationClassPersistenceSupport: Boolean = false
 
 
 
@@ -43,6 +42,6 @@ class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
 
     override fun doOKAction() {
         mainPanel!!.apply()
-        super.doOKAction();
+        super.doOKAction()
     }
 }

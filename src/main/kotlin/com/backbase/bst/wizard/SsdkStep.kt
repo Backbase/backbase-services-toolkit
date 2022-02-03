@@ -4,10 +4,8 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
-import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
 import org.jetbrains.idea.maven.model.MavenId
 import javax.swing.DefaultComboBoxModel
-import javax.swing.DefaultListCellRenderer
 import javax.swing.JComponent
 
 class ProjectId {
@@ -51,12 +49,12 @@ class SsdkStep(val backbaseModuleWizard: BackbaseProjectWizard, val wizardContex
     }
 
     override fun getComponent(): JComponent {
-        return panel;
+        return panel
     }
 
 
     override fun updateDataModel() {
-        panel.apply();
+        panel.apply()
         backbaseModuleWizard.myProjectId = MavenId(projectId.groupId, projectId.artifactId, projectId.version)
         backbaseModuleWizard.ssdkMavenId = MavenId(backbaseModuleWizard.ssdkMavenId.groupId,
             backbaseModuleWizard.ssdkMavenId.artifactId,

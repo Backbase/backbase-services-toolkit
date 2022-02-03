@@ -88,12 +88,12 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             Notification(
                 "Backbase notification group", title, "Adding Maven dependencies on pom.xml",
                 NotificationType.INFORMATION
-            ).notify(project);
+            ).notify(project)
         } else {
             Notification(
                 "Backbase notification group", title, "Maven dependencies were previously on pom.xml",
                 NotificationType.WARNING
-            ).notify(project);
+            ).notify(project)
         }
     }
 
@@ -105,7 +105,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             Notification(
                 "Backbase notification group", title, "The file $name already exist",
                 NotificationType.WARNING
-            ).notify(project);
+            ).notify(project)
         }
     }
 
@@ -126,7 +126,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
 
         if(file == null) {
             e.presentation.isVisible = false
-            return;
+            return
         }
     }
 
