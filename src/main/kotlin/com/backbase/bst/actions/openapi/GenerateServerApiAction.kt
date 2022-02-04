@@ -118,7 +118,7 @@ class GenerateServerApiAction : DumbAwareAction() {
         project: Project,
         dialog: GenerateServerApiDialog,
         selectedSpecFile: VirtualFile
-    ): MavenDomPlugin? {
+    ): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "com.backbase.oss"
         plugin.artifactId.stringValue = "boat-maven-plugin"

@@ -10,7 +10,6 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.NlsSafe
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 import org.jetbrains.annotations.NotNull
@@ -79,7 +78,7 @@ object SpecUtils {
         // Removed checks like file name , contents, because its boat-maven-plugin logic.
     }
 
-    fun isPomFileSelected(event: AnActionEvent): Boolean? {
+    fun isPomFileSelected(event: AnActionEvent): Boolean {
         val selectedFile = getSelectedFile(event)
         // Return false if fileType is not pom.xml
         return SpecConstants.POM_XML == selectedFile?.name

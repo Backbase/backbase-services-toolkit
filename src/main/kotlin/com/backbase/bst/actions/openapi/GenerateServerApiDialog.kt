@@ -4,7 +4,6 @@ import com.backbase.bst.BackbaseBundle
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.util.NlsSafe
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.layout.CellBuilder
@@ -12,13 +11,13 @@ import com.intellij.ui.layout.panel
 import java.io.File
 import javax.swing.JComponent
 
-class GenerateServerApiDialog (project: Project, file: @NlsSafe VirtualFile) : DialogWrapper(project, true) {
+class GenerateServerApiDialog (project: Project, file: VirtualFile) : DialogWrapper(project, true) {
 
-    var serviceName: String
     var specPath: String
     var apiPackage: String
     var modelPackage: String
 
+    private var serviceName: String
     private var  mainPanel : DialogPanel? = null
     private var  serviceNameTextField : CellBuilder<JBTextField>? = null
     private var  specPathTextField : CellBuilder<JBTextField>? = null
@@ -28,11 +27,11 @@ class GenerateServerApiDialog (project: Project, file: @NlsSafe VirtualFile) : D
     init {
         title = BackbaseBundle.message("action.add.openapi.server.api.dialog.title")
         serviceName = SpecUtils.extractServiceNameWithType(file.name)
-        val relativeSpecPath: String = File(project.basePath).toURI().relativize(File(file.canonicalPath).toURI()).getPath()
+        val relativeSpecPath: String = File(project.basePath).toURI().relativize(File(file.canonicalPath).toURI()).path
         specPath = ".."+File.separator+relativeSpecPath
-        var stripServiceName = serviceName.replace("-","")
-        apiPackage = "com.backbase.$stripServiceName.api";
-        modelPackage = "com.backbase.$stripServiceName.api.model";
+        val stripServiceName = serviceName.replace("-","")
+        apiPackage = "com.backbase.$stripServiceName.api"
+        modelPackage = "com.backbase.$stripServiceName.api.model"
         init()
     }
 
@@ -75,7 +74,7 @@ class GenerateServerApiDialog (project: Project, file: @NlsSafe VirtualFile) : D
 
     override fun doOKAction() {
         mainPanel!!.apply()
-        super.doOKAction();
+        super.doOKAction()
     }
 
 }
