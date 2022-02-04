@@ -3,6 +3,7 @@ package com.backbase.bst.common
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.idea.maven.dom.MavenDomUtil
@@ -70,6 +71,11 @@ object MavenTools {
     fun findProjectPom(project: Project): VirtualFile? {
 
         return MavenProjectsManager.getInstance(project).projectsFiles.first()
+    }
+
+    fun findProjectPom(project: Project, module: Module): VirtualFile? {
+
+        return MavenProjectsManager.getInstance(project).projectsFiles.find { it.parent.name== module.name }
     }
 
     fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
