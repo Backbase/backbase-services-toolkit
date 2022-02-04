@@ -27,7 +27,7 @@ object SpecUtils {
      * input = sample-service-api-v1.yaml ; output = sample
      * input = sample-client-api-v1.yaml ; output = sample
      * */
-    fun extractServiceName(fileName: @NlsSafe String?): String {
+    fun extractServiceName(fileName: String?): String {
         if (fileName != null) {
             specTypesArr.forEach {
                 if (fileName.contains(it)) {
@@ -45,7 +45,7 @@ object SpecUtils {
     * input = sample-service-api-v1.yaml ; output = sample-service
     * input = sample-client-api-v1.yaml ; output = sample-client
     * */
-    fun extractServiceNameWithType(fileName: @NlsSafe String?): String {
+    fun extractServiceNameWithType(fileName: String?): String {
         if (fileName != null) {
             specTypesArr.forEach {
                 if (fileName.contains(it)) {
@@ -58,7 +58,7 @@ object SpecUtils {
         }
     }
 
-    fun getSelectedFile(event: AnActionEvent): PsiFile? {
+    private fun getSelectedFile(event: AnActionEvent): PsiFile? {
         return event.getData(LangDataKeys.PSI_FILE)
     }
 
@@ -66,7 +66,7 @@ object SpecUtils {
         return getSelectedFile(event)?.virtualFile?.name
     }
 
-    fun isFileAnOpenApiSpec(event: AnActionEvent): Boolean? {
+    fun isFileAnOpenApiSpec(event: AnActionEvent): Boolean {
         val selectedFile = getSelectedFile(event)
         // Return false if fileType is not yaml
         return SpecConstants.YAML == selectedFile?.fileType?.name

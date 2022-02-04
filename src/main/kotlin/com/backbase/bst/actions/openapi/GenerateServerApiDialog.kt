@@ -19,11 +19,11 @@ class GenerateServerApiDialog (project: Project, file: @NlsSafe VirtualFile) : D
     var apiPackage: String
     var modelPackage: String
 
-    var  mainPanel : DialogPanel? = null
-    var  serviceNameTextField : CellBuilder<JBTextField>? = null
-    var  specPathTextField : CellBuilder<JBTextField>? = null
-    var  apiPackageTextField : CellBuilder<JBTextField>? = null
-    var  modelPackageTextField : CellBuilder<JBTextField>? = null
+    private var  mainPanel : DialogPanel? = null
+    private var  serviceNameTextField : CellBuilder<JBTextField>? = null
+    private var  specPathTextField : CellBuilder<JBTextField>? = null
+    private var  apiPackageTextField : CellBuilder<JBTextField>? = null
+    private var  modelPackageTextField : CellBuilder<JBTextField>? = null
 
     init {
         title = BackbaseBundle.message("action.add.openapi.server.api.dialog.title")

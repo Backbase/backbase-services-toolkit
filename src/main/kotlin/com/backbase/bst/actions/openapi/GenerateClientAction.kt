@@ -12,6 +12,7 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileEditorManager
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
@@ -24,9 +25,7 @@ import com.intellij.ui.GotItMessage
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
-import org.jetbrains.annotations.NotNull
 import org.jetbrains.idea.maven.dom.MavenDomUtil
-import org.jetbrains.idea.maven.dom.model.MavenDomConfiguration
 import org.jetbrains.idea.maven.dom.model.MavenDomGoal
 import org.jetbrains.idea.maven.dom.model.MavenDomPlugin
 import org.jetbrains.idea.maven.dom.model.MavenDomPlugins
@@ -52,40 +51,50 @@ class GenerateClientAction : DumbAwareAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = MavenActionUtil.getProject(e.dataContext) ?: return
-
+        val selectedModule = e.getData(LangDataKeys.MODULE) // If a multimodule project
         val dialog = GenerateClientDialog(project, SpecUtils.getFileName(e))
         dialog.show()
         if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 
-        val file: VirtualFile = MavenTools.findProjectPom(project) ?: return
+        //Select pomfile only from the selected pom.xml if a multimodule project
+        val projectPomFile: VirtualFile = selectedModule?.let { MavenTools.findProjectPom(project, it) } ?: return
 
         //Add additional dependencies if not present
-        addAdditionalDependencies(project, file, e.dataContext)
+        addAdditionalDependencies(project, projectPomFile, e.dataContext)
 
         val boatPluginId = MavenId("com.backbase.oss", "boat-maven-plugin", "")
 
         //Add Boat maven plugin or just add the execution
-        if (!MavenTools.findPluginOnBom(project, file, boatPluginId)) {
+        if (!MavenTools.findPluginOnBom(project, projectPomFile, boatPluginId)) {
             WriteCommandAction.runWriteCommandAction(project) {
-                createDomPlugin(MavenDomUtil
-                        .getMavenDomProjectModel(project, file)!!.build.plugins, project, dialog)
+                createDomPlugin(
+                    MavenDomUtil
+                        .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins, project, dialog
+                )
 
             }
-            Notification("Backbase notification group", BackbaseBundle.message("action.add.openapi.client.title"),
-                    BackbaseBundle.message("action.add.openapi.message.adding.boat.plugin"),
-                    NotificationType.INFORMATION).notify(project)
+            Notification(
+                "Backbase notification group", BackbaseBundle.message("action.add.openapi.client.title"),
+                BackbaseBundle.message("action.add.openapi.message.adding.boat.plugin"),
+                NotificationType.INFORMATION
+            ).notify(project)
         } else {
             // Only add execution to exsisting plugin
             val plugin = MavenDomUtil
-                    .getMavenDomProjectModel(project, file)!!.build.plugins.plugins.find { it.artifactId.stringValue == "boat-maven-plugin" }
+                .getMavenDomProjectModel(
+                    project,
+                    projectPomFile
+                )!!.build.plugins.plugins.find { it.artifactId.stringValue == "boat-maven-plugin" }
             val executionId = "generate-" + dialog.serviceName + "-client-code"
             plugin?.executions?.executions?.forEach {
                 if (it.id.stringValue.equals(executionId)) {
-                    Notification("Backbase notification group",BackbaseBundle.message("action.add.openapi.client.title"),
-                            BackbaseBundle.message("action.add.openapi.message.boat.execution.present"),
-                            NotificationType.WARNING).notify(project)
+                    Notification(
+                        "Backbase notification group", BackbaseBundle.message("action.add.openapi.client.title"),
+                        BackbaseBundle.message("action.add.openapi.message.boat.execution.present"),
+                        NotificationType.WARNING
+                    ).notify(project)
                     return
                 }
             }
@@ -100,17 +109,21 @@ class GenerateClientAction : DumbAwareAction() {
         mavenProjectManager.waitForPostImportTasksCompletion()
 
         if (dialog.addRestClientConfiguration) {
-            addRestClientConfigClass(e, project, "restClientConfiguration", dialog)
+            addRestClientConfigClass(selectedModule, project, "restClientConfiguration", dialog)
             val gotIt = GotItMessage.createMessage(
-                    BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
-                    BackbaseBundle.message("action.add.openapi.client.gotit.message"))
+                BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
+                BackbaseBundle.message("action.add.openapi.client.gotit.message")
+            )
 
-            gotIt.show(RelativePoint.getCenterOf(FileEditorManager.getInstance(project).selectedTextEditor!!.component), Balloon.Position.above)
+            gotIt.show(
+                RelativePoint.getCenterOf(FileEditorManager.getInstance(project).selectedTextEditor!!.component),
+                Balloon.Position.above
+            )
         }
 
     }
 
-    fun createDomPlugin(plugins: MavenDomPlugins?, project: Project, dialog: GenerateClientDialog): MavenDomPlugin? {
+    private fun createDomPlugin(plugins: MavenDomPlugins?, project: Project, dialog: GenerateClientDialog): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "com.backbase.oss"
         plugin.artifactId.stringValue = "boat-maven-plugin"
@@ -120,7 +133,11 @@ class GenerateClientAction : DumbAwareAction() {
         return plugin
     }
 
-    private fun createPluginExecution(plugin: MavenDomPlugin, project: Project, dialog: GenerateClientDialog): MavenDomPlugin {
+    private fun createPluginExecution(
+        plugin: MavenDomPlugin,
+        project: Project,
+        dialog: GenerateClientDialog
+    ): MavenDomPlugin {
 
         val execution = plugin.executions.addExecution()
         execution.id.stringValue = "generate-" + dialog.serviceName + "-client-code"
@@ -128,7 +145,7 @@ class GenerateClientAction : DumbAwareAction() {
         val goals = execution.goals
 
         val childDescription: DomCollectionChildDescription =
-                goals.genericInfo.getCollectionChildDescription("goal")!!
+            goals.genericInfo.getCollectionChildDescription("goal")!!
         if (childDescription != null) {
             val element: DomElement = childDescription.addValue(goals)
             if (element is MavenDomGoal) {
@@ -140,79 +157,93 @@ class GenerateClientAction : DumbAwareAction() {
         val configuration = execution.configuration
         configuration.ensureTagExists()
 
-        addElement(configuration, "inputSpec", dialog.specPath)
-        addElement(configuration, "apiPackage", dialog.apiPackage)
-        addElement(configuration, "modelPackage", dialog.modelPackage)
+        SpecUtils.addElement(configuration, "inputSpec", dialog.specPath)
+        SpecUtils.addElement(configuration, "apiPackage", dialog.apiPackage)
+        SpecUtils.addElement(configuration, "modelPackage", dialog.modelPackage)
 
         return plugin
     }
 
-    private fun addElement(
-            configuration: @NotNull MavenDomConfiguration,
-            name: String,
-            value: String
+    private fun addAdditionalDependencies(project: Project, pomFile: VirtualFile, dataContext: DataContext) {
+        val dependencies = mutableListOf(
+            MavenId("io.swagger", "swagger-annotations", ""),
+            MavenId("org.openapitools", "jackson-databind-nullable", ""),
+            MavenId("com.google.code.findbugs", "jsr305", "3.0.2"),
+            MavenId("com.backbase.buildingblocks", "communication", "")
+        )
+
+        SpecUtils.addAdditionalDependencies(dependencies, project, pomFile, dataContext, title)
+    }
+
+    private fun addRestClientConfigClass(
+        module: Module,
+        project: Project,
+        configurationClass: String,
+        dialog: GenerateClientDialog
     ) {
-        val createChildTag = configuration.xmlTag!!.createChildTag(name, "", value, false)
-        configuration.xmlTag!!.addSubTag(createChildTag, false)
-    }
 
-    private fun addAdditionalDependencies(project: Project, file: VirtualFile, dataContext: DataContext) {
-        val dependencies = listOf(
-                MavenId("io.swagger", "swagger-annotations", ""),
-                MavenId("org.openapitools", "jackson-databind-nullable", ""),
-                MavenId("com.google.code.findbugs", "jsr305", "3.0.2"),
-                MavenId("com.backbase.buildingblocks", "communication", "")
-        ).filter {
-            !MavenTools.findDependencyOnBom(project, file, it)
-        }
-
-        if (dependencies.isNotEmpty()) {
-            WriteCommandAction.runWriteCommandAction(project) {
-                MavenTools.writeDependenciesOnPom(
-                        project, file, dataContext,
-                        dependencies
-                )
-            }
-
-            Notification(
-                    "Backbase notification group", title, "Adding Maven dependencies on pom.xml",
-                    NotificationType.INFORMATION
-            ).notify(project)
-        } else {
-            Notification(
-                    "Backbase notification group", title, "Maven dependencies were previously on pom.xml",
-                    NotificationType.WARNING
-            ).notify(project)
-        }
-    }
-
-    private fun addRestClientConfigClass(e: AnActionEvent, project: Project, configurationClass: String, dialog: GenerateClientDialog) {
-        val ideView = e.getData(LangDataKeys.IDE_VIEW)
         val mavenModel = MavenDomUtil
-                .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
+            .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
 
 
-        val packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase() + ".config"
-        val directoryPath = packageName.replace(".", File.separator)
-        val directory = VfsUtil.createDirectories(project.basePath + File.separator + Paths.get("src", "main", "java") + File.separator + directoryPath)
-        val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
+        var directoryPath: String
+        var psiDirectory: PsiDirectory
+        if (project.name == module.name) {
+            //Single project
+            val packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase().replace("-", "") + ".config"
+            directoryPath = packageName.replace(".", File.separator)
+            var directory = VfsUtil.createDirectories(
+                project.basePath + File.separator + Paths.get(
+                    "src",
+                    "main",
+                    "java"
+                ) + File.separator + directoryPath
+            )
+            psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
+        } else {
+            //Multimodule project
+            val packageName = mavenModel!!.groupId.value + "." + module.name.toLowerCase().replace("-", "") + ".config"
+            directoryPath = packageName.replace(".", File.separator)
+            var directory = VfsUtil.createDirectories(
+                project.basePath + File.separator + module.name + File.separator + File.separator + Paths.get(
+                    "src",
+                    "main",
+                    "java"
+                ) + File.separator + directoryPath
+            )
+            psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
+        }
         val templateChangeLogPersistence =
-                FileTemplateManager.getInstance(project).getTemplate("myServiceRestClientConfiguration")
-        createFileFromTemplate("$configurationClass-event", templateChangeLogPersistence, psiDirectory!!,
-                HashMap<String, String>(), project, SpecUtils.createPropertiesForClientTemplate(dialog.serviceName, dialog.apiPackage))
+            FileTemplateManager.getInstance(project).getTemplate("myServiceRestClientConfiguration")
+        createFileFromTemplate(
+            "$configurationClass-event",
+            templateChangeLogPersistence,
+            psiDirectory,
+            HashMap<String, String>(),
+            project,
+            SpecUtils.createPropertiesForClientTemplate(dialog.serviceName, dialog.apiPackage)
+        )
     }
 
-    private fun createFileFromTemplate(name: String, template: FileTemplate, dir: PsiDirectory,
-                                       templateValues: Map<String, String>, project: Project, properties: Properties) {
+    private fun createFileFromTemplate(
+        name: String, template: FileTemplate, dir: PsiDirectory,
+        templateValues: Map<String, String>, project: Project, properties: Properties
+    ) {
         try {
             templateValues.forEach { (key, value) -> println("$key = $value") }
-            FileTools.createFileFromTemplate(name, template, dir,
-                    "", true, templateValues, properties)
-            Notification("Backbase notification group", "Generating Rest Client Config class", "Creating file $name-event",
-                    NotificationType.INFORMATION).notify(project)
+            FileTools.createFileFromTemplate(
+                name, template, dir,
+                "", true, templateValues, properties
+            )
+            Notification(
+                "Backbase notification group", "Generating Rest Client Config Class", "Creating file $name-event",
+                NotificationType.INFORMATION
+            ).notify(project)
         } catch (e: Exception) {
-            Notification("Backbase notification group", "Generating Rest Client Config class", "Event $name-event already exist",
-                    NotificationType.WARNING).notify(project)
+            Notification(
+                "Backbase notification group", "Generating Rest Client Config Class", "Event $name-event already exist",
+                NotificationType.WARNING
+            ).notify(project)
         }
     }
 }
