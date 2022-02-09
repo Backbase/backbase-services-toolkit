@@ -49,6 +49,13 @@
 
         </action>
 
+        <action class="com.backbase.bst.actions.openapi.GenerateServerApiAction" id="actions.GenerateServerApiAction"
+                description="Generate Server Api from OpenAPI spec"
+                text="Generate Server Api from OpenAPI spec" icon="/icons/openapi_icon_132133.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+
+        </action>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">

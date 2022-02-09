@@ -4,36 +4,35 @@ import com.backbase.bst.BackbaseBundle
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.util.NlsSafe
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.layout.CellBuilder
 import com.intellij.ui.layout.panel
 import javax.swing.JComponent
 
-class GenerateClientDialog(project: Project, fileName: @NlsSafe String?) : DialogWrapper(project, true) {
+class GenerateClientDialog(project: Project, fileName: String?) : DialogWrapper(project, true) {
 
     var serviceName: String
     var specPath: String
     var apiPackage: String
     var modelPackage: String
 
-    var  mainPanel : DialogPanel? = null
-    var  serviceNameTextField : CellBuilder<JBTextField>? = null
-    var  specPathTextField : CellBuilder<JBTextField>? = null
-    var  apiPackageTextField : CellBuilder<JBTextField>? = null
-    var  modelPackageTextField : CellBuilder<JBTextField>? = null
-    var addRestClientConfiguration: Boolean = true;
+    private var mainPanel: DialogPanel? = null
+    private var serviceNameTextField: CellBuilder<JBTextField>? = null
+    private var specPathTextField: CellBuilder<JBTextField>? = null
+    private var apiPackageTextField: CellBuilder<JBTextField>? = null
+    private var modelPackageTextField: CellBuilder<JBTextField>? = null
+    var addRestClientConfiguration: Boolean = true
 
     init {
         title = BackbaseBundle.message("action.add.openapi.client.dialog.title")
         serviceName = SpecUtils.extractServiceName(fileName)
-        if(!serviceName.endsWith("service")){
+        if (!serviceName.endsWith("service")) {
             serviceName += "-service"
         }
-        specPath = "\${project.basedir}/src/main/resources/$fileName";
-        var stripServiceName = serviceName.replace("-","")
-        apiPackage = "com.backbase.$stripServiceName.api.client";
-        modelPackage = "com.backbase.$stripServiceName.api.client.model";
+        specPath = "\${project.basedir}/src/main/resources/$fileName"
+        val stripServiceName = serviceName.replace("-", "")
+        apiPackage = "com.backbase.$stripServiceName.api.client"
+        modelPackage = "com.backbase.$stripServiceName.api.client.model"
         init()
     }
 
@@ -71,7 +70,10 @@ class GenerateClientDialog(project: Project, fileName: @NlsSafe String?) : Dialo
                 }
             }
             row {
-                checkBox(BackbaseBundle.message("action.add.openapi.client.dialog.generateConfig"),::addRestClientConfiguration)
+                checkBox(
+                    BackbaseBundle.message("action.add.openapi.client.dialog.generateConfig"),
+                    ::addRestClientConfiguration
+                )
             }
         }
 
@@ -81,6 +83,6 @@ class GenerateClientDialog(project: Project, fileName: @NlsSafe String?) : Dialo
 
     override fun doOKAction() {
         mainPanel!!.apply()
-        super.doOKAction();
+        super.doOKAction()
     }
 }

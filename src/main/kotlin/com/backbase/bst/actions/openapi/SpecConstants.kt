@@ -2,7 +2,7 @@ package com.backbase.bst.actions.openapi
 
 object SpecConstants {
     const val YAML = "YAML"
-    const val YAML_SUFFIX = ".yml"
+    const val POM_XML = "pom.xml"
     const val CLIENT_SERVICE_NAME_UPPERCASE = "CLIENT_SERVICE_NAME_UPPERCASE"
     const val CLIENT_SERVICE_NAME_LOWERCASE = "CLIENT_SERVICE_NAME_LOWERCASE"
     const val CLIENT_API_PACKAGE_TRIM_LAST_DOT = "CLIENT_API_PACKAGE_TRIM_LAST_DOT"
