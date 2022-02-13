@@ -9,7 +9,6 @@ import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.codeStyle.JavaCodeStyleManager
-import com.intellij.psi.impl.source.tree.java.PsiAnnotationImpl
 import com.intellij.psi.search.GlobalSearchScope
 
 object JavaTools {

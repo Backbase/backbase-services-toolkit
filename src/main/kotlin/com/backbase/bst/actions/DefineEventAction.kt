@@ -212,7 +212,7 @@ class DefineEventAction : DumbAwareAction(){
 
         if(file == null) {
             e.presentation.isVisible = false
-            return;
+            return
         }
     }
 
