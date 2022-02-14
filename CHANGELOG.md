@@ -10,5 +10,6 @@
 - Persistence Support Action
 - Define, consume and emit events. 
 - Add any SSDK module
+- Generate clients and API from open-api specs.
 - Synchronize with scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
