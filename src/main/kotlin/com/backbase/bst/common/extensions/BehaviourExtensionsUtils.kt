@@ -29,13 +29,13 @@ object BehaviourExtensionsUtils {
             .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
 
 
-        var directoryPath: String
-        var psiDirectory: PsiDirectory
+        val directoryPath: String
+        val psiDirectory: PsiDirectory
         if (project.name == module.name) {
             //Single project
             val packageName = mavenModel!!.groupId.value.toString()
             directoryPath = packageName.replace(".", File.separator)
-            var directory = VfsUtil.createDirectories(
+            val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
                     "src",
                     "main",
@@ -47,7 +47,7 @@ object BehaviourExtensionsUtils {
             //Multimodule project
             val packageName = mavenModel!!.groupId.value.toString()
             directoryPath = packageName.replace(".", File.separator)
-            var directory = VfsUtil.createDirectories(
+            val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + module.name + File.separator + File.separator + Paths.get(
                     "src",
                     "main",
@@ -78,12 +78,12 @@ object BehaviourExtensionsUtils {
                 "", true, templateValues, properties
             )
             Notification(
-                "Backbase notification group", "Generating Hook Class", "Creating file $name-hook",
+                "Backbase notification group", "Generating hook class", "Creating file $name-hook",
                 NotificationType.INFORMATION
             ).notify(project)
         } catch (e: Exception) {
             Notification(
-                "Backbase notification group", "Generating Hook Class", "$name-hook already exist",
+                "Backbase notification group", "Generating hook class", "$name-hook already exist",
                 NotificationType.WARNING
             ).notify(project)
         }

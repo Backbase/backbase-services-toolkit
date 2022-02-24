@@ -3,7 +3,7 @@ package com.backbase.bst.wizard.extensions
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.BackbaseIcons
 import com.backbase.bst.common.extensions.BehaviourExtensionsModuleType
-import com.backbase.bst.wizard.BackbaseMavenModuleBuilder
+import com.intellij.ide.projectWizard.ProjectSettingsStep
 import com.intellij.ide.util.projectWizard.ModuleBuilder
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.SettingsStep
@@ -21,11 +21,12 @@ import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProject
 import org.jetbrains.idea.maven.utils.MavenUtil
 import java.io.File
+import java.nio.file.Paths
 import javax.swing.Icon
 
 class BehaviourExtensionsProjectWizard : ModuleBuilder() {
 
-    var myAggregatorProject: MavenProject? = null
+    private var myAggregatorProject: MavenProject? = null
 
     var serviceGroupId = ""
     var serviceArtifactId = ""
@@ -35,14 +36,11 @@ class BehaviourExtensionsProjectWizard : ModuleBuilder() {
     var version: String = "1.0.0-SNAPSHOT"
     var ssdkVersion: String = ""
 
-    var myProjectId: MavenId? = null
-
-    var ssdkMavenId: MavenId =
-        MavenId("com.backbase.buildingblocks", "backbase-service-extension-starter-parent", "14.0.0")
+    private var myProjectId: MavenId? = null
 
     override fun getNodeIcon(): Icon = BackbaseIcons.BACKBASE_PROJECT_LOGO
 
-    override fun getModuleType(): ModuleType<*>? = BehaviourExtensionsModuleType()
+    override fun getModuleType(): ModuleType<*> = BehaviourExtensionsModuleType()
 
     override fun getPresentableName(): String =
         BackbaseBundle.message("wizard.behaviour.extension.project.display.name")
@@ -50,10 +48,10 @@ class BehaviourExtensionsProjectWizard : ModuleBuilder() {
     override fun createWizardSteps(
         wizardContext: WizardContext,
         modulesProvider: ModulesProvider
-    ): Array<ModuleWizardStep>? {
+    ): Array<ModuleWizardStep> {
 
         return arrayOf(
-            CaptureServiceStep(this, wizardContext),
+            CaptureServiceStep(this),
             ExtensionProjectStep(this, wizardContext)
         )
     }
@@ -63,6 +61,11 @@ class BehaviourExtensionsProjectWizard : ModuleBuilder() {
     }
 
     override fun modifySettingsStep(settingsStep: SettingsStep): ModuleWizardStep? {
+        if (settingsStep is ProjectSettingsStep) {
+            settingsStep.setNameValue(this.artifactId)
+            settingsStep.setModuleName(this.artifactId)
+            settingsStep.setPath(Paths.get(System.getProperty("user.home"),"IdeaProjects",this.artifactId).toString())
+        }
         val nameLocationSettings = settingsStep.moduleNameLocationSettings
         if (nameLocationSettings != null && myProjectId != null && myProjectId!!.artifactId != null) {
             nameLocationSettings.moduleName = myProjectId!!.artifactId

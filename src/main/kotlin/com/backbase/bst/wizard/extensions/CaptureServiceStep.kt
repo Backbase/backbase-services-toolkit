@@ -8,8 +8,7 @@ import javax.swing.JComponent
 
 
 class CaptureServiceStep(
-    private val behaviourExtensionsProjectWizard: BehaviourExtensionsProjectWizard,
-    private val wizardContext: WizardContext
+    private val behaviourExtensionsProjectWizard: BehaviourExtensionsProjectWizard
 ) : ModuleWizardStep() {
 
     private var serviceGroupId: String = ""

@@ -58,7 +58,7 @@
 
         <action class="com.backbase.bst.actions.extensions.GenerateHooksAction" id="actions.GenerateHooksAction"
                 description="Generate new behaviour extension hooks"
-                text="Generate new behaviour extension hooks" icon="/icons/camel2.svg">
+                text="Generate new behaviour extension hooks" icon="/icons/camel.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
 
         </action>

@@ -37,7 +37,7 @@ import java.io.IOException
 import java.util.*
 
 
-class BackbaseExtensionProjectBuilder(val projectWizard: BehaviourExtensionsProjectWizard, val myProjectId: MavenId) {
+class BackbaseExtensionProjectBuilder(private val projectWizard: BehaviourExtensionsProjectWizard, private val myProjectId: MavenId) {
 
     private val newProjectCommandName = BackbaseBundle.message("wizard.behaviour.extension.project.command.name")
 
@@ -124,16 +124,16 @@ class BackbaseExtensionProjectBuilder(val projectWizard: BehaviourExtensionsProj
             PsiDocumentManager.getInstance(project).commitAllDocuments()
             val model = MavenDomUtil.getMavenDomProjectModel(project, pom) ?: return@run
             model.name.stringValue = "Backbase ::${project.name.replace("-", " ")}"
-            var parentId : MavenId = MavenId("com.backbase.buildingblocks", "backbase-service-extension-starter-parent", projectWizard.ssdkVersion)
+            val parentId = MavenId("com.backbase.buildingblocks", "backbase-service-extension-starter-parent", projectWizard.ssdkVersion)
             updateMavenParent(model, parentId)
             val dep1: MavenCoordinate = MavenId("com.backbase.buildingblocks", "service-sdk-starter-test", "")
             val dep = MavenDomUtil.createDomDependency(
                 model.dependencies,
                 EditorHelper.openInEditor(getPsiFile(project, pom)!!)
             )
-            dep.groupId.setStringValue(dep1.groupId)
+            dep.groupId.stringValue = dep1.groupId
             dep.artifactId.setStringValue(dep1.artifactId)
-            dep.scope.setValue("test")
+            dep.scope.value = "test"
 
             //createDomPlugin(model.build.plugins, project)
 
@@ -154,7 +154,7 @@ class BackbaseExtensionProjectBuilder(val projectWizard: BehaviourExtensionsProj
             fileDocumentManager.saveDocument(document)
         }
     }
-    fun updateMavenParent(mavenModel: MavenDomProjectModel, parentId: MavenId): MavenDomParent? {
+    private fun updateMavenParent(mavenModel: MavenDomProjectModel, parentId: MavenId): MavenDomParent {
         val result = mavenModel.mavenParent
         result.groupId.stringValue = parentId.groupId
         result.artifactId.stringValue = parentId.artifactId
@@ -179,7 +179,7 @@ class BackbaseExtensionProjectBuilder(val projectWizard: BehaviourExtensionsProj
         )
     }
 
-    fun createFileFromTemplate(
+    private fun createFileFromTemplate(
         name: String?,
         template: FileTemplate,
         dir: PsiDirectory,
@@ -224,7 +224,7 @@ class BackbaseExtensionProjectBuilder(val projectWizard: BehaviourExtensionsProj
         return null
     }
 
-    fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin? {
+    private fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "org.springframework.boot"
         plugin.artifactId.stringValue = "spring-boot-maven-plugin"

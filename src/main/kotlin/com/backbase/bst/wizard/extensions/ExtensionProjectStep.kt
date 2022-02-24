@@ -15,7 +15,7 @@ class ExtensionProjectStep(
 ) : ModuleWizardStep() {
 
     private var groupId: String = "com.backbase"
-    private var artifactId: String = "example-extention"
+    private var artifactId: String = "example-extension"
     private var version: String = "1.0.0-SNAPSHOT"
     private var ssdkVersion: String = ""
 
@@ -40,7 +40,7 @@ class ExtensionProjectStep(
         }
         row(separated = true) {
             label("Extension Version")
-                .comment("backbase-service-extension-starter-parent version ")
+                .comment("Backbase service extension starter parent version ")
             comboBox(
                 DefaultComboBoxModel(SsdkUtils.listVersionsSsdk().toTypedArray()),
                 ::ssdkVersion
@@ -66,6 +66,5 @@ class ExtensionProjectStep(
         behaviourExtensionsProjectWizard.version = version
         behaviourExtensionsProjectWizard.ssdkVersion = ssdkVersion
         wizardContext.projectName = artifactId
-        wizardContext
     }
 }

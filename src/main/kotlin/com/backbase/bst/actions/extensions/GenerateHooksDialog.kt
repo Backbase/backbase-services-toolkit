@@ -13,8 +13,8 @@ import javax.swing.JComponent
 
 class GenerateHooksDialog(project: Project) : DialogWrapper(project, true) {
 
-    var mainPanel: DialogPanel? = null
-    var textField: CellBuilder<JBTextField>? = null
+    private var mainPanel: DialogPanel? = null
+    private var textField: CellBuilder<JBTextField>? = null
     var behaviorName: String = "undefined"
     var selectedRouteExtensionType: RouteExtensionType = RouteExtensionType.SIMPLE_ROUTE_HOOK
 

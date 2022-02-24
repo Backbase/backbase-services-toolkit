@@ -43,17 +43,17 @@ class GenerateHooksAction : DumbAwareAction() {
             .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
         val properties = createProperties(dialog.behaviorName, mavenModel!!.groupId.value.toString())
 
-        if(dialog.selectedRouteExtensionType.equals(RouteExtensionType.SIMPLE_ROUTE_HOOK)){
+        if(dialog.selectedRouteExtensionType == RouteExtensionType.SIMPLE_ROUTE_HOOK){
             BehaviourExtensionsUtils.addClass(
                 selectedModule!!, project, "simpleHookBehaviorExtension",
                 properties
             )
-        }else if(dialog.selectedRouteExtensionType.equals(RouteExtensionType.REPLACE_ROUTE_HOOK)){
+        }else if(dialog.selectedRouteExtensionType == RouteExtensionType.REPLACE_ROUTE_HOOK){
             BehaviourExtensionsUtils.addClass(
                 selectedModule!!, project, "replaceHookRouteBuilder",
                 properties
             )
-        }else if(dialog.selectedRouteExtensionType.equals(RouteExtensionType.EXTEND_ROUTE_HOOK)){
+        }else if(dialog.selectedRouteExtensionType == RouteExtensionType.EXTEND_ROUTE_HOOK){
             BehaviourExtensionsUtils.addClass(
                 selectedModule!!, project, "extendHookRouteBuilder",
                 properties
