@@ -1,0 +1,35 @@
+package ${PACKAGE_NAME};
+
+import com.backbase.buildingblocks.backend.communication.extension.annotations.BehaviorExtension;
+import com.backbase.buildingblocks.backend.communication.extension.annotations.PostHook;
+import com.backbase.buildingblocks.backend.communication.extension.annotations.PreHook;
+import org.apache.camel.Exchange;
+
+@BehaviorExtension(
+        // The name parameter is used as a configuration key to enable/disable this specific extension.
+        // For example, "backbase.behavior-extensions.${BEHAVIOUR_NAME}.enabled=false".
+        // (Extensions are enabled by default.)
+        name = "${BEHAVIOUR_NAME}",
+        // The routeId parameter is the value returned by the getRouteId() method of the target SimpleExtensibleRouteBuilder
+        // and is typically exposed as a constant by that route builder.  E.g.:
+        routeId = com.backbase.example.route.DummyRoute.ROUTE_ID
+)
+public class ${BEHAVIOUR_NAME_CAMELCASE}Extension {
+
+    @PreHook
+    public void preHook(Object body, Exchange exchange) {
+        // Custom pre-hook code here.
+        // Update the "body" parameter type according to the producer method signature (parameter type) of the route you extend.
+        // See the Camel documentation for details about how parameters are bound: http://camel.apache.org/bean-binding.html#BeanBinding-Parameterbinding
+        // If no pre-hook behavior is required, this method can be deleted.
+    }
+
+    @PostHook
+    public void postHook(Object body, Exchange exchange) {
+        // Custom post-hook code here.
+        // Update the "body" parameter type according to the last consumer method signature (return type) of the route you extend.
+        // See the Camel documentation for details about how parameters are bound: http://camel.apache.org/bean-binding.html#BeanBinding-Parameterbinding
+        // If no post-hook behavior is required, this method can be deleted.
+    }
+
+}
