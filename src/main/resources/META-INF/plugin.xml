@@ -56,6 +56,13 @@
 
         </action>
 
+        <action class="com.backbase.bst.actions.extensions.GenerateHooksAction" id="actions.GenerateHooksAction"
+                description="Generate new behaviour extension hooks"
+                text="Generate new behaviour extension hooks" icon="/icons/camel2.svg">
+            <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
+
+        </action>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -67,6 +74,11 @@
             id="BACKBASE_STEP"
             order="first"/>
         <moduleType implementationClass="com.backbase.bst.common.BackbaseSSDKModuleType" id="BackbaseSSDKModuleType"/>
+
+        <moduleBuilder builderClass="com.backbase.bst.wizard.extensions.BehaviourExtensionsProjectWizard"
+                       id="BEHAVIOUR_EXTENSION"
+                       order="after BACKBASE_STEP"/>
+        <moduleType implementationClass="com.backbase.bst.common.extensions.BehaviourExtensionsModuleType" id="BehaviourExtensionsModuleType"/>
     </extensions>
 
     <applicationListeners>
