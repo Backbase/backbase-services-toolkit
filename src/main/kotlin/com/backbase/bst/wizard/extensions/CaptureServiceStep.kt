@@ -1,7 +1,6 @@
 package com.backbase.bst.wizard.extensions
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
-import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
 import javax.swing.JComponent
