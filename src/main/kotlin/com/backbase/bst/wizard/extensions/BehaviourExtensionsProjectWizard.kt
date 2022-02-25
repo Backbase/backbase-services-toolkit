@@ -36,7 +36,7 @@ class BehaviourExtensionsProjectWizard : ModuleBuilder() {
     var version: String = "1.0.0-SNAPSHOT"
     var ssdkVersion: String = ""
 
-    private var myProjectId: MavenId? = null
+    var myProjectId: MavenId? = null
 
     override fun getNodeIcon(): Icon = BackbaseIcons.BACKBASE_PROJECT_LOGO
 

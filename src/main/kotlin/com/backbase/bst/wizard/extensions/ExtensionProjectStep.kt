@@ -5,6 +5,7 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
+import org.jetbrains.idea.maven.model.MavenId
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 
@@ -49,11 +50,6 @@ class ExtensionProjectStep(
         }
     }
 
-    override fun updateStep() {
-//        groupId = behaviourExtensionsProjectWizard.serviceGroupId
-//        artifactId = behaviourExtensionsProjectWizard.serviceArtifactId + "-extension"
-    }
-
     override fun getComponent(): JComponent {
         return panel
     }
@@ -66,5 +62,6 @@ class ExtensionProjectStep(
         behaviourExtensionsProjectWizard.version = version
         behaviourExtensionsProjectWizard.ssdkVersion = ssdkVersion
         wizardContext.projectName = artifactId
+        behaviourExtensionsProjectWizard.myProjectId = MavenId(groupId,artifactId,version)
     }
 }

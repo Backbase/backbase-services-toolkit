@@ -35,7 +35,7 @@ class CaptureServiceStep(
             textField(::bbVersion)
 
         }
-        noteRow("Check <a href=\"https://community.backbase.com/\">Community</a>")
+        noteRow("Check <a href=\"https://community.backbase.com/\">Community</a> for service details")
     }
 
     override fun getComponent(): JComponent {
