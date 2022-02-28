@@ -18,8 +18,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.util.IncorrectOperationException
-import com.intellij.util.xml.DomElement
-import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.apache.velocity.runtime.parser.ParseException
 import org.jetbrains.idea.maven.dom.MavenDomUtil
 import org.jetbrains.idea.maven.dom.model.*

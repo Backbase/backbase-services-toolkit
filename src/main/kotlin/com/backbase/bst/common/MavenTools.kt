@@ -10,7 +10,6 @@ import org.jetbrains.idea.maven.dom.MavenDomUtil
 import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel
-import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
@@ -52,9 +51,9 @@ object MavenTools {
     fun findPluginOnBom(project: Project, file: VirtualFile, plugin: MavenId): Boolean {
         val mavenModel = MavenDomUtil
             .getMavenDomProjectModel(project, file)
-        return MavenDomUtil.findProject(mavenModel!!)!!.plugins.filter{
-            plugin.groupId  == it.groupId && plugin.artifactId == it.artifactId
-        }.any()
+        return MavenDomUtil.findProject(mavenModel!!)!!.plugins.any {
+            plugin.groupId == it.groupId && plugin.artifactId == it.artifactId
+        }
     }
 
     fun findPomXml(dataContext: DataContext): VirtualFile? {
