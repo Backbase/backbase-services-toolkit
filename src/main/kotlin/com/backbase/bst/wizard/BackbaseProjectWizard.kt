@@ -24,7 +24,7 @@ import javax.swing.Icon
 
 class BackbaseProjectWizard : ModuleBuilder(){
 
-    var myAggregatorProject: MavenProject? = null
+    private var myAggregatorProject: MavenProject? = null
 
     var myProjectId: MavenId? = null
 
@@ -32,16 +32,16 @@ class BackbaseProjectWizard : ModuleBuilder(){
 
     override fun getNodeIcon(): Icon = BackbaseIcons.BACKBASE_PROJECT_LOGO
 
-    override fun getModuleType(): ModuleType<*>? = BackbaseSSDKModuleType()
+    override fun getModuleType(): ModuleType<*> = BackbaseSSDKModuleType()
 
     override fun getPresentableName(): String = BackbaseBundle.message("wizard.project.display.name")
 
-    override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep>? {
+    override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {
 
         val versionSsdkArtifact = listVersionsSsdk()
 
         return arrayOf(
-            SsdkStep(this, wizardContext, ProjectId(), versionSsdkArtifact)
+            SsdkStep(this, ProjectId(), versionSsdkArtifact)
         )
     }
 
@@ -60,7 +60,7 @@ class BackbaseProjectWizard : ModuleBuilder(){
                 ?.let { StringUtil.sanitizeJavaIdentifier(it) }.toString()
             if (myAggregatorProject != null) {
                 nameLocationSettings.moduleContentRoot =
-                    myAggregatorProject!!.getDirectory() + "/" + myProjectId!!.getArtifactId()
+                    myAggregatorProject!!.directory + "/" + myProjectId!!.artifactId
             }
         }
         return super.modifySettingsStep(settingsStep)

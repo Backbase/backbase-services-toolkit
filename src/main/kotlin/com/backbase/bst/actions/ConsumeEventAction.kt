@@ -88,7 +88,7 @@ class ConsumeEventAction : DumbAwareAction(){
 
         WriteCommandAction.runWriteCommandAction(project) {
             val psiJavaFile = FileTools.createFileFromTemplate(
-                eventHandlerName, eventHandlerTemplate, psiDirectory!!, "", true, HashMap<String, String>(),
+                eventHandlerName, eventHandlerTemplate, psiDirectory!!, "", true, HashMap(),
                 properties
             )
             javaCodeStyleManager.shortenClassReferences(psiJavaFile as PsiJavaFile)

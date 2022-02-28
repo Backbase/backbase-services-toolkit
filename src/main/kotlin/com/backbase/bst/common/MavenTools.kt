@@ -19,11 +19,11 @@ import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 object MavenTools {
 
-    fun createDomDependency(
+    private fun createDomDependency(
         dependencies: MavenDomDependencies?,
         editor: Editor?,
         id: MavenCoordinate
-    ): MavenDomDependency? {
+    ): MavenDomDependency {
         val dep = MavenDomUtil.createDomDependency(dependencies!!, editor)
         dep.groupId.stringValue = id.groupId
         dep.artifactId.stringValue = id.artifactId
@@ -43,9 +43,9 @@ object MavenTools {
     fun findDependencyOnBom(project: Project, file: VirtualFile, dependency: MavenId): Boolean {
         val mavenModel = MavenDomUtil
             .getMavenDomModel(project, file, MavenDomProjectModel::class.java)
-        return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.filter{
-            dependency.groupId  == it.groupId && dependency.artifactId == it.artifactId
-        }.any()
+        return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.any {
+            dependency.groupId == it.groupId && dependency.artifactId == it.artifactId
+        }
     }
 
 
@@ -76,14 +76,6 @@ object MavenTools {
     fun findProjectPom(project: Project, module: Module): VirtualFile? {
 
         return MavenProjectsManager.getInstance(project).projectsFiles.find { it.parent.name== module.name }
-    }
-
-    fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
-        val searcher = MavenArtifactSearcherMod()
-
-        val result = searcher.search(project, "$groupId:$artifactId:", 1000)
-
-        return result.filter { it.searchResults.artifactId =="service-sdk-starter-core" }.first()
     }
 
 }

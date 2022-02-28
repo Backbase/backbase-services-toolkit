@@ -9,7 +9,7 @@ import javax.swing.JComponent
 
 class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
 
-    var  mainPanel : DialogPanel? = null
+    private var  mainPanel : DialogPanel? = null
 
     init {
         title = BackbaseBundle.message("action.add.persistence.support.dialog.title")

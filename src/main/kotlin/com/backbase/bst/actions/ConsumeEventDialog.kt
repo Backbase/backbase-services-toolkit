@@ -12,10 +12,10 @@ import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 import javax.swing.ListSelectionModel
 
-class ConsumeEventDialog(project : Project, private val events : List<String>) : DialogWrapper(project, true) {
+class ConsumeEventDialog(project : Project, events : List<String>) : DialogWrapper(project, true) {
 
-    var  mainPanel : DialogPanel? = null
-    var listModel = DefaultComboBoxModel(events.toTypedArray())
+    private var  mainPanel : DialogPanel? = null
+    private var listModel = DefaultComboBoxModel(events.toTypedArray())
     val jbTable: JBList<String>
 
     init {

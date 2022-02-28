@@ -136,7 +136,7 @@ tasks.register("incrementVersion"){
         val newVersion = generateVersion(version)
         println(newVersion)
         exec {
-            commandLine("sh", "incrementVersion.sh", "$newVersion")
+            commandLine("sh", "incrementVersion.sh", newVersion)
         }
     }
 }

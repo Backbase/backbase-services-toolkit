@@ -43,7 +43,7 @@ class GenerateClientAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
 
         //Disable if the File is not a valid Open Api file
-        if (SpecUtils.isFileAnOpenApiSpec(e) != true) {
+        if (!SpecUtils.isFileAnOpenApiSpec(e)) {
             e.presentation.isEnabledAndVisible = false
             return
         }
@@ -186,13 +186,13 @@ class GenerateClientAction : DumbAwareAction() {
             .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
 
 
-        var directoryPath: String
-        var psiDirectory: PsiDirectory
+        val directoryPath: String
+        val psiDirectory: PsiDirectory
         if (project.name == module.name) {
             //Single project
             val packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase().replace("-", "") + ".config"
             directoryPath = packageName.replace(".", File.separator)
-            var directory = VfsUtil.createDirectories(
+            val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
                     "src",
                     "main",
@@ -204,7 +204,7 @@ class GenerateClientAction : DumbAwareAction() {
             //Multimodule project
             val packageName = mavenModel!!.groupId.value + "." + module.name.toLowerCase().replace("-", "") + ".config"
             directoryPath = packageName.replace(".", File.separator)
-            var directory = VfsUtil.createDirectories(
+            val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + module.name + File.separator + File.separator + Paths.get(
                     "src",
                     "main",
@@ -236,12 +236,12 @@ class GenerateClientAction : DumbAwareAction() {
                 "", true, templateValues, properties
             )
             Notification(
-                "Backbase notification group", "Generating Rest Client Config Class", "Creating file $name-event",
+                "Backbase notification group", "Generating rest client config class", "Creating file $name-event",
                 NotificationType.INFORMATION
             ).notify(project)
         } catch (e: Exception) {
             Notification(
-                "Backbase notification group", "Generating Rest Client Config Class", "Event $name-event already exist",
+                "Backbase notification group", "Generating rest client config class", "Event $name-event already exist",
                 NotificationType.WARNING
             ).notify(project)
         }

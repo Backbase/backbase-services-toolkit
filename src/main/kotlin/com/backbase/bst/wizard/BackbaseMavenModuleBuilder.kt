@@ -6,7 +6,6 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.actions.CreateFromTemplateActionBase
-import com.intellij.ide.navigationToolbar.ui.NavBarUIManager
 import com.intellij.ide.util.EditorHelper
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.application.ModalityState
@@ -14,13 +13,10 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
-import com.intellij.ui.GotItMessage
-import com.intellij.ui.awt.RelativePoint
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
@@ -37,7 +33,7 @@ import org.jetbrains.idea.maven.utils.MavenUtil
 import java.io.IOException
 import java.util.*
 
-class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: MavenId) {
+class BackbaseMavenModuleBuilder(private val myProjectId: MavenId, private val myParentId: MavenId) {
 
     private val newProjectCommandName = BackbaseBundle.message("wizard.project.command.name")
 
@@ -130,9 +126,9 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
                 model.dependencies,
                 EditorHelper.openInEditor(getPsiFile(project, pom)!!)
             )
-            dep.groupId.setStringValue(dep1.groupId)
-            dep.artifactId.setStringValue(dep1.artifactId)
-            dep.scope.setValue("test")
+            dep.groupId.stringValue = dep1.groupId
+            dep.artifactId.stringValue = dep1.artifactId
+            dep.scope.value = "test"
 
             //createDomPlugin(model.build.plugins, project)
 
@@ -153,7 +149,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             fileDocumentManager.saveDocument(document)
         }
     }
-    fun updateMavenParent(mavenModel: MavenDomProjectModel, parentId: MavenId): MavenDomParent? {
+    private fun updateMavenParent(mavenModel: MavenDomProjectModel, parentId: MavenId): MavenDomParent {
         val result = mavenModel.mavenParent
         result.groupId.stringValue = parentId.groupId
         result.artifactId.stringValue = parentId.artifactId
@@ -178,7 +174,7 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
         )
     }
 
-    fun createFileFromTemplate(
+    private fun createFileFromTemplate(
         name: String?,
         template: FileTemplate,
         dir: PsiDirectory,
@@ -221,24 +217,6 @@ class BackbaseMavenModuleBuilder(val myProjectId: MavenId, val myParentId: Maven
             MavenLog.LOG.info(e)
         }
         return null
-    }
-
-    fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin? {
-        val plugin = plugins!!.addPlugin()
-        plugin!!.groupId.stringValue = "org.springframework.boot"
-        plugin.artifactId.stringValue = "spring-boot-maven-plugin"
-        val execution = plugin.executions.addExecution()
-        val goals = execution.goals
-
-        val childDescription: DomCollectionChildDescription =
-            goals.genericInfo.getCollectionChildDescription("goal")!!
-
-        val element: DomElement = childDescription.addValue(goals)
-        if (element is MavenDomGoal) {
-            element.stringValue = "build-info"
-        }
-
-         return plugin
     }
 
 }

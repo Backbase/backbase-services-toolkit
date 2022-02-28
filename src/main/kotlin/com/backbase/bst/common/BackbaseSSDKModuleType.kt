@@ -4,9 +4,9 @@ import com.intellij.openapi.module.JavaModuleType
 
 class BackbaseSSDKModuleType : JavaModuleType() {
 
-    val SSDK_CORE = "SSDK CORE"
+    private val ssdkCore = "SSDK CORE"
 
     override fun getName(): String {
-        return SSDK_CORE
+        return ssdkCore
     }
 }
