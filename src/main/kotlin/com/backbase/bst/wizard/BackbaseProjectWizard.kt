@@ -3,6 +3,7 @@ package com.backbase.bst.wizard
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.BackbaseIcons
 import com.backbase.bst.common.BackbaseSSDKModuleType
+import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.util.projectWizard.ModuleBuilder
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.SettingsStep
@@ -38,15 +39,9 @@ class BackbaseProjectWizard : ModuleBuilder(){
 
     override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {
 
-        val versionSsdkArtifact = listVersionsSsdk()
-
         return arrayOf(
-            SsdkStep(this, ProjectId(), versionSsdkArtifact)
+            SsdkStep(this, ProjectId(), SsdkUtils.listVersionsSsdk())
         )
-    }
-
-    private fun listVersionsSsdk(): List<String> {
-        return listOf("13.3.1", "13.3.0", "13.2.2", "13.2.1", "13.2.0")
     }
 
     override fun getBuilderId(): @NonNls String? {
