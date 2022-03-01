@@ -34,10 +34,10 @@ object JavaTools {
                 codeStyleManager.reformat(psiJavaFile)
             }
             Notification("Backbase notification group", title, "Adding required annotation on Application class",
-                NotificationType.INFORMATION).notify(project);
+                NotificationType.INFORMATION).notify(project)
         } else {
             Notification("Backbase notification group", title, "Annotations were previously on Application class",
-                NotificationType.WARNING).notify(project);
+                NotificationType.WARNING).notify(project)
         }
 
     }

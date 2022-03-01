@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backbase-services-toolkit
+  description: An IntelliJ Plugin to help you to create and maintain your own Backbase backend services. It would make it easier for you to follow Community Backbase Documentation.
+  annotations:
+    backbase/public: "false"
+    backbase/build-job-link: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/build.yml'
+    backbase/release-job-link: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/release.yml'
+    backbase/slack-channel-name: 'backend-foundation-team'
+  tags:
+    - intellij
+    - ssdk
+  links:
+    - url: 'https://github.com/Backbase/backbase-services-toolkit/releases'
+      title: Releases
+      icon: dashboard
+    - url: 'https://backbase.slack.com/archives/C01EQ60LXK8'
+      title: Support
+      icon: help
+spec:
+  type: tool
+  lifecycle: beta
+  owner: 'backend-foundation'

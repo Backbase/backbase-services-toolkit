@@ -43,25 +43,29 @@ class GenerateHooksAction : DumbAwareAction() {
             .getMavenDomProjectModel(project, MavenTools.findProjectPom(project)!!)
         val properties = createProperties(dialog.behaviorName, mavenModel!!.groupId.value.toString())
 
-        if(dialog.selectedRouteExtensionType == RouteExtensionType.SIMPLE_ROUTE_HOOK){
-            BehaviourExtensionsUtils.addClass(
-                selectedModule!!, project, "simpleHookBehaviorExtension",
-                properties
-            )
-        }else if(dialog.selectedRouteExtensionType == RouteExtensionType.REPLACE_ROUTE_HOOK){
-            BehaviourExtensionsUtils.addClass(
-                selectedModule!!, project, "replaceHookRouteBuilder",
-                properties
-            )
-        }else if(dialog.selectedRouteExtensionType == RouteExtensionType.EXTEND_ROUTE_HOOK){
-            BehaviourExtensionsUtils.addClass(
-                selectedModule!!, project, "extendHookRouteBuilder",
-                properties
-            )
-            BehaviourExtensionsUtils.addClass(
-                selectedModule!!, project, "extendHookRouteBuilderEndpoints",
-                properties
-            )
+        when (dialog.selectedRouteExtensionType) {
+            RouteExtensionType.SIMPLE_ROUTE_HOOK -> {
+                BehaviourExtensionsUtils.addClass(
+                    selectedModule!!, project, "simpleHookBehaviorExtension",
+                    properties
+                )
+            }
+            RouteExtensionType.REPLACE_ROUTE_HOOK -> {
+                BehaviourExtensionsUtils.addClass(
+                    selectedModule!!, project, "replaceHookRouteBuilder",
+                    properties
+                )
+            }
+            RouteExtensionType.EXTEND_ROUTE_HOOK -> {
+                BehaviourExtensionsUtils.addClass(
+                    selectedModule!!, project, "extendHookRouteBuilder",
+                    properties
+                )
+                BehaviourExtensionsUtils.addClass(
+                    selectedModule, project, "extendHookRouteBuilderEndpoints",
+                    properties
+                )
+            }
         }
         val gotIt = GotItMessage.createMessage(
             BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),

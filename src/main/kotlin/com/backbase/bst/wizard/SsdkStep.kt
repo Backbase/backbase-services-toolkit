@@ -1,7 +1,6 @@
 package com.backbase.bst.wizard
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
-import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
 import org.jetbrains.idea.maven.model.MavenId
@@ -15,9 +14,10 @@ class ProjectId {
     var ssdkVersion=""
 }
 
-class SsdkStep(val backbaseModuleWizard: BackbaseProjectWizard, val wizardContext: WizardContext,
-               private val projectId: ProjectId = ProjectId(),
-               private val ssdkVersions : List<String>) : ModuleWizardStep() {
+class SsdkStep(
+    private val backbaseModuleWizard: BackbaseProjectWizard,
+    private val projectId: ProjectId = ProjectId(),
+    private val ssdkVersions : List<String>) : ModuleWizardStep() {
 
     private val panel: DialogPanel = panel {
 

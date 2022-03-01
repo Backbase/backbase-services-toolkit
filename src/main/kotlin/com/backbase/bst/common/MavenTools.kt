@@ -10,7 +10,6 @@ import org.jetbrains.idea.maven.dom.MavenDomUtil
 import org.jetbrains.idea.maven.dom.model.MavenDomDependencies
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel
-import org.jetbrains.idea.maven.indices.MavenArtifactSearchResult
 import org.jetbrains.idea.maven.model.MavenCoordinate
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
@@ -19,11 +18,11 @@ import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 object MavenTools {
 
-    fun createDomDependency(
+    private fun createDomDependency(
         dependencies: MavenDomDependencies?,
         editor: Editor?,
         id: MavenCoordinate
-    ): MavenDomDependency? {
+    ): MavenDomDependency {
         val dep = MavenDomUtil.createDomDependency(dependencies!!, editor)
         dep.groupId.stringValue = id.groupId
         dep.artifactId.stringValue = id.artifactId
@@ -43,18 +42,18 @@ object MavenTools {
     fun findDependencyOnBom(project: Project, file: VirtualFile, dependency: MavenId): Boolean {
         val mavenModel = MavenDomUtil
             .getMavenDomModel(project, file, MavenDomProjectModel::class.java)
-        return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.filter{
-            dependency.groupId  == it.groupId && dependency.artifactId == it.artifactId
-        }.any()
+        return MavenDomUtil.findProject(mavenModel!!)!!.dependencies.any {
+            dependency.groupId == it.groupId && dependency.artifactId == it.artifactId
+        }
     }
 
 
     fun findPluginOnBom(project: Project, file: VirtualFile, plugin: MavenId): Boolean {
         val mavenModel = MavenDomUtil
             .getMavenDomProjectModel(project, file)
-        return MavenDomUtil.findProject(mavenModel!!)!!.plugins.filter{
-            plugin.groupId  == it.groupId && plugin.artifactId == it.artifactId
-        }.any()
+        return MavenDomUtil.findProject(mavenModel!!)!!.plugins.any {
+            plugin.groupId == it.groupId && plugin.artifactId == it.artifactId
+        }
     }
 
     fun findPomXml(dataContext: DataContext): VirtualFile? {
@@ -76,14 +75,6 @@ object MavenTools {
     fun findProjectPom(project: Project, module: Module): VirtualFile? {
 
         return MavenProjectsManager.getInstance(project).projectsFiles.find { it.parent.name== module.name }
-    }
-
-    fun findVersionsArtifact(project: Project?, groupId: String, artifactId: String) : MavenArtifactSearchResult {
-        val searcher = MavenArtifactSearcherMod()
-
-        val result = searcher.search(project, "$groupId:$artifactId:", 1000)
-
-        return result.filter { it.searchResults.artifactId =="service-sdk-starter-core" }.first()
     }
 
 }

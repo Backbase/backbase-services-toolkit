@@ -16,7 +16,7 @@ import javax.swing.JPanel
 
 class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map<String, Library>) : DialogWrapper(project, true) {
 
-    var  mainPanel : DialogPanel? = null
+    private var  mainPanel : DialogPanel? = null
 
 
     init {
@@ -24,7 +24,7 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
         init()
     }
 
-    override fun createCenterPanel(): JComponent? {
+    override fun createCenterPanel(): JComponent {
         val keyByPairs = modules.keys.chunked(1)
         mainPanel = panel{
 
@@ -50,8 +50,8 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
 
         val doScrollRectToVisible: MouseMotionListener = object : MouseMotionAdapter() {
             override fun mouseDragged(e: MouseEvent) {
-                val r = Rectangle(e.getX(), e.getY(), 1, 1)
-                (e.getSource() as JPanel).scrollRectToVisible(r)
+                val r = Rectangle(e.x, e.y, 1, 1)
+                (e.source as JPanel).scrollRectToVisible(r)
             }
         }
 

@@ -33,7 +33,7 @@ class GenerateServerApiAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
 
         //Disable if the File selected file in not pom.xml
-        if (SpecUtils.isPomFileSelected(e) != true) {
+        if (!SpecUtils.isPomFileSelected(e)) {
             e.presentation.isEnabledAndVisible = false
             return
         }

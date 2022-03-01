@@ -12,8 +12,8 @@ import javax.swing.JComponent
 
 class DefineEventDialog(project : Project) : DialogWrapper(project, true) {
 
-    var  mainPanel : DialogPanel? = null
-    var textField : CellBuilder<JBTextField>? = null
+    private var  mainPanel : DialogPanel? = null
+    private var textField : CellBuilder<JBTextField>? = null
 
     init {
         title = BackbaseBundle.message("action.add.define.event.dialog.title")

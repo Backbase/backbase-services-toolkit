@@ -157,7 +157,7 @@ class DefineEventAction : DumbAwareAction(){
     }
 
 
-    fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin? {
+    private fun createDomPlugin(plugins: MavenDomPlugins?, project: Project): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "com.backbase.codegen"
         plugin.artifactId.stringValue = "jsonschema-events-maven-plugin"
@@ -166,7 +166,7 @@ class DefineEventAction : DumbAwareAction(){
         val goals = execution.goals
 
         val childDescription: DomCollectionChildDescription =
-            goals.getGenericInfo().getCollectionChildDescription("goal")!!
+            goals.genericInfo.getCollectionChildDescription("goal")!!
         if (childDescription != null) {
             val element: DomElement = childDescription.addValue(goals)
             if (element is MavenDomGoal) {

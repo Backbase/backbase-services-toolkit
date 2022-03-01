@@ -4,3 +4,9 @@
 version: 1.0
 profile:
   name: qodana.recommended
+exclude:
+  # To disable capital SSDK qodana warning. All or paths
+  - name: DialogTitleCapitalization
+    paths:
+      - src/main/kotlin/com/backbase/bst/actions/AddAnyServiceSSDKModuleDialog.kt
+
