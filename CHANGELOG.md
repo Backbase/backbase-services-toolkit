@@ -3,6 +3,8 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+
+## [0.0.2]
 ### Added
 - Create new behaviour extension project
 - Generate new behaviour extension hooks
@@ -17,4 +19,3 @@
 - Add any SSDK module
 - Generate clients and API from open-api specs.
 - Synchronize with scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
-
