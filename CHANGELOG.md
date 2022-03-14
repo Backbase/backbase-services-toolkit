@@ -3,6 +3,9 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+### Added
+- Create new behaviour extension project
+- Generate new behaviour extension hooks
 
 ## [0.0.1]
 ### Added

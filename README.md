@@ -18,6 +18,7 @@
 This Fancy IntelliJ Platform Plugin is going to help you to create and maintain your own Backbase backend services.  
 
 It would make it easier for you to follow [Community Backbase Documentation](https://community.backbase.com/) with simple Intellij options.
+Note: An approved account is required to access the Community. Please sign up with your business email address.
 
 With this plugin you can:
 
@@ -25,6 +26,8 @@ With this plugin you can:
 - Adding Persistence support to your Backbase Service.
 - Define, consume and emit events.
 - Quick access to Golden samples. 
+- Generate Client and Server APIs from Openapi Specs
+- Create new behaviour extension project and generate new extension hooks
 
 
 More new cool features coming soon!  
