@@ -7,7 +7,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.idea.maven</depends>
     <depends>com.intellij.java</depends>
-
+    <description><![CDATA[ Description will be added by gradle build]]></description>
     <actions>
         <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb-horizontal16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
@@ -81,6 +81,7 @@
         <moduleType implementationClass="com.backbase.bst.common.extensions.BehaviourExtensionsModuleType" id="BehaviourExtensionsModuleType"/>
     </extensions>
 
+    <change-notes><![CDATA[	Change notes will be filled by gradle build ]]> </change-notes>
     <applicationListeners>
 
     </applicationListeners>
