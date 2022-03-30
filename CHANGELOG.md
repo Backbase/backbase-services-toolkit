@@ -3,6 +3,8 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+
+## [0.0.3]
 ### Update
 - Doc links on how to use the plugins different features.
 
