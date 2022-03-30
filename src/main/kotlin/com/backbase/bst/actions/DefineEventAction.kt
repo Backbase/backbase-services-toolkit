@@ -179,7 +179,7 @@ class DefineEventAction : DumbAwareAction(){
         configuration.ensureTagExists()
 
 
-        val packageName =  project.name.toLowerCase()
+        val packageName =  project.name.toLowerCase().replace("-", "")
         addElement(configuration, "inputFile", "\${project.basedir}/src/main/resources/events")
         addElement(configuration, "outputFile", "\${project.build.directory}/generated-sources/events")
         addElement(configuration, "basePackageName", "\${project.groupId}")

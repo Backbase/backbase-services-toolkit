@@ -6,22 +6,23 @@ import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.JavaPsiFacade
-import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiJavaFile
-import com.intellij.psi.PsiManager
+import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.codeStyle.JavaCodeStyleManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ClassInheritorsSearch
 import org.jetbrains.idea.maven.dom.MavenDomUtil
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
+import java.io.File
+import java.nio.file.Paths
 
 
 class ConsumeEventAction : DumbAwareAction(){
@@ -68,13 +69,36 @@ class ConsumeEventAction : DumbAwareAction(){
 
         val mavenModel = MavenDomUtil
             .getMavenDomProjectModel(project, file)
+        val selectedModuleName = e.getData(LangDataKeys.MODULE)!!.name // If a multimodule project
+        val directoryPath: String
+        val psiDirectory: PsiDirectory
+        val packageName: String
+        if (project.name == selectedModuleName) {
+            //Single project
+            packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase().replace("-", "") + ".events"
+            directoryPath = packageName.replace(".", File.separator)
+            val directory = VfsUtil.createDirectories(
+                project.basePath + File.separator + Paths.get(
+                    "src",
+                    "main",
+                    "java"
+                ) + File.separator + directoryPath
+            )
+            psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
+        } else {
+            //Multimodule project
+            packageName = mavenModel!!.groupId.value + "." + selectedModuleName.toLowerCase().replace("-", "") + ".events"
+            directoryPath = packageName.replace(".", File.separator)
+            val directory = VfsUtil.createDirectories(
+                project.basePath + File.separator + selectedModuleName + File.separator + File.separator + Paths.get(
+                    "src",
+                    "main",
+                    "java"
+                ) + File.separator + directoryPath
+            )
+            psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
+        }
 
-
-
-        val packageName = mavenModel!!.groupId.value + "." +  project.name.toLowerCase() + ".events"
-        val directoryPath = packageName.replace(".", "/")
-        val directory = VfsUtil.createDirectories(project.basePath + "/src/main/java/" + directoryPath)
-        val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
 
         val fileTemplateManager = FileTemplateManager.getInstance(project)
         val properties = fileTemplateManager.defaultProperties
@@ -116,8 +140,12 @@ class ConsumeEventAction : DumbAwareAction(){
             return
         }
 
-        val events = ClassInheritorsSearch.search(eventClass!!, GlobalSearchScope.allScope(e.project!!),
+        val events = ClassInheritorsSearch.search(eventClass, GlobalSearchScope.allScope(e.project!!),
             true, true, true)
+
+//        val descendantsSearchScope = GlobalSearchScope.moduleWithDependenciesScope(e.getData(LangDataKeys.MODULE)!!)
+//        val events = ClassInheritorsSearch.search(eventClass!!, descendantsSearchScope,
+//            true, true, true)
 
         if( !events.any()) {
             e.presentation.isVisible = false
