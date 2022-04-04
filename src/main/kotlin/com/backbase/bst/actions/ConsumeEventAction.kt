@@ -19,6 +19,7 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ClassInheritorsSearch
 import org.jetbrains.idea.maven.dom.MavenDomUtil
+import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 import java.io.File
 import java.nio.file.Paths
@@ -131,33 +132,13 @@ class ConsumeEventAction : DumbAwareAction() {
 
     override fun update(e: AnActionEvent) {
 
-        val file = MavenTools.findPomXml(e.dataContext)
+        val projectPomFile = MavenTools.findPomXml(e.dataContext)
 
-        if (file == null) {
-            e.presentation.isVisible = false
-            return
-        }
+        val project = MavenActionUtil.getProject(e.dataContext)
 
-        val eventClass = JavaPsiFacade.getInstance(e.project!!).findClass(
-            "com.backbase.buildingblocks.persistence.model.Event",
-            GlobalSearchScope.allScope(e.project!!)
-        )
+        val boatPluginId = MavenId("com.backbase.codegen", "jsonschema-events-maven-plugin", "")
 
-        if (eventClass == null) {
-            e.presentation.isVisible = false
-            return
-        }
-
-        val events = ClassInheritorsSearch.search(
-            eventClass, GlobalSearchScope.allScope(e.project!!),
-            true, true, true
-        )
-
-//        val descendantsSearchScope = GlobalSearchScope.moduleWithDependenciesScope(e.getData(LangDataKeys.MODULE)!!)
-//        val events = ClassInheritorsSearch.search(eventClass!!, descendantsSearchScope,
-//            true, true, true)
-
-        if (!events.any()) {
+        if(!MavenTools.findPluginOnBom(project!!, projectPomFile!!, boatPluginId)){
             e.presentation.isVisible = false
             return
         }
