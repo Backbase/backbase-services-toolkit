@@ -132,13 +132,13 @@ class ConsumeEventAction : DumbAwareAction() {
 
     override fun update(e: AnActionEvent) {
 
-        val projectPomFile = MavenTools.findPomXml(e.dataContext)
+        val file = MavenTools.findPomXml(e.dataContext)
 
         val project = MavenActionUtil.getProject(e.dataContext)
 
-        val boatPluginId = MavenId("com.backbase.codegen", "jsonschema-events-maven-plugin", "")
+        val eventArtifact = MavenId("com.backbase.buildingblocks", "events", "")
 
-        if(!MavenTools.findPluginOnBom(project!!, projectPomFile!!, boatPluginId)){
+        if(!MavenTools.findDependencyOnBom(project!!, file!!, eventArtifact)){
             e.presentation.isVisible = false
             return
         }
