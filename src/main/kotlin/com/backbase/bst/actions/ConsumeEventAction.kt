@@ -2,6 +2,7 @@ package com.backbase.bst.actions
 
 import com.backbase.bst.common.FileTools
 import com.backbase.bst.common.MavenTools
+import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
@@ -79,7 +80,7 @@ class ConsumeEventAction : DumbAwareAction() {
         val packageName: String
         if (project.name == selectedModuleName) {
             //Single project
-            packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase().replace("-", "") + ".events"
+            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.toLowerCase() + ".events")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
@@ -91,8 +92,7 @@ class ConsumeEventAction : DumbAwareAction() {
             psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
         } else {
             //Multimodule project
-            packageName =
-                mavenModel!!.groupId.value + "." + selectedModuleName.toLowerCase().replace("-", "") + ".events"
+            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + selectedModuleName.toLowerCase() + ".events")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + selectedModuleName + File.separator + File.separator + Paths.get(

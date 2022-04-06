@@ -3,6 +3,7 @@ package com.backbase.bst.actions.openapi
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.FileTools
 import com.backbase.bst.common.MavenTools
+import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
@@ -190,7 +191,7 @@ class GenerateClientAction : DumbAwareAction() {
         val psiDirectory: PsiDirectory
         if (project.name == module.name) {
             //Single project
-            val packageName = mavenModel!!.groupId.value + "." + project.name.toLowerCase().replace("-", "") + ".config"
+            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.toLowerCase() + ".config")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
@@ -202,7 +203,7 @@ class GenerateClientAction : DumbAwareAction() {
             psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
         } else {
             //Multimodule project
-            val packageName = mavenModel!!.groupId.value + "." + module.name.toLowerCase().replace("-", "") + ".config"
+            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + module.name.toLowerCase() + ".config")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + module.name + File.separator + File.separator + Paths.get(
