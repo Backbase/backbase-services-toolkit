@@ -43,7 +43,7 @@ object SsdkUtils {
         val elements = packageName.trim().replace("-".toRegex(), "").split("\\W+".toRegex()).toTypedArray()
         val sb = StringBuilder()
         for (element in elements) {
-            var el = element.replaceFirst("^[0-9]+(?!$)".toRegex(), "")
+            val el = element.replaceFirst("^[0-9]+(?!$)".toRegex(), "")
             if (!el.matches("[0-9]+".toRegex()) && sb.isNotEmpty()) {
                 sb.append(".")
             }
