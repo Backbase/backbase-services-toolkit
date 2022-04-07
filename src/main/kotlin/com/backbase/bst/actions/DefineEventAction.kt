@@ -2,6 +2,7 @@ package com.backbase.bst.actions
 
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.MavenTools
+import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.actions.CreateFileAction.MkDirs
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.fileTemplates.FileTemplate
@@ -179,7 +180,7 @@ class DefineEventAction : DumbAwareAction(){
         configuration.ensureTagExists()
 
 
-        val packageName =  project.name.toLowerCase()
+        val packageName =  SsdkUtils.cleanPackageName(project.name.toLowerCase())
         addElement(configuration, "inputFile", "\${project.basedir}/src/main/resources/events")
         addElement(configuration, "outputFile", "\${project.build.directory}/generated-sources/events")
         addElement(configuration, "basePackageName", "\${project.groupId}")
