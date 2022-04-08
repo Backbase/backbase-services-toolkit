@@ -3,6 +3,7 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+- Events file generation and consume event bugs fix.
 
 ## [0.0.3]
 ### Update
