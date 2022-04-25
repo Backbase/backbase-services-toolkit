@@ -3,7 +3,6 @@ package com.backbase.bst.wizard
 import com.backbase.bst.BackbaseBundle
 import com.backbase.bst.common.BackbaseIcons
 import com.backbase.bst.common.BackbaseSSDKModuleType
-import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.util.projectWizard.ModuleBuilder
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.SettingsStep
