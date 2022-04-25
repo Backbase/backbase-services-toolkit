@@ -18,7 +18,7 @@ class ExtensionProjectStep(
     private var groupId: String = "com.backbase"
     private var artifactId: String = "example-extension"
     private var version: String = "1.0.0-SNAPSHOT"
-    private var ssdkVersion: String = ""
+    private var ssdkVersion: String = "14.1.0"
 
     private val panel: DialogPanel = panel {
 
@@ -42,10 +42,7 @@ class ExtensionProjectStep(
         row(separated = true) {
             label("Extension Version")
                 .comment("Backbase service extension starter parent version ")
-            comboBox(
-                DefaultComboBoxModel(SsdkUtils.listVersionsSsdk().toTypedArray()),
-                ::ssdkVersion
-            )
+            textField(::ssdkVersion)
 
         }
     }

@@ -3,6 +3,9 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+### Update
+- Change selection of SSDK from dropdown to textbox
+- Minor fixes
 
 ## [0.0.4]
 ### Update

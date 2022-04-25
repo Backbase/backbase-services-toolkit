@@ -10,7 +10,8 @@
     <description><![CDATA[ Description will be added by gradle build]]></description>
     <actions>
         <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb-horizontal16.svg">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="WeighingNewGroup"/>
         </group>
 
         <action id="actions.SearchGithubAction" class="com.backbase.bst.actions.SearchGoldenSamplesAction" text="Search Golden Samples"

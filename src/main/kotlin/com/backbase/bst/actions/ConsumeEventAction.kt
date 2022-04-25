@@ -138,7 +138,7 @@ class ConsumeEventAction : DumbAwareAction() {
 
         val eventArtifact = MavenId("com.backbase.buildingblocks", "events", "")
 
-        if(file != null && project !=null  && !MavenTools.findDependencyOnBom(project, file, eventArtifact)){
+        if(file == null || project ==null  || !MavenTools.findDependencyOnBom(project, file, eventArtifact)){
             e.presentation.isVisible = false
             return
         }

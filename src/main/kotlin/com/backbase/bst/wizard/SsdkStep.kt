@@ -11,13 +11,12 @@ class ProjectId {
     var artifactId=""
     var groupId="com.backbase"
     var version="1.0.0"
-    var ssdkVersion=""
+    var ssdkVersion="14.1.0"
 }
 
 class SsdkStep(
     private val backbaseModuleWizard: BackbaseProjectWizard,
-    private val projectId: ProjectId = ProjectId(),
-    private val ssdkVersions : List<String>) : ModuleWizardStep() {
+    private val projectId: ProjectId = ProjectId()) : ModuleWizardStep() {
 
     private val panel: DialogPanel = panel {
 
@@ -42,8 +41,7 @@ class SsdkStep(
         row {
             cell(isFullWidth = true) {
                 label("SSDK Version")
-                comboBox(DefaultComboBoxModel(ssdkVersions.toTypedArray()),
-                    projectId::ssdkVersion)
+                textField(projectId::ssdkVersion)
             }
         }
     }

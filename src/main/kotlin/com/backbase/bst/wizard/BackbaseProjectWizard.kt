@@ -40,7 +40,7 @@ class BackbaseProjectWizard : ModuleBuilder(){
     override fun createWizardSteps(wizardContext: WizardContext, modulesProvider: ModulesProvider): Array<ModuleWizardStep> {
 
         return arrayOf(
-            SsdkStep(this, ProjectId(), SsdkUtils.listVersionsSsdk())
+            SsdkStep(this, ProjectId())
         )
     }
 
