@@ -4,7 +4,6 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
 import org.jetbrains.idea.maven.model.MavenId
-import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 
 class ProjectId {
