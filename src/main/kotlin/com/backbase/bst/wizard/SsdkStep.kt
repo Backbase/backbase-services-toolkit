@@ -42,7 +42,8 @@ class SsdkStep(
         row {
             cell(isFullWidth = true) {
                 label("SSDK Version")
-                comboBox(DefaultComboBoxModel(ssdkVersions.toTypedArray()),
+                comboBox(
+                    DefaultComboBoxModel(ssdkVersions.toTypedArray()),
                     projectId::ssdkVersion)
             }
         }
