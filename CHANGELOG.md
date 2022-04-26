@@ -3,6 +3,8 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+
+## [0.0.5]
 ### Update
 - Minor fixes
 
