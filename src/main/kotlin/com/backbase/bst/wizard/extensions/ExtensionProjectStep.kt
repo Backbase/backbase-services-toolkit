@@ -1,10 +1,12 @@
 package com.backbase.bst.wizard.extensions
 
+import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
 import org.jetbrains.idea.maven.model.MavenId
+import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 
 
@@ -16,7 +18,7 @@ class ExtensionProjectStep(
     private var groupId: String = "com.backbase"
     private var artifactId: String = "example-extension"
     private var version: String = "1.0.0-SNAPSHOT"
-    private var ssdkVersion: String = "14.1.0"
+    private var ssdkVersion: String = ""
 
     private val panel: DialogPanel = panel {
 
@@ -40,7 +42,10 @@ class ExtensionProjectStep(
         row(separated = true) {
             label("Extension Version")
                 .comment("Backbase service extension starter parent version ")
-            textField(::ssdkVersion)
+            comboBox(
+                DefaultComboBoxModel(SsdkUtils.listVersionsSsdk().toTypedArray()),
+                ::ssdkVersion
+            )
 
         }
     }

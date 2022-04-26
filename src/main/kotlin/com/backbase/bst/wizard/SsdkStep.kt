@@ -4,18 +4,20 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.layout.panel
 import org.jetbrains.idea.maven.model.MavenId
+import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 
 class ProjectId {
     var artifactId=""
     var groupId="com.backbase"
     var version="1.0.0"
-    var ssdkVersion="14.1.0"
+    var ssdkVersion=""
 }
 
 class SsdkStep(
     private val backbaseModuleWizard: BackbaseProjectWizard,
-    private val projectId: ProjectId = ProjectId()) : ModuleWizardStep() {
+    private val projectId: ProjectId = ProjectId(),
+    private val ssdkVersions : List<String>) : ModuleWizardStep() {
 
     private val panel: DialogPanel = panel {
 
@@ -40,7 +42,9 @@ class SsdkStep(
         row {
             cell(isFullWidth = true) {
                 label("SSDK Version")
-                textField(projectId::ssdkVersion)
+                comboBox(
+                    DefaultComboBoxModel(ssdkVersions.toTypedArray()),
+                    projectId::ssdkVersion)
             }
         }
     }

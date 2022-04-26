@@ -8,6 +8,10 @@ object SsdkUtils {
 
     private const val defaultPackageName = "com.backbase.demo"
 
+    fun listVersionsSsdk(): List<String> {
+        return listOf("14.1.0", "14.0.0", "13.4.0", "13.3.1", "13.3.0", "13.2.2", "13.2.1", "13.2.0")
+    }
+
     /**
      * Taken from spring initializer
      * https://github.com/spring-io/initializr/blob/main/initializr-metadata/src/main/java/io/spring/initializr/metadata/InitializrConfiguration.java#L109
