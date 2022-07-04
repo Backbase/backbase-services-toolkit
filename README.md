@@ -1,5 +1,7 @@
 # backbase-services-toolkit
 
+[Vision](VISION.md)
+
 ![Build](https://github.com/Backbase/backbase-services-toolkit/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
@@ -41,3 +43,16 @@ With this plugin you can:
 Plugin based on the [IntelliJ Platform Plugin Template][template].
 
 [template]: https://github.com/JetBrains/intellij-platform-plugin-template
+
+## Documentation
+* Documentation for the plugin is [here](https://github.com/Backbase/intellij-docs) which is published [here](http://engineering.backbase.com/intellij-docs/)
+* Plugin is publeshed in [IntelliJ marketplace](https://plugins.jetbrains.com/plugin/18745-backbase-services-toolkit)
+
+### Support
+
+* Slack channel: [#s-backbase-services-toolkit](https://backbase.slack.com/archives/C037FUQMXF0)
+* Email: [developer-enablement-backend-foundation@backbase.com](mailto:developer-enablement-backend-foundation@backbase.com)
+
+### Contribution Guide
+
+[CONTRIBUTING.md](CONTRIBUTING.md)
