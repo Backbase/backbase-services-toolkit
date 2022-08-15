@@ -22,11 +22,11 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
     fun testCreateProject() {
         val myProjectId = MavenId(GROUP_ID,project.name,VERSION)
-        var ssdkMavenId : MavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
+        val ssdkMavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
         val builder = BackbaseMavenModuleBuilder(myProjectId, ssdkMavenId)
         val root: VirtualFile? = createAndGetContentEntry()
 
-        builder.configure(project, root!!, false);
+        builder.configure(project, root!!, false)
 
         val pom = root.findChild("pom.xml")
 
@@ -39,7 +39,7 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
        val applicationJavaFile = root.findChild("src")!!.findChild("main")!!
             .findChild("java")!!
             .findChild("com")!!.findChild("backbase")!!
-            .findChild(project.name.toLowerCase())!!.findChild("Application.java")!!
+            .findChild(project.name.lowercase())!!.findChild("Application.java")!!
 
         TestCase.assertNotNull(applicationJavaFile)
     }

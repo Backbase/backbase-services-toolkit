@@ -24,6 +24,12 @@
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
         </action>
 
+        <action id="actions.ConsumeEventActionFunctionalStyle" class="com.backbase.bst.actions.ConsumeEventFunctionalStyleAction" text="Consume a Message"
+            description="Consume events using a functional style" icon="/icons/0756-download.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
+        </action>
+
+
         <action class="com.backbase.bst.actions.AddPersistenceSupportAction" id="actions.AddPersistenceSupportAction" description="Add persistence support to Backbase project"
             text="Add Persistence Support" icon="/icons/0095-database-add.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
@@ -69,7 +75,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Backbase notification group" displayType="BALLOON"/>
 
-        <defaultLiveTemplates file="/liveTemplates/emitevent.xml"/>
+        <defaultLiveTemplates file="/liveTemplates/backbase.xml"/>
 
         <moduleBuilder builderClass="com.backbase.bst.wizard.BackbaseProjectWizard"
             id="BACKBASE_STEP"

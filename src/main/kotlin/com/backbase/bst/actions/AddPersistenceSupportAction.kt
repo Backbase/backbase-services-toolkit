@@ -57,7 +57,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
 
         if(persistenceDialog.addApplicationClassPersistenceSupport){
             JavaTools.addAnnotationToJavaClass(e.project!!,
-                "com.backbase." + project.name.toLowerCase() + ".Application",
+                "com.backbase." + project.name.lowercase()+ ".Application",
                 title,
                 listOf(
                     "org.springframework.data.jpa.repository.config.EnableJpaRepositories",

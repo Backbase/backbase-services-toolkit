@@ -61,19 +61,26 @@ class BackbaseMavenModuleBuilder(private val myProjectId: MavenId, private val m
             VfsUtil.createDirectories(root.path + "/src/test/java")
 
             //Create java main file
-            val projectName = project.name.toLowerCase().replace("-", "")
+            val projectName = project.name.lowercase().replace("-", "")
             val packageName = myProjectId.groupId + "." + projectName
             val directoryPath = packageName.replace(".", "/")
             val directory = VfsUtil.createDirectories(root.path + "/src/main/java/" + directoryPath)
-
+            val directoryTest = VfsUtil.createDirectories(root.path + "/src/test/java/" + directoryPath)
             WriteCommandAction.runWriteCommandAction(project) {
 
-                val templateChangeLogPersistence = FileTemplateManager.getInstance(project).getTemplate("application")
+                val templateMainApplicationClass = FileTemplateManager.getInstance(project).getTemplate("application")
+                val templateController = FileTemplateManager.getInstance(project).getTemplate("exampleController")
+                val templateMessage = FileTemplateManager.getInstance(project).getTemplate("message")
+                val templateControllerTest = FileTemplateManager.getInstance(project).getTemplate("exampleControllerIT")
                 val psiDirectory = PsiManager.getInstance(project).findDirectory(directory)
+                val psiDirectoryTest = PsiManager.getInstance(project).findDirectory(directoryTest)
                 val fileTemplateManager = FileTemplateManager.getInstance(project)
                 val properties = fileTemplateManager.defaultProperties
                 properties.setProperty("PACKAGE_NAME", packageName)
-                createFileFromTemplate("Application", templateChangeLogPersistence, psiDirectory!!, properties)
+                createFileFromTemplate("Application", templateMainApplicationClass, psiDirectory!!, properties)
+                createFileFromTemplate("ExampleController", templateController, psiDirectory, properties)
+                createFileFromTemplate("Message", templateMessage, psiDirectory, properties)
+                createFileFromTemplate("ExampleControllerIT", templateControllerTest, psiDirectoryTest!!, properties)
 
                 addApplicationYaml(project, projectName, root)
             }

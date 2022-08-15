@@ -2,7 +2,6 @@ package com.backbase.bst.actions.openapi
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertSame
 
 
 class SpecUtilsTest{
