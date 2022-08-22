@@ -95,7 +95,7 @@ object SpecUtils {
         println(serviceNameWithoutService)
         properties.setProperty(
             SpecConstants.CLIENT_SERVICE_NAME_UPPERCASE,
-            serviceName.replace("-".toRegex(), "_").lowercase()
+            serviceName.replace("-".toRegex(), "_").uppercase()
         )
         properties.setProperty(SpecConstants.CLIENT_SERVICE_NAME_LOWERCASE, serviceName.lowercase())
         properties.setProperty(
