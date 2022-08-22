@@ -6,4 +6,10 @@
       <option name="JAVA_CODE" value="true" />
     </context>
   </template>
+  <template name="consumer" value="@org.springframework.context.annotation.Bean&#10;public java.util.function.Consumer&lt;org.springframework.messaging.Message&lt;$EVENT_CLASS$&gt;&gt; processEvent() {&#10;        return e -&gt; System.out.println(&quot;message:&quot; +  e.getPayload());&#10;}" description="create a consumer" toReformat="true" toShortenFQNames="true" useStaticImport="true">
+    <variable name="EVENT_CLASS" expression="subtypes(&quot;com.backbase.buildingblocks.persistence.model.Event&quot;)" defaultValue="Object" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_CODE" value="true" />
+    </context>
+  </template>
 </templateSet>

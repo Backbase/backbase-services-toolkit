@@ -20,7 +20,7 @@ public class ${BEHAVIOUR_NAME_CAMELCASE}Endpoints {
     public static final String CUSTOM_POST_HOOK_END_POINT = "direct:postHook";
 
     // The actual endpoint method for the custom exchange.
-    // It do not necessarily need to be here, and could be defined in another component, as long as they're annotated and
+    // It does not necessarily need to be here, and could be defined in another component, as long as they're annotated and
     // configured appropriately. Also, it does not have to be just one exchange.
 
     @Consume(uri = CUSTOM_ENDPOINT)

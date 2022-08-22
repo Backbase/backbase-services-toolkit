@@ -95,12 +95,12 @@ object SpecUtils {
         println(serviceNameWithoutService)
         properties.setProperty(
             SpecConstants.CLIENT_SERVICE_NAME_UPPERCASE,
-            serviceName.replace("-".toRegex(), "_").toUpperCase()
+            serviceName.replace("-".toRegex(), "_").uppercase()
         )
-        properties.setProperty(SpecConstants.CLIENT_SERVICE_NAME_LOWERCASE, serviceName.toLowerCase())
+        properties.setProperty(SpecConstants.CLIENT_SERVICE_NAME_LOWERCASE, serviceName.lowercase())
         properties.setProperty(
             SpecConstants.CLIENT_API_PACKAGE_TRIM_LAST_DOT,
-            apiPackage.substring(0, apiPackage.lastIndexOf(".")).toLowerCase()
+            apiPackage.substring(0, apiPackage.lastIndexOf(".")).lowercase()
         )
         properties.setProperty(
             SpecConstants.CLIENT_SERVICE_NAME_CAMELCASE,
@@ -115,7 +115,7 @@ object SpecUtils {
         )
         properties.setProperty(
             SpecConstants.CLIENT_SERVICE_NAME_SINGLE_WORD_WITHOUT_SERVICE_LOWERCASE,
-            serviceNameWithoutService.replace("-".toRegex(), "").toLowerCase()
+            serviceNameWithoutService.replace("-".toRegex(), "").lowercase()
         )
 
         return properties

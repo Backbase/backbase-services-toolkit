@@ -80,7 +80,7 @@ class ConsumeEventAction : DumbAwareAction() {
         val packageName: String
         if (project.name == selectedModuleName) {
             //Single project
-            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.toLowerCase() + ".events")
+            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.lowercase() + ".events")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
@@ -92,7 +92,7 @@ class ConsumeEventAction : DumbAwareAction() {
             psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
         } else {
             //Multimodule project
-            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + selectedModuleName.toLowerCase() + ".events")
+            packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + selectedModuleName.lowercase() + ".events")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + selectedModuleName + File.separator + File.separator + Paths.get(

@@ -25,7 +25,7 @@ class MavenToolsTest : BasePlatformTestCase()  {
 
         WriteCommandAction.runWriteCommandAction(project) {
             MavenTools.writeDependenciesOnPom(
-                project, virtualFile!!, dataContext,
+                project, virtualFile, dataContext,
                 listOf(
                     MavenId("com.backbase", "test", "1.0.0")
                 )

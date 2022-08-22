@@ -191,7 +191,7 @@ class GenerateClientAction : DumbAwareAction() {
         val psiDirectory: PsiDirectory
         if (project.name == module.name) {
             //Single project
-            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.toLowerCase() + ".config")
+            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + project.name.lowercase() + ".config")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + Paths.get(
@@ -203,7 +203,7 @@ class GenerateClientAction : DumbAwareAction() {
             psiDirectory = PsiManager.getInstance(project).findDirectory(directory)!!
         } else {
             //Multimodule project
-            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + module.name.toLowerCase() + ".config")
+            val packageName = SsdkUtils.cleanPackageName(mavenModel!!.groupId.value + "." + module.name.lowercase() + ".config")
             directoryPath = packageName.replace(".", File.separator)
             val directory = VfsUtil.createDirectories(
                 project.basePath + File.separator + module.name + File.separator + File.separator + Paths.get(

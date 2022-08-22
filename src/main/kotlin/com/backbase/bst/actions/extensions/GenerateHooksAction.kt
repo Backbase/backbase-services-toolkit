@@ -90,7 +90,7 @@ class GenerateHooksAction : DumbAwareAction() {
             BehaviourExtensionsConstants.PACKAGE_NAME,
             apiPackage
         )
-        properties.setProperty(BehaviourExtensionsConstants.BEHAVIOUR_NAME, serviceNameWithBehaviour.toLowerCase())
+        properties.setProperty(BehaviourExtensionsConstants.BEHAVIOUR_NAME, serviceNameWithBehaviour.lowercase())
         properties.setProperty(
             BehaviourExtensionsConstants.BEHAVIOUR_NAME_CAMELCASE,
             CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, serviceNameWithBehaviour.replace("-", "_"))
