@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import com.backbase.buildingblocks.test.http.TestRestTemplateConfiguration;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class ExampleControllerIT {
 
         MvcResult result =
             mvc.perform(get("/message")
-                .header("Authorization", TestRestTemplateConfiguration.TEST_SERVICE_TOKEN))
+                .header(AUTHORIZATION, TestRestTemplateConfiguration.TEST_SERVICE_TOKEN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
