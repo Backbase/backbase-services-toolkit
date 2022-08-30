@@ -3,7 +3,6 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
-## [0.0.7]
 ### Update
 - Add and remove new SSDK supported versions
 - Support only Intellij version from 2021
