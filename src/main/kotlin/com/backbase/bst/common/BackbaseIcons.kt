@@ -4,5 +4,5 @@ import com.intellij.openapi.util.IconLoader
 
 object BackbaseIcons {
 
-    var BACKBASE_PROJECT_LOGO = IconLoader.getIcon("/icons/bb-horizontal16.svg", BackbaseIcons::class.java)
+    var BACKBASE_PROJECT_LOGO = IconLoader.getIcon("/icons/bb_new_logo.svg", BackbaseIcons::class.java)
 }

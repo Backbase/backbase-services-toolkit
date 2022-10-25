@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 ### Update
+- New logo
+- Supported SSDK version
+
+## [0.0.7]
+### Update
 - Add and remove new SSDK supported versions
 - Support only Intellij version from 2021
 ### Added
