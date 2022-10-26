@@ -3,6 +3,8 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+
+## [0.0.8]
 ### Update
 - New logo
 - Supported SSDK version
@@ -11,6 +13,7 @@
 ### Update
 - Add and remove new SSDK supported versions
 - Support only Intellij version from 2021
+
 ### Added
 - Consume Messages Action
 - Add default ExampleController and Integration Test in new Backbase Projects.
