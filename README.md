@@ -10,7 +10,7 @@
 <!-- Plugin description -->
 This IntelliJ Platform Plugin is going to help you to create and maintain your own Backbase backend services.  
 
-It would make it easier for you to follow [Community Backbase Documentation](https://community.backbase.com/) with simple Intellij options.
+It would make it easier for you to follow [Community Backbase Documentation](https://backbase.io/) with simple Intellij options.
 
 Note: An approved account is required to access the Community. Please sign up with your business email address.
 

@@ -9,18 +9,18 @@
     <depends>com.intellij.java</depends>
     <description><![CDATA[ Description will be added by gradle build]]></description>
     <actions>
-        <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb-horizontal16.svg">
+        <group id="ProjectViewPopupBackbaseMenu" text="Backbase" popup="true" icon="/icons/bb_new_logo.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
                           relative-to-action="WeighingNewGroup"/>
         </group>
 
         <action id="actions.SearchGithubAction" class="com.backbase.bst.actions.SearchGoldenSamplesAction" text="Search Golden Samples"
-            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb-horizontal16.svg">
+            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb_new_logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
         </action>
 
         <action id="actions.EmitEventAction" class="com.backbase.bst.actions.EmitEventAction" text="Emit an Event"
-            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb-horizontal16.svg">
+            description="Search code snippets on Backbase Golden Samples repositories" icon="/icons/bb_new_logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
         </action>
 
