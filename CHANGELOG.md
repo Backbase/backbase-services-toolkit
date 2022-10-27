@@ -3,6 +3,8 @@
 # backbase-services-toolkit Changelog
 
 ## [Unreleased]
+### Update
+- Plugin marketplace icon
 
 ## [0.0.8]
 ### Update
