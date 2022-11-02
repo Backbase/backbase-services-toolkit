@@ -19,6 +19,15 @@ metadata:
     - url: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/release.yml'
       title: Github Action - Release
       icon: cloud
+    - url: 'http://engineering.backbase.com/intellij-docs/'
+      title: Documentation
+      icon: dashboard
+    - url: 'https://github.com/Backbase/intellij-docs'
+      title: Documentation Repo
+      icon: dashboard
+    - url: 'https://plugins.jetbrains.com/plugin/18745-backbase-services-toolkit'
+      title: Jetbrains Marketplace
+      icon: dashboard
 spec:
   type: tool
   lifecycle: experimental
