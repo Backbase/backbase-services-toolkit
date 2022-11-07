@@ -30,6 +30,6 @@ metadata:
       title: Jetbrains Marketplace
       icon: dashboard
 spec:
-  type: tool
+  type: internal
   lifecycle: experimental
   owner: de/backend-foundation
