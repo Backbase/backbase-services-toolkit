@@ -1,13 +1,12 @@
+# nonk8s
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: backbase-services-toolkit
   description: An IntelliJ Plugin to help you to create and maintain your own Backbase backend services. It would make it easier for you to follow Community Backbase Documentation.
   annotations:
-    backbase/public: "false"
-    backbase/build-job-link: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/build.yml'
-    backbase/release-job-link: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/release.yml'
-    backbase/slack-channel-name: 'backend-foundation-team'
+    jira/project-key: BEFOUND
+    slack/conversation-id: C037FUQMXF0
   tags:
     - intellij
     - ssdk
@@ -15,10 +14,22 @@ metadata:
     - url: 'https://github.com/Backbase/backbase-services-toolkit/releases'
       title: Releases
       icon: dashboard
-    - url: 'https://backbase.slack.com/archives/C037FUQMXF0'
-      title: Support
-      icon: help
+    - url: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/build.yml'
+      title: Github Action - Build
+      icon: cloud
+    - url: 'https://github.com/Backbase/backbase-services-toolkit/actions/workflows/release.yml'
+      title: Github Action - Release
+      icon: cloud
+    - url: 'http://engineering.backbase.com/intellij-docs/'
+      title: Documentation
+      icon: dashboard
+    - url: 'https://github.com/Backbase/intellij-docs'
+      title: Documentation Repo
+      icon: dashboard
+    - url: 'https://plugins.jetbrains.com/plugin/18745-backbase-services-toolkit'
+      title: Jetbrains Marketplace
+      icon: dashboard
 spec:
   type: tool
-  lifecycle: beta
-  owner: 'backend-foundation'
+  lifecycle: experimental
+  owner: de/backend-foundation
