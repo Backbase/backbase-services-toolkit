@@ -14,7 +14,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
-import org.jetbrains.idea.maven.server.MavenServerManager
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 import kotlin.collections.HashMap
 
@@ -107,10 +106,8 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
         e: AnActionEvent,
         libraries: HashMap<String, Library>
     ) {
-        if (!MavenServerManager.getInstance().isUseMaven2) {
 
-            actionEventDependencies(project, file, e.dataContext, libraries)
-        }
+        actionEventDependencies(project, file, e.dataContext, libraries)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
         mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 

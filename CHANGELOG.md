@@ -5,6 +5,7 @@
 ## [Unreleased]
 ### Update
 - Supported SSDK version
+- Gradle and Java update
 - Supported Intellij version
 
 ## [0.0.9]
