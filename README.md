@@ -16,13 +16,13 @@ Note: An approved account is required to access the Community. Please sign up wi
 
 With this plugin you can:
 
-- [Create Backbase Backend Services](http://engineering.backbase.com/intellij-docs/#create-a-new-backbase-project)
-- [Add SSDK modules](http://engineering.backbase.com/intellij-docs/#add-ssdk-module)
-- [Adding Persistence support to your Backbase Service](http://engineering.backbase.com/intellij-docs/#add-persistence-support)
-- [Define, consume and emit events](http://engineering.backbase.com/intellij-docs/#events-support)
-- [Quick access to Golden samples](http://engineering.backbase.com/intellij-docs/#search-golden-samples)
-- [Generate Client and Server APIs from Openapi Specs](http://engineering.backbase.com/intellij-docs/#open-api-support)
-- [Create new behaviour extension project and generate new extension hooks](http://engineering.backbase.com/intellij-docs/#create-a-new-behaviour-extension-project)
+- [Create Backbase Backend Services](https://engineering.backbase.com/intellij-docs/#create-a-new-backbase-project)
+- [Add SSDK modules](https://engineering.backbase.com/intellij-docs/#add-ssdk-module)
+- [Adding Persistence support to your Backbase Service](https://engineering.backbase.com/intellij-docs/#add-persistence-support)
+- [Define, consume and emit events](https://engineering.backbase.com/intellij-docs/#events-support)
+- [Quick access to Golden samples](https://engineering.backbase.com/intellij-docs/#search-golden-samples)
+- [Generate Client and Server APIs from Openapi Specs](https://engineering.backbase.com/intellij-docs/#open-api-support)
+- [Create new behaviour extension project and generate new extension hooks](https://engineering.backbase.com/intellij-docs/#create-a-new-behaviour-extension-project)
 
 <!-- Plugin description end -->
 

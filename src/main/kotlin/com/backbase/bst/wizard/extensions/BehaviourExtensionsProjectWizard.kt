@@ -30,7 +30,7 @@ class BehaviourExtensionsProjectWizard : ModuleBuilder() {
 
     var serviceGroupId = ""
     var serviceArtifactId = ""
-    var bbVersion = "2022.02"
+    var bbVersion = "2023.02-LTS"
     var groupId: String = ""
     var artifactId: String = ""
     var version: String = "1.0.0-SNAPSHOT"

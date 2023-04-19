@@ -19,7 +19,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
-import org.jetbrains.idea.maven.server.MavenServerManager
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 class AddPersistenceSupportAction : DumbAwareAction(){
@@ -41,9 +40,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
         if(persistenceDialog.addPomDependencies) {
             val file: VirtualFile = MavenTools.findPomXml(e.dataContext) ?: return
 
-            if (!MavenServerManager.getInstance().isUseMaven2) {
-                actionAddPersistenceDependencies(project, file, e.dataContext)
-            }
+            actionAddPersistenceDependencies(project, file, e.dataContext)
             val mavenProjectManager = MavenProjectsManager.getInstance(project)
             mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 

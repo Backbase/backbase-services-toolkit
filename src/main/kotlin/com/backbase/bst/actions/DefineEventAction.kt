@@ -33,7 +33,6 @@ import org.jetbrains.idea.maven.dom.model.MavenDomPlugin
 import org.jetbrains.idea.maven.dom.model.MavenDomPlugins
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
-import org.jetbrains.idea.maven.server.MavenServerManager
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
 
 class DefineEventAction : DumbAwareAction(){
@@ -84,10 +83,8 @@ class DefineEventAction : DumbAwareAction(){
         file: VirtualFile,
         e: AnActionEvent
     ) {
-        if (!MavenServerManager.getInstance().isUseMaven2) {
 
-            actionEventDependencies(project, file, e.dataContext)
-        }
+        actionEventDependencies(project, file, e.dataContext)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
         mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 
@@ -99,10 +96,8 @@ class DefineEventAction : DumbAwareAction(){
         file: VirtualFile,
         e: AnActionEvent
     ) {
-        if (!MavenServerManager.getInstance().isUseMaven2) {
 
-            actionEventPlugin(project, file, e.dataContext)
-        }
+        actionEventPlugin(project, file, e.dataContext)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
         mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
 

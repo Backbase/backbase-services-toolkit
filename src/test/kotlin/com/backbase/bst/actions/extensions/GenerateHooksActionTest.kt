@@ -1,8 +1,9 @@
 package com.backbase.bst.actions.extensions
 
 import com.backbase.bst.common.extensions.BehaviourExtensionsConstants
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
+
 
 class GenerateHooksActionTest {
 

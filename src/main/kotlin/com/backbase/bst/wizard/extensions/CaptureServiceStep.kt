@@ -12,7 +12,7 @@ class CaptureServiceStep(
 
     private var serviceGroupId: String = ""
     private var serviceArtifactId: String = ""
-    private var bbVersion: String = "2022.02"
+    private var bbVersion: String = "2023.02-LTS"
 
     private val panel: DialogPanel = panel {
 
