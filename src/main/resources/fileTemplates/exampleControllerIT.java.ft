@@ -35,7 +35,7 @@ public class ExampleControllerIT {
 
         MvcResult result =
             mvc.perform(get("/message")
-                .header(AUTHORIZATION, TestRestTemplateConfiguration.TEST_SERVICE_TOKEN))
+                .header(AUTHORIZATION, TestRestTemplateConfiguration.TEST_SERVICE_BEARER))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))

@@ -29,7 +29,7 @@ class BackbaseProjectWizard : ModuleBuilder(){
 
     var myProjectId: MavenId? = null
 
-    var ssdkMavenId : MavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "13.3.1")
+    var ssdkMavenId : MavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "15.2.3")
 
     override fun getNodeIcon(): Icon = BackbaseIcons.BACKBASE_PROJECT_LOGO
 
