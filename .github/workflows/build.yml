@@ -47,7 +47,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: zulu
-          java-version: 11
+          java-version: 17
           cache: gradle
 
       # Set environment variables
@@ -81,6 +81,13 @@ jobs:
         with:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
+
+      # Free GitHub Actions Environment Disk Space
+      - name: Maximize Build Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          large-packages: false
 
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache

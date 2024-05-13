@@ -4,6 +4,9 @@
 
 ## Unreleased
 
+### Update
+- Supported SSDK 17.0.0 
+
 ### Update 
 - Supported SSDK 16.0.1
 - Fix broken ExampleControllerIT.java 
