@@ -7,13 +7,13 @@
 ## 0.0.12
 
 ### Update
-- Supported SSDK 17.0.0 
+- Supported SSDK 17.0.0
 
 ## 0.0.11
 
-### Update 
+### Update
 - Supported SSDK 16.0.1
-- Fix broken ExampleControllerIT.java 
+- Fix broken ExampleControllerIT.java
 
 ## 0.0.10 - 2023-04-20
 
