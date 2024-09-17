@@ -84,7 +84,7 @@ class BackbaseExtensionProjectBuilder(
         MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         // execute when current dialog is closed (e.g. Project Structure)
-        MavenUtil.invokeLater(project, ModalityState.NON_MODAL) {
+        MavenUtil.invokeLater(project) {
 
 
         }
