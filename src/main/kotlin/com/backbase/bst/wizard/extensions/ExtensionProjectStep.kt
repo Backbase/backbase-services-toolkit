@@ -4,9 +4,9 @@ import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.bindText
+import com.intellij.ui.dsl.builder.panel
 import org.jetbrains.idea.maven.model.MavenId
-import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
 
 
@@ -22,31 +22,17 @@ class ExtensionProjectStep(
 
     private val panel: DialogPanel = panel {
 
-        row(separated = true) {
-            label("GroupId")
-                .comment("The groupId of the generated Maven project")
-            textField(::groupId)
+        row{
+            textField().bindText(::groupId).label("GroupId").comment("The groupId of the generated Maven project")
         }
-        row(separated = true) {
-            label("ArtifactId")
-                .comment("The artifactId of the generated Maven project")
-            textField(::artifactId)
-
+        row {
+            textField().bindText(::artifactId).label("ArtifactId").comment("The artifactId of the generated Maven project")
         }
-        row(separated = true) {
-            label("Version")
-                .comment("The version number of the generated Maven project")
-            textField(::version)
-
+        row {
+            textField().bindText(::version).label("Version").comment("The version number of the generated Maven project")
         }
-        row(separated = true) {
-            label("Extension Version")
-                .comment("Backbase service extension starter parent version ")
-            comboBox(
-                DefaultComboBoxModel(SsdkUtils.listVersionsSsdk().toTypedArray()),
-                ::ssdkVersion
-            )
-
+        row {
+            comboBox(SsdkUtils.listVersionsSsdk())// TODO
         }
     }
 

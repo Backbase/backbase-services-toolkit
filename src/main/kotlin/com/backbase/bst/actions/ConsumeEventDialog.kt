@@ -5,7 +5,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBList
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.panel
+
 import com.intellij.util.ui.JBUI
 import java.awt.Color
 import javax.swing.DefaultComboBoxModel
@@ -35,9 +36,9 @@ class ConsumeEventDialog(project : Project, events : List<String>) : DialogWrapp
             row {
                 label(BackbaseBundle.message("action.add.consume.event.dialog.select.event"))
             }
-            row {
+            /*row {// TODO
                 jbTable().focused()
-            }
+            }*/
         }
 
         return mainPanel

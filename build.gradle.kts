@@ -33,9 +33,9 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-    //compileOnly("org.apache.maven:maven-artifact:3.9.6")
+    compileOnly("org.apache.maven:maven-artifact:3.9.6")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    //testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     intellijPlatform {
 
         // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -119,8 +119,8 @@ changelog {
     repositoryUrl = providers.gradleProperty("pluginRepositoryUrl") //NA
 
 }
-
-/*// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
+/*//TODO to check the purpose
+// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
 qodana {
     cachePath.set(projectDir.resolve(".qodana").canonicalPath)
     reportPath.set(projectDir.resolve("build/reports/inspections").canonicalPath)
@@ -128,9 +128,9 @@ qodana {
     showReport.set(System.getenv("QODANA_SHOW_REPORT")?.toBoolean() ?: false)
 }*/
 
-// Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+// Set the JVM language level used to build the project. Use Java 17 for 2022.2+ and Java 21 for 2024.2+ .
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 tasks {
@@ -175,6 +175,7 @@ intellijPlatformTesting {
                         "-Dide.mac.message.dialogs.as.sheets=false",
                         "-Djb.privacy.policy.text=<!--999.999-->",
                         "-Djb.consents.confirmation.enabled=false",
+                        "-Didea.kotlin.plugin.use.k2=true",
                     )
                 }
             }
@@ -185,3 +186,5 @@ intellijPlatformTesting {
         }
     }
 }
+
+

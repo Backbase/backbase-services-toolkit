@@ -6,7 +6,10 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBScrollPane
-import com.intellij.ui.layout.*
+import com.intellij.ui.dsl.builder.RightGap
+import com.intellij.ui.dsl.builder.bindSelected
+import com.intellij.ui.dsl.builder.panel
+
 import java.awt.Rectangle
 import java.awt.event.MouseEvent
 import java.awt.event.MouseMotionAdapter
@@ -14,9 +17,10 @@ import java.awt.event.MouseMotionListener
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map<String, Library>) : DialogWrapper(project, true) {
+class AddAnyServiceSSDKModuleDialog(project: Project, private val modules: Map<String, Library>) :
+    DialogWrapper(project, true) {
 
-    private var  mainPanel : DialogPanel? = null
+    private var mainPanel: DialogPanel? = null
 
 
     init {
@@ -26,25 +30,19 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
 
     override fun createCenterPanel(): JComponent {
         val keyByPairs = modules.keys.chunked(1)
-        mainPanel = panel{
+        mainPanel = panel {
+            keyByPairs.forEach { pair ->
+                val element1 = modules[pair[0]]
 
-
-                keyByPairs.forEach {
-
-                    val element1 = modules[it[0]]
-                    row  {
-
-                        cell {
-                            checkBox(it[0], element1!!::selected)
-                                .comment(element1.description, 100, false)
-                                .withLeftGap()
-
-                        }
-
+                element1?.let { module ->
+                    row {
+                        checkBox(pair[0]).bindSelected(module::selected) // Creates a checkbox with the label from pair[0] and binds it to `module.selected`
+                            .comment(module.description) // Adds a comment (description)
+                            .gap(RightGap.SMALL) // Use the latest gap management, replace `.withLeftGap()` with `.gap()`
                     }
                 }
             }
-
+        }
 
         mainPanel!!.autoscrolls = true
 
@@ -61,8 +59,6 @@ class AddAnyServiceSSDKModuleDialog(project : Project, private val modules : Map
 
         return JBScrollPane(mainPanel)
     }
-
-
 
 
     override fun doOKAction() {
