@@ -54,7 +54,7 @@ class GenerateServerApiAction : DumbAwareAction() {
 
         val dialog = GenerateServerApiDialog(project, selectedSpecFile)
         dialog.show()
-        if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (dialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

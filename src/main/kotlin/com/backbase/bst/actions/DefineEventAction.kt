@@ -21,6 +21,7 @@ import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.GotItMessage
+
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
@@ -46,7 +47,7 @@ class DefineEventAction : DumbAwareAction(){
         val persistenceDialog = DefineEventDialog(project)
         persistenceDialog.show()
 
-        if (persistenceDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (persistenceDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

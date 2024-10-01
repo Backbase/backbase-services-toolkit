@@ -15,7 +15,6 @@ import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
-import kotlin.collections.HashMap
 
 class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
 
@@ -56,7 +55,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
         val modulesDialog = AddAnyServiceSSDKModuleDialog(project, libraries)
         modulesDialog.show()
 
-        if (modulesDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (modulesDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

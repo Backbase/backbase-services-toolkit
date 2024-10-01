@@ -52,7 +52,7 @@ class ConsumeEventAction : DumbAwareAction() {
 
         consumeEventDialog.show()
 
-        if (consumeEventDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (consumeEventDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

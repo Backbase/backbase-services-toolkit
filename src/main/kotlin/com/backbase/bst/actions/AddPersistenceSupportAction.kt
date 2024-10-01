@@ -32,7 +32,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
         val persistenceDialog = PersistenceDialog(project)
         persistenceDialog.show()
 
-        if (persistenceDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (persistenceDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

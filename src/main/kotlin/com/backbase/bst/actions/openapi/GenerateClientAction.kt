@@ -55,7 +55,7 @@ class GenerateClientAction : DumbAwareAction() {
         val selectedModule = e.getData(LangDataKeys.MODULE) // If a multimodule project
         val dialog = GenerateClientDialog(project, SpecUtils.getFileName(e))
         dialog.show()
-        if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (dialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

@@ -32,7 +32,7 @@ class ExtensionProjectStep(
             textField().bindText(::version).label("Version").comment("The version number of the generated Maven project")
         }
         row {
-            comboBox(SsdkUtils.listVersionsSsdk())// TODO
+            comboBox(SsdkUtils.listVersionsSsdk()).label("Extension Version").comment("Backbase service extension starter parent version ")// TODO
         }
     }
 

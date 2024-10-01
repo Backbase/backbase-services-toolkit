@@ -36,8 +36,10 @@ class CaptureServiceStep(
             textField().bindText(::bbVersion)
 
         }
-        //TODO noteRow("Check <a href=\"https://community.backbase.com/\">Community</a> for service details")
-    }
+        row {
+            comment("Check <a href=\\\"https://community.backbase.com/\\\">Community</a> for service details")
+        }
+      }
 
     override fun getComponent(): JComponent {
         return panel

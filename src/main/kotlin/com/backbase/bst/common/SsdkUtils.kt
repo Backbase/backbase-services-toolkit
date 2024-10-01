@@ -9,7 +9,7 @@ object SsdkUtils {
     private const val defaultPackageName = "com.backbase.demo"
 
     fun listVersionsSsdk(): List<String> {
-        return listOf("17.0.0","16.1.6","16.1.0")
+        return listOf("18.0.1","17.0.0","16.1.6","16.1.0")
     }
 
     /**

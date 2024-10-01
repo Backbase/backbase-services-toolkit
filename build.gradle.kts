@@ -1,6 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -10,9 +11,9 @@ plugins {
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.9.24"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij.platform") version "2.0.1"
+    id("org.jetbrains.intellij.platform") version "2.1.0"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.0.0"
+    id("org.jetbrains.changelog") version "2.2.0"
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "2023.3.2"
 }
@@ -34,8 +35,21 @@ repositories {
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     compileOnly("org.apache.maven:maven-artifact:3.9.6")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    val junitVersion = "5.10.2"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.vintage:junit-vintage-engine:$junitVersion")
+
+    /*testCompileOnly("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testCompileOnly("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testCompileOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testCompileOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")*/
     intellijPlatform {
 
         // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -54,6 +68,8 @@ dependencies {
         zipSigner()
         testFramework(TestFrameworkType.Platform)
     }
+
+
 }
 
 intellijPlatform {
@@ -75,7 +91,7 @@ intellijPlatform {
         }
 
         val changelog = project.changelog // local variable for configuration cache compatibility
-        // Get the latest available change notes from the changelog file
+        // Get the latest available change notes from the changelog file // TODO check the implementation with history
         changeNotes = providers.gradleProperty("pluginVersion").map { pluginVersion ->
             with(changelog) {
                 renderItem(
@@ -105,6 +121,17 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
+        /*failureLevel.set(
+            listOf(
+                VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
+                VerifyPluginTask.FailureLevel.INTERNAL_API_USAGES,
+                VerifyPluginTask.FailureLevel.NON_EXTENDABLE_API_USAGES,
+                VerifyPluginTask.FailureLevel.OVERRIDE_ONLY_API_USAGES,
+                VerifyPluginTask.FailureLevel.MISSING_DEPENDENCIES,
+                VerifyPluginTask.FailureLevel.INVALID_PLUGIN
+            )
+        )*/
+
         ides {
             recommended()
         }
@@ -128,14 +155,19 @@ qodana {
     showReport.set(System.getenv("QODANA_SHOW_REPORT")?.toBoolean() ?: false)
 }*/
 
+
 // Set the JVM language level used to build the project. Use Java 17 for 2022.2+ and Java 21 for 2024.2+ .
 kotlin {
     jvmToolchain(21)
+
 }
 
 tasks {
     test {
         useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
     }
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
