@@ -3,6 +3,7 @@ package com.backbase.bst.wizard
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.ui.dsl.builder.bindItem
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
 import org.jetbrains.idea.maven.model.MavenId
@@ -36,8 +37,9 @@ class SsdkStep(
         }
         // Row for SSDK Version ComboBox
         row("SSDK Version:") {
-            comboBox(DefaultComboBoxModel(ssdkVersions.toTypedArray()))
-            //.bindSelectedItemIn(projectId::ssdkVersion)
+            comboBox(DefaultComboBoxModel(ssdkVersions.toTypedArray())).bindItem(
+                projectId::ssdkVersion,
+                { selectedOption -> projectId.ssdkVersion = selectedOption!! })
         }
 
     }
