@@ -103,7 +103,7 @@ jobs:
       # Collect Plugin Verifier Result
       - name: Collect Plugin Verifier Result
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/build/reports/pluginVerifier
@@ -129,7 +129,7 @@ jobs:
 
       # Store already-built plugin as an artifact for downloading
       - name: Upload artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: ${{ steps.artifact.outputs.filename }}.zip
           path: ./build/distributions/
@@ -157,7 +157,7 @@ jobs:
             | xargs -I '{}' gh api -X DELETE repos/{owner}/{repo}/releases/{}
 
       - name: Download build-output artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.4.0
         with:
           name: ${{ needs.build.outputs.filename }}.zip
           path: ${{ github.workspace }}/build/distributions/
