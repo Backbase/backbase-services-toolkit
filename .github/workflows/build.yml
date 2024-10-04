@@ -47,7 +47,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: zulu
-          java-version: 17
+          java-version: 21
           cache: gradle
 
       # Set environment variables
@@ -157,7 +157,7 @@ jobs:
             | xargs -I '{}' gh api -X DELETE repos/{owner}/{repo}/releases/{}
 
       - name: Download build-output artifact
-        uses: actions/download-artifact@v4.4.0
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.filename }}.zip
           path: ${{ github.workspace }}/build/distributions/
