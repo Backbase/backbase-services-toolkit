@@ -8,7 +8,6 @@ import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.actions.CreateFromTemplateActionBase
 import com.intellij.ide.util.EditorHelper
 import com.intellij.ide.util.PropertiesComponent
-import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
@@ -95,7 +94,7 @@ class BackbaseMavenModuleBuilder(private val myProjectId: MavenId, private val m
         MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         // execute when current dialog is closed (e.g. Project Structure)
-        MavenUtil.invokeLater(project, ModalityState.NON_MODAL) {
+        MavenUtil.invokeLater(project) {
             if (!pom.isValid) {
                showError(project, RuntimeException("Project is not valid"))
                 return@invokeLater

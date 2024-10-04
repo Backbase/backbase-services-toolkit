@@ -1,7 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
+
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -41,15 +41,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.vintage:junit-vintage-engine:$junitVersion")
 
-    /*testCompileOnly("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testCompileOnly("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-    testCompileOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testCompileOnly("org.junit.platform:junit-platform-launcher")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")*/
     intellijPlatform {
 
         // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
@@ -169,6 +160,7 @@ tasks {
             events("passed", "skipped", "failed")
         }
     }
+
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }

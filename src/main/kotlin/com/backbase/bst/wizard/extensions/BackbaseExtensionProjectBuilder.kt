@@ -1,7 +1,6 @@
 package com.backbase.bst.wizard.extensions
 
 import com.backbase.bst.BackbaseBundle
-import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
@@ -83,7 +82,7 @@ class BackbaseExtensionProjectBuilder(
         MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         // execute when current dialog is closed (e.g. Project Structure)
-        MavenUtil.invokeLater(project, ModalityState.NON_MODAL) {
+        MavenUtil.invokeLater(project) {
 
 
         }

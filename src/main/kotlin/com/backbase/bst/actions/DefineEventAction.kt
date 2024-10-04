@@ -66,7 +66,7 @@ class DefineEventAction : DumbAwareAction(){
 
         val pluginId = MavenId("com.backbase.codegen", "jsonschema-events-maven-plugin", "")
         if(!MavenTools.findPluginOnBom(project, file, pluginId)) {
-            addingMavenPlugin(project, file, e)
+            addingMavenPlugin(project, file)
             Notification("Backbase notification group", "Define an Event", "Adding plugin jsonschema-events-maven-plugin on pom.xml",
                 NotificationType.INFORMATION).notify(project)
         }
@@ -84,25 +84,19 @@ class DefineEventAction : DumbAwareAction(){
         file: VirtualFile,
         e: AnActionEvent
     ) {
-
         actionEventDependencies(project, file, e.dataContext)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun addingMavenPlugin(
         project: @Nullable Project,
-        file: VirtualFile,
-        e: AnActionEvent
+        file: VirtualFile
     ) {
 
-        actionEventPlugin(project, file, e.dataContext)
+        actionEventPlugin(project, file)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun actionEventDependencies(project: Project, file: VirtualFile, dataContext: DataContext) {
@@ -116,11 +110,9 @@ class DefineEventAction : DumbAwareAction(){
         }
     }
 
-    private fun actionEventPlugin(project: Project, file: VirtualFile, dataContext: DataContext) {
+    private fun actionEventPlugin(project: Project, file: VirtualFile) {
         val mavenModel = MavenDomUtil
             .getMavenDomProjectModel(project, file)
-
-
         WriteCommandAction.runWriteCommandAction(project) {
             createDomPlugin(mavenModel!!.build.plugins, project)
 

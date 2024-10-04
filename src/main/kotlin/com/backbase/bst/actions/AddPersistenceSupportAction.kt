@@ -8,6 +8,7 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -42,10 +43,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
 
             actionAddPersistenceDependencies(project, file, e.dataContext)
             val mavenProjectManager = MavenProjectsManager.getInstance(project)
-            mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-            mavenProjectManager.waitForPostImportTasksCompletion()
-
+            mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
         }
 
         if(persistenceDialog.addLiquibaseFile){
@@ -125,6 +123,10 @@ class AddPersistenceSupportAction : DumbAwareAction(){
             e.presentation.isVisible = false
             return
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 
 

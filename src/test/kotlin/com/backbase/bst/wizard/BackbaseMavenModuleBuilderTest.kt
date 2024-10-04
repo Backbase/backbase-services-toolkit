@@ -22,7 +22,7 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
     fun testCreateProject() {
         val myProjectId = MavenId(GROUP_ID,project.name,VERSION)
-        val ssdkMavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "12.3.0")
+        val ssdkMavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "17.0.0")
         val builder = BackbaseMavenModuleBuilder(myProjectId, ssdkMavenId)
         val root: VirtualFile? = createAndGetContentEntry()
 
@@ -54,7 +54,7 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
         rootTag.assertArtifact(project.name, GROUP_ID, VERSION)
 
         rootTag.findFirstSubTag("parent")!!
-            .assertArtifact("service-sdk-starter-core", "com.backbase.buildingblocks", "12.3.0")
+            .assertArtifact("service-sdk-starter-core", "com.backbase.buildingblocks", "17.0.0")
 
         rootTag.findFirstSubTag("dependencies")!!.findFirstSubTag("dependency")!!
             .assertArtifact("service-sdk-starter-test", "com.backbase.buildingblocks", null, "test")

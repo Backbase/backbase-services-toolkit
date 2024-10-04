@@ -72,7 +72,7 @@ class GenerateClientAction : DumbAwareAction() {
             WriteCommandAction.runWriteCommandAction(project) {
                 createDomPlugin(
                     MavenDomUtil
-                        .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins, project, dialog
+                        .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins, dialog
                 )
 
             }
@@ -101,16 +101,15 @@ class GenerateClientAction : DumbAwareAction() {
             }
 
             WriteCommandAction.runWriteCommandAction(project) {
-                createPluginExecution(plugin!!, project, dialog)
+                createPluginExecution(plugin!!, dialog)
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         if (dialog.addRestClientConfiguration) {
             addRestClientConfigClass(selectedModule, project, "restClientConfiguration", dialog)
+
             val gotIt = GotItMessage.createMessage(
                 BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
                 BackbaseBundle.message("action.add.openapi.client.gotit.message")
@@ -124,19 +123,18 @@ class GenerateClientAction : DumbAwareAction() {
 
     }
 
-    private fun createDomPlugin(plugins: MavenDomPlugins?, project: Project, dialog: GenerateClientDialog): MavenDomPlugin {
+    private fun createDomPlugin(plugins: MavenDomPlugins?, dialog: GenerateClientDialog): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "com.backbase.oss"
         plugin.artifactId.stringValue = "boat-maven-plugin"
 
-        createPluginExecution(plugin, project, dialog)
+        createPluginExecution(plugin, dialog)
 
         return plugin
     }
 
     private fun createPluginExecution(
         plugin: MavenDomPlugin,
-        project: Project,
         dialog: GenerateClientDialog
     ): MavenDomPlugin {
 
