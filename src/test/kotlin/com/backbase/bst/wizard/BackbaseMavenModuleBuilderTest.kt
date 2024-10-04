@@ -12,16 +12,17 @@ import com.intellij.util.PsiErrorElementUtil
 import junit.framework.TestCase
 import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.model.MavenId
+import org.junit.Ignore
 import java.io.File
 
-
+@Ignore
 internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
     private val GROUP_ID = "com.backbase"
     private val VERSION= "1.0.1"
 
 
-    /*fun testCreateProject() { //TODO test failed
+    fun testCreateProject() { //TODO test failed
         val myProjectId = MavenId(GROUP_ID,project.name,VERSION)
         val ssdkMavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "17.0.0")
         val builder = BackbaseMavenModuleBuilder(myProjectId, ssdkMavenId)
@@ -43,7 +44,7 @@ internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
             .findChild(project.name.lowercase())!!.findChild("Application.java")!!
 
         TestCase.assertNotNull(applicationJavaFile)
-    }*/
+    }
 
     private fun assertPom(psiPom: @Nullable PsiFile?) {
         val xmlFile = assertInstanceOf(psiPom, XmlFile::class.java)
