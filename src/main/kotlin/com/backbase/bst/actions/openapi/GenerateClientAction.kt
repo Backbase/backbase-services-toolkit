@@ -105,7 +105,7 @@ class GenerateClientAction : DumbAwareAction() {
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         if (dialog.addRestClientConfiguration) {
             addRestClientConfigClass(selectedModule, project, "restClientConfiguration", dialog)

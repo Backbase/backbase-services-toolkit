@@ -86,7 +86,7 @@ class DefineEventAction : DumbAwareAction(){
     ) {
         actionEventDependencies(project, file, e.dataContext)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun addingMavenPlugin(
@@ -96,7 +96,7 @@ class DefineEventAction : DumbAwareAction(){
 
         actionEventPlugin(project, file)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun actionEventDependencies(project: Project, file: VirtualFile, dataContext: DataContext) {
