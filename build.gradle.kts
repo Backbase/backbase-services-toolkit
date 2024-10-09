@@ -9,17 +9,25 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.9.24"
+    id("org.jetbrains.kotlin.jvm") version "1.9.25"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij.platform") version "2.1.0"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.2.0"
+    id("org.jetbrains.changelog") version "2.2.1"
     // Gradle Qodana Plugin
-    id("org.jetbrains.qodana") version "2023.3.2"
+    id("org.jetbrains.qodana") version "2024.2.3"
+    // Kover
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
+
+// Set the JVM language level used to build the project. Use Java 17 for 2022.2+ and Java 21 for 2024.2+ .
+kotlin {
+    jvmToolchain(17)
+
+}
 
 // Configure project's dependencies
 repositories {
@@ -34,7 +42,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-    compileOnly("org.apache.maven:maven-artifact:3.9.6")
+
     val junitVersion = "5.10.2"
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
@@ -47,7 +55,7 @@ dependencies {
 
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
 
-       // create(IntelliJPlatformType.IntellijIdeaUltimate, providers.gradleProperty("platformVersion"))
+        // create(IntelliJPlatformType.IntellijIdeaUltimate, providers.gradleProperty("platformVersion"))
         // Plugin Dependencies. Uses `platformBundledPlugins` property from the gradle.properties file for bundled IntelliJ Platform plugins.
         bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
 
@@ -59,10 +67,9 @@ dependencies {
         zipSigner()
         testFramework(TestFrameworkType.Platform)
     }
-
-
 }
 
+// Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
 intellijPlatform {
 
     pluginConfiguration {
@@ -82,7 +89,7 @@ intellijPlatform {
         }
 
         val changelog = project.changelog // local variable for configuration cache compatibility
-        // Get the latest available change notes from the changelog file // TODO check the implementation with history
+        // Get the latest available change notes from the changelog file
         changeNotes = providers.gradleProperty("pluginVersion").map { pluginVersion ->
             with(changelog) {
                 renderItem(
@@ -109,20 +116,10 @@ intellijPlatform {
         // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
-        channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
+        channels = providers.gradleProperty("pluginVersion")
+            .map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
-        /*failureLevel.set(
-            listOf(
-                VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
-                VerifyPluginTask.FailureLevel.INTERNAL_API_USAGES,
-                VerifyPluginTask.FailureLevel.NON_EXTENDABLE_API_USAGES,
-                VerifyPluginTask.FailureLevel.OVERRIDE_ONLY_API_USAGES,
-                VerifyPluginTask.FailureLevel.MISSING_DEPENDENCIES,
-                VerifyPluginTask.FailureLevel.INVALID_PLUGIN
-            )
-        )*/
-
         ides {
             recommended()
         }
@@ -137,55 +134,31 @@ changelog {
     repositoryUrl = providers.gradleProperty("pluginRepositoryUrl") //NA
 
 }
-/*//TODO to check the purpose
-// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
-qodana {
-    cachePath.set(projectDir.resolve(".qodana").canonicalPath)
-    reportPath.set(projectDir.resolve("build/reports/inspections").canonicalPath)
-    saveReport.set(true)
-    showReport.set(System.getenv("QODANA_SHOW_REPORT")?.toBoolean() ?: false)
-}*/
 
-
-// Set the JVM language level used to build the project. Use Java 17 for 2022.2+ and Java 21 for 2024.2+ .
-kotlin {
-    jvmToolchain(21)
-
+// Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
+// (Kover is a set of solutions for collecting test coverage of Kotlin code compiled for JVM and Android platforms. )
+kover {
+    reports {
+        total {
+            xml {
+                onCheck = true
+            }
+        }
+    }
+    currentProject {
+        instrumentation {
+            excludedClasses.add("org.apache.velocity.*")
+        }
+    }
 }
 
 tasks {
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events("passed", "skipped", "failed")
-        }
-    }
-
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
 
     publishPlugin {
         dependsOn(patchChangelog)
-    }
-}
-
-
-tasks.register("incrementVersion") {
-    intellijPlatform {
-        fun generateVersion(version: String): String {
-            val (oldMajor, oldMinor, oldPatch) = version.split(".").map(String::toInt)
-            val (newMajor, newMinor, newPatch) = arrayOf(oldMajor, oldMinor, oldPatch + 1)
-            return "$newMajor.$newMinor.$newPatch"
-        }
-        doLast {
-            val version = properties("pluginVersion")
-            val newVersion = generateVersion(version)
-            println(newVersion)
-            exec {
-                commandLine("sh", "incrementVersion.sh", newVersion)
-            }
-        }
     }
 }
 
@@ -198,8 +171,7 @@ intellijPlatformTesting {
                         "-Drobot-server.port=8082",
                         "-Dide.mac.message.dialogs.as.sheets=false",
                         "-Djb.privacy.policy.text=<!--999.999-->",
-                        "-Djb.consents.confirmation.enabled=false",
-                        "-Didea.kotlin.plugin.use.k2=true",
+                        "-Djb.consents.confirmation.enabled=false"
                     )
                 }
             }

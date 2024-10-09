@@ -1,1 +1,0 @@
-sed -i "/pluginVersion =/ s/=.*/= $1/" gradle.properties

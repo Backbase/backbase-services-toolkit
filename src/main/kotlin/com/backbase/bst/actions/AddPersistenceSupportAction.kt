@@ -43,7 +43,7 @@ class AddPersistenceSupportAction : DumbAwareAction(){
 
             actionAddPersistenceDependencies(project, file, e.dataContext)
             val mavenProjectManager = MavenProjectsManager.getInstance(project)
-            mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
+            mavenProjectManager.forceUpdateProjects()
         }
 
         if(persistenceDialog.addLiquibaseFile){

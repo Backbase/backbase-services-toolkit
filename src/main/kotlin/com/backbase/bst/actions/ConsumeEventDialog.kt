@@ -34,12 +34,9 @@ class ConsumeEventDialog(project : Project, events : List<String>) : DialogWrapp
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = panel {
-            row {
-                label(BackbaseBundle.message("action.add.consume.event.dialog.select.event"))
+            row(BackbaseBundle.message("action.add.consume.event.dialog.select.event")) {
+                cell(jbTable).focused() // Add JBList to the panel
             }
-            /*row {// TODO
-                jbTable().focused()
-            }*/
         }
 
         return mainPanel

@@ -106,8 +106,7 @@ class GenerateServerApiAction : DumbAwareAction() {
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
-
+        mavenProjectManager.forceUpdateProjects()
 
     }
 

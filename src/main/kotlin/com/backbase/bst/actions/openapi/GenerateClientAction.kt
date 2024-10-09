@@ -72,7 +72,7 @@ class GenerateClientAction : DumbAwareAction() {
             WriteCommandAction.runWriteCommandAction(project) {
                 createDomPlugin(
                     MavenDomUtil
-                        .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins, dialog
+                        .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins, project, dialog
                 )
 
             }
@@ -101,11 +101,11 @@ class GenerateClientAction : DumbAwareAction() {
             }
 
             WriteCommandAction.runWriteCommandAction(project) {
-                createPluginExecution(plugin!!, dialog)
+                createPluginExecution(plugin!!, project, dialog)
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
+        mavenProjectManager.forceUpdateProjects()
 
         if (dialog.addRestClientConfiguration) {
             addRestClientConfigClass(selectedModule, project, "restClientConfiguration", dialog)
@@ -123,18 +123,19 @@ class GenerateClientAction : DumbAwareAction() {
 
     }
 
-    private fun createDomPlugin(plugins: MavenDomPlugins?, dialog: GenerateClientDialog): MavenDomPlugin {
+    private fun createDomPlugin(plugins: MavenDomPlugins?, project: Project, dialog: GenerateClientDialog): MavenDomPlugin {
         val plugin = plugins!!.addPlugin()
         plugin!!.groupId.stringValue = "com.backbase.oss"
         plugin.artifactId.stringValue = "boat-maven-plugin"
 
-        createPluginExecution(plugin, dialog)
+        createPluginExecution(plugin, project, dialog)
 
         return plugin
     }
 
     private fun createPluginExecution(
         plugin: MavenDomPlugin,
+        project: Project,
         dialog: GenerateClientDialog
     ): MavenDomPlugin {
 
