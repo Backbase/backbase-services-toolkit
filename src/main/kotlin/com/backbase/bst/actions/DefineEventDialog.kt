@@ -37,11 +37,9 @@ class DefineEventDialog(project: Project) : DialogWrapper(project, true) {
     }
 
     override fun doValidate(): ValidationInfo? {
-        if (textField!!.component.text == "") {
+        if (textField?.component?.text == "") {
             return ValidationInfo("Event Name cannot be empty")
         }
-
-
         return null
     }
 

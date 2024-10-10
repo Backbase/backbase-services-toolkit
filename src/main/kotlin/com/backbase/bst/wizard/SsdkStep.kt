@@ -3,9 +3,7 @@ package com.backbase.bst.wizard
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.dsl.builder.bindItem
-import com.intellij.ui.dsl.builder.bindText
-import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.builder.*
 import org.jetbrains.idea.maven.model.MavenId
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JComponent
@@ -26,17 +24,17 @@ class SsdkStep(
 
     private val panel: DialogPanel = panel {
 
-        row("ArtifactId ") {
-            textField().bindText(projectId::artifactId)
+        row("   ArtifactId ") {
+            textField().align(Align.FILL).bindText(projectId::artifactId)
         }
-        row("GroupId ") {
-            textField().bindText(projectId::groupId)
+        row("   GroupId ") {
+            textField().align(Align.FILL).bindText(projectId::groupId)
         }
-        row("Version ") {
-            textField().bindText(projectId::version)
+        row("   Version ") {
+            textField().align(Align.FILL).bindText(projectId::version)
         }
         // Row for SSDK Version ComboBox
-        row("SSDK Version:") {
+        row("   SSDK Version ") {
             comboBox(DefaultComboBoxModel(ssdkVersions.toTypedArray())).bindItem(
                 projectId::ssdkVersion,
                 { selectedOption -> projectId.ssdkVersion = selectedOption!! })

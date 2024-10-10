@@ -24,20 +24,19 @@ class ExtensionProjectStep(
 
     private val panel: DialogPanel = panel {
 
-        row {
-            textField().bindText(::groupId).label("GroupId").comment("The groupId of the generated Maven project")
+        row ("  GroupId "){
+            textField().bindText(::groupId).comment("The groupId of the generated Maven project")
         }
-        row {
-            textField().bindText(::artifactId).label("ArtifactId")
+        row ("  ArtifactId "){
+            textField().bindText(::artifactId)
                 .comment("The artifactId of the generated Maven project")
         }
-        row {
-            textField().bindText(::version).label("Version")
+        row ("  Version "){
+            textField().bindText(::version)
                 .comment("The version number of the generated Maven project")
         }
-        row {
+        row ("  Extension Version "){
             comboBox(DefaultComboBoxModel(SsdkUtils.listVersionsSsdk().toTypedArray()))
-                .label("Extension Version")
                 .comment("Backbase service extension starter parent version ")
                 .bindItem(::ssdkVersion,
                     { selectedOption -> ssdkVersion = selectedOption!! })
