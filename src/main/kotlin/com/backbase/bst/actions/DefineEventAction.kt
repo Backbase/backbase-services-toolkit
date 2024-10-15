@@ -22,7 +22,6 @@ import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.GotItMessage
-import com.intellij.ui.GotItTooltip
 
 import com.intellij.ui.awt.RelativePoint
 
