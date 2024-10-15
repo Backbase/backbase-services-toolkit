@@ -6,9 +6,9 @@
 
 ## 1.0.0
 
-- Intellij service plugin update
+- Intellij service plugin 2.x update
 - Fix deprecated usage and scheduled for removal
-- Supported SSDK 18.0.1
+- Supported SSDK 18.0.1,17.1.0 (Latest 2 release lines)
 
 ## 0.0.12
 
