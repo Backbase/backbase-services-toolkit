@@ -1,6 +1,7 @@
 package com.backbase.bst.actions
 
 import com.intellij.ide.BrowserUtil
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
@@ -29,5 +30,9 @@ class SearchGoldenSamplesAction  : DumbAwareAction() {
         if (selectedText == null || selectedText.isEmpty()) {
             e.presentation.isVisible = false
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 }

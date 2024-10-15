@@ -2,6 +2,7 @@ package com.backbase.bst.actions
 
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.codeInsight.template.impl.TemplateSettings
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
@@ -35,5 +36,9 @@ class EmitEventAction  : DumbAwareAction() {
         }
 
 
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 }

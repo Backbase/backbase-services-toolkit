@@ -6,6 +6,7 @@ import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
@@ -142,5 +143,9 @@ class ConsumeEventAction : DumbAwareAction() {
             e.presentation.isVisible = false
             return
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 }

@@ -9,6 +9,7 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -21,8 +22,10 @@ import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.GotItMessage
+import com.intellij.ui.GotItTooltip
 
 import com.intellij.ui.awt.RelativePoint
+
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.jetbrains.annotations.NotNull
@@ -70,7 +73,7 @@ class DefineEventAction : DumbAwareAction(){
             Notification("Backbase notification group", "Define an Event", "Adding plugin jsonschema-events-maven-plugin on pom.xml",
                 NotificationType.INFORMATION).notify(project)
         }
-
+        GotItTooltip
         val gotIt = GotItMessage.createMessage(
             BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
             BackbaseBundle.message("action.add.define.event.dialog.gotit.message"))
@@ -205,5 +208,8 @@ class DefineEventAction : DumbAwareAction(){
         }
     }
 
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
 
 }
