@@ -2,6 +2,7 @@ package com.backbase.bst.wizard.extensions
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.ui.dsl.builder.Align
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
 
@@ -18,28 +19,28 @@ class CaptureServiceStep(
 
     private val panel: DialogPanel = panel {
 
-        row{
-            label("ServiceGroupId")
+        row("   ServiceGroupId ") {
+            textField().bindText(::serviceGroupId).align(Align.FILL)
                 .comment("The groupId of the service you are creating an extension for")
-            textField().bindText(::serviceGroupId)
         }
 
-        row{
-            label("ServiceArtifactId")
+        row("   ServiceArtifactId ") {
+            textField().bindText(::serviceArtifactId).align(Align.FILL)
                 .comment("The artifactId of the service you are creating an extension for")
-            textField().bindText(::serviceArtifactId)
 
         }
-        row {
-            label("BBVersion")
+        row("   BBVersion ") {
+
+            textField().bindText(::bbVersion).align(Align.FILL)
                 .comment("The version number of Backbase you want to create an extension for")
-            textField().bindText(::bbVersion)
 
         }
         row {
-            comment("Check <a href=\\\"https://community.backbase.com/\\\">Community</a> for service details")
+            comment("Check <a href=\\\"https://community.backbase.com/\\\">Community</a> for service details").align(
+                Align.CENTER
+            )
         }
-      }
+    }
 
     override fun getComponent(): JComponent {
         return panel

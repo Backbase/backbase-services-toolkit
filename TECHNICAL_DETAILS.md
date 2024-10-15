@@ -1,6 +1,6 @@
 # Technical Details
 
-There project requires Gradle 7+, Kotlin 1.7+  and Java version specified in the `gradle.properties`.
+There project requires Gradle 8+, Kotlin 1.9+  and Java 17 version specified in the `gradle.properties`.
 
 Once a pull request is merged a new version will be automatically built along with a draft release.
 

@@ -4,6 +4,7 @@ import com.backbase.bst.common.SsdkUtils
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.ui.dsl.builder.Align
 import com.intellij.ui.dsl.builder.bindItem
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
@@ -25,14 +26,14 @@ class ExtensionProjectStep(
     private val panel: DialogPanel = panel {
 
         row ("  GroupId "){
-            textField().bindText(::groupId).comment("The groupId of the generated Maven project")
+            textField().bindText(::groupId).align(Align.FILL).comment("The groupId of the generated Maven project")
         }
         row ("  ArtifactId "){
-            textField().bindText(::artifactId)
+            textField().bindText(::artifactId).align(Align.FILL)
                 .comment("The artifactId of the generated Maven project")
         }
         row ("  Version "){
-            textField().bindText(::version)
+            textField().bindText(::version).align(Align.FILL)
                 .comment("The version number of the generated Maven project")
         }
         row ("  Extension Version "){
