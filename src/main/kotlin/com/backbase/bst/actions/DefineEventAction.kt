@@ -73,7 +73,7 @@ class DefineEventAction : DumbAwareAction(){
             Notification("Backbase notification group", "Define an Event", "Adding plugin jsonschema-events-maven-plugin on pom.xml",
                 NotificationType.INFORMATION).notify(project)
         }
-        GotItTooltip
+
         val gotIt = GotItMessage.createMessage(
             BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
             BackbaseBundle.message("action.add.define.event.dialog.gotit.message"))
