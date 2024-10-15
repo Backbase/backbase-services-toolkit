@@ -44,14 +44,14 @@ jobs:
 
       # Validate wrapper
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v4
+        uses: gradle/actions/wrapper-validation@v3
 
       # Setup Java 17 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: zulu
-          java-version: 21
+          java-version: 17
           cache: gradle
 
       # Set environment variables
