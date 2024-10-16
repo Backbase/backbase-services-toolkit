@@ -16,13 +16,22 @@ import org.junit.Ignore
 import java.io.File
 
 @Ignore
+/*
+Test ignored temporarily, as it throws "com.intellij.openapi.util.TraceableDisposable$DisposalException: Editor EditorImplEditor EditorImpl[file:///private/var/folders/d8/jn_7qn4n1gv30gct2svbrcfh0000gp/T/unitTest_createProject_2nVdvm8HV6nAnqQMzPCmZAlxLcH/pom.xml] hasn't been released:
+hasn't been released:" Exception.
+It is a known issue in intellij plugin, there are multiple issues related to our issue
+https://youtrack.jetbrains.com/issue/CWM-9356/com.intellij.openapi.util.TraceableDisposableDisposalException-Editor-is-already-disposed
+https://youtrack.jetbrains.com/issue/IJPL-71075/com.intellij.openapi.util.TraceableDisposableDisposalException-Editor-EditorImplnull-hasnt-been-released-at-Down-and-Edit
+
+Some Clues: We should verify the pom file creation or availability to the Editor( com.intellij.openapi.editor.impl.EditorImpl)
+ */
 internal class BackbaseMavenModuleBuilderTest : BasePlatformTestCase() {
 
     private val GROUP_ID = "com.backbase"
     private val VERSION= "1.0.1"
 
 
-    fun testCreateProject() { //TODO test failed
+    fun testCreateProject() {
         val myProjectId = MavenId(GROUP_ID,project.name,VERSION)
         val ssdkMavenId = MavenId("com.backbase.buildingblocks", "service-sdk-starter-core", "17.0.0")
         val builder = BackbaseMavenModuleBuilder(myProjectId, ssdkMavenId)

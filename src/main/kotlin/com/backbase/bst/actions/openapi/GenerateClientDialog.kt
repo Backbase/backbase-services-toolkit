@@ -4,6 +4,7 @@ import com.backbase.bst.BackbaseBundle
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.ui.dsl.builder.Align
 import com.intellij.ui.dsl.builder.bindSelected
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
@@ -36,20 +37,20 @@ class GenerateClientDialog(project: Project, fileName: String?) : DialogWrapper(
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = panel {
-            row {
-                textField().label(BackbaseBundle.message("action.add.openapi.client.dialog.serviceName"))
+            row (BackbaseBundle.message("action.add.openapi.client.dialog.serviceName")){
+                textField().align(Align.FILL)
                     .bindText(::serviceName).focused()
             }
-            row {
-                textField().label(BackbaseBundle.message("action.add.openapi.client.dialog.inputSpec"))
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.inputSpec")) {
+                textField().align(Align.FILL)
                     .bindText(::specPath).focused()
             }
-            row {
-                textField().label(BackbaseBundle.message("action.add.openapi.client.dialog.apiPackage"))
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.apiPackage")) {
+                textField().align(Align.FILL)
                     .bindText(::apiPackage).focused()
             }
-            row {
-                textField().label(BackbaseBundle.message("action.add.openapi.client.dialog.modelPackage"))
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.modelPackage")) {
+                textField().align(Align.FILL)
                     .bindText(::modelPackage).focused()
             }
             row {

@@ -4,6 +4,7 @@ import com.backbase.bst.common.Library
 import com.backbase.bst.common.MavenTools
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.command.WriteCommandAction
@@ -131,6 +132,10 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
             }
 
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 
 }

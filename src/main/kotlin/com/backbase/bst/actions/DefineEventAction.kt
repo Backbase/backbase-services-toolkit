@@ -9,6 +9,7 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -23,6 +24,7 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.ui.GotItMessage
 
 import com.intellij.ui.awt.RelativePoint
+
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.jetbrains.annotations.NotNull
@@ -205,5 +207,8 @@ class DefineEventAction : DumbAwareAction(){
         }
     }
 
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
 
 }
