@@ -35,7 +35,7 @@ class GenerateHooksAction : DumbAwareAction() {
         val selectedModule = e.getData(LangDataKeys.MODULE) // If a multimodule project
         val dialog = GenerateHooksDialog(project)
         dialog.show()
-        if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (dialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 

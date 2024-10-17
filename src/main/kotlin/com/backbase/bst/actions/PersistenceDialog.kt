@@ -4,7 +4,9 @@ import com.backbase.bst.BackbaseBundle
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.bindSelected
+import com.intellij.ui.dsl.builder.panel
+
 import javax.swing.JComponent
 
 class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
@@ -24,16 +26,16 @@ class PersistenceDialog(project : Project) : DialogWrapper(project, true) {
 
 
     override fun createCenterPanel(): JComponent? {
-        mainPanel = panel {
+        mainPanel = panel{
             row {
-                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.pom"),::addPomDependencies)
+                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.pom")).bindSelected(::addPomDependencies)
             }
             row {
-                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.liquibase"),::addLiquibaseFile)
+                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.liquibase")).bindSelected(::addLiquibaseFile)
             }
             row {
-                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.annotation"),::addApplicationClassPersistenceSupport)
-            }
+                checkBox(BackbaseBundle.message("action.add.persistence.support.dialog.annotation")).bindSelected(::addApplicationClassPersistenceSupport)
+               }
         }
 
         return mainPanel

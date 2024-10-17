@@ -2,7 +2,10 @@ package com.backbase.bst.wizard.extensions
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.bindText
+import com.intellij.ui.dsl.builder.panel
+
 import javax.swing.JComponent
 
 
@@ -16,25 +19,27 @@ class CaptureServiceStep(
 
     private val panel: DialogPanel = panel {
 
-        row(separated = true) {
-            label("ServiceGroupId")
+        row("   ServiceGroupId ") {
+            textField().bindText(::serviceGroupId).align(Align.FILL)
                 .comment("The groupId of the service you are creating an extension for")
-            textField(::serviceGroupId)
         }
 
-        row(separated = true) {
-            label("ServiceArtifactId")
+        row("   ServiceArtifactId ") {
+            textField().bindText(::serviceArtifactId).align(Align.FILL)
                 .comment("The artifactId of the service you are creating an extension for")
-            textField(::serviceArtifactId)
 
         }
-        row(separated = true) {
-            label("BBVersion")
+        row("   BBVersion ") {
+
+            textField().bindText(::bbVersion).align(Align.FILL)
                 .comment("The version number of Backbase you want to create an extension for")
-            textField(::bbVersion)
 
         }
-        noteRow("Check <a href=\"https://community.backbase.com/\">Community</a> for service details")
+        row {
+            comment("Check <a href=\\\"https://community.backbase.com/\\\">Community</a> for service details").align(
+                Align.CENTER
+            )
+        }
     }
 
     override fun getComponent(): JComponent {

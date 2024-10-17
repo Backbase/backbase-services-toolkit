@@ -46,7 +46,7 @@ Plugin based on the [IntelliJ Platform Plugin Template][template].
 
 ## Documentation
 * Documentation for the plugin is [here](https://github.com/Backbase/intellij-docs) which is published [here](http://engineering.backbase.com/intellij-docs/)
-* Plugin is publeshed in [IntelliJ marketplace](https://plugins.jetbrains.com/plugin/18745-backbase-services-toolkit)
+* Plugin is published in [IntelliJ marketplace](https://plugins.jetbrains.com/plugin/18745-backbase-services-toolkit)
 
 ### Support
 

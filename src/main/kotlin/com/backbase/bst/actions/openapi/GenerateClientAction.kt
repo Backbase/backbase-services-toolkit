@@ -55,7 +55,7 @@ class GenerateClientAction : DumbAwareAction() {
         val selectedModule = e.getData(LangDataKeys.MODULE) // If a multimodule project
         val dialog = GenerateClientDialog(project, SpecUtils.getFileName(e))
         dialog.show()
-        if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (dialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 
@@ -105,12 +105,11 @@ class GenerateClientAction : DumbAwareAction() {
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
         if (dialog.addRestClientConfiguration) {
             addRestClientConfigClass(selectedModule, project, "restClientConfiguration", dialog)
+
             val gotIt = GotItMessage.createMessage(
                 BackbaseBundle.message("action.add.define.event.dialog.gotit.title"),
                 BackbaseBundle.message("action.add.openapi.client.gotit.message")

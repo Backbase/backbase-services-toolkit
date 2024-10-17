@@ -4,9 +4,11 @@ import com.backbase.bst.BackbaseBundle
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.components.JBTextField
-import com.intellij.ui.layout.CellBuilder
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.bindSelected
+import com.intellij.ui.dsl.builder.bindText
+import com.intellij.ui.dsl.builder.panel
+
 import javax.swing.JComponent
 
 class GenerateClientDialog(project: Project, fileName: String?) : DialogWrapper(project, true) {
@@ -17,10 +19,6 @@ class GenerateClientDialog(project: Project, fileName: String?) : DialogWrapper(
     var modelPackage: String
 
     private var mainPanel: DialogPanel? = null
-    private var serviceNameTextField: CellBuilder<JBTextField>? = null
-    private var specPathTextField: CellBuilder<JBTextField>? = null
-    private var apiPackageTextField: CellBuilder<JBTextField>? = null
-    private var modelPackageTextField: CellBuilder<JBTextField>? = null
     var addRestClientConfiguration: Boolean = true
 
     init {
@@ -39,41 +37,24 @@ class GenerateClientDialog(project: Project, fileName: String?) : DialogWrapper(
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = panel {
-            row {
-                cell {
-                    label(BackbaseBundle.message("action.add.openapi.client.dialog.serviceName"))
-
-                    serviceNameTextField = textField(::serviceName)
-                    serviceNameTextField!!.focused()
-                }
+            row (BackbaseBundle.message("action.add.openapi.client.dialog.serviceName")){
+                textField().align(Align.FILL)
+                    .bindText(::serviceName).focused()
+            }
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.inputSpec")) {
+                textField().align(Align.FILL)
+                    .bindText(::specPath).focused()
+            }
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.apiPackage")) {
+                textField().align(Align.FILL)
+                    .bindText(::apiPackage).focused()
+            }
+            row(BackbaseBundle.message("action.add.openapi.client.dialog.modelPackage")) {
+                textField().align(Align.FILL)
+                    .bindText(::modelPackage).focused()
             }
             row {
-                cell {
-                    label(BackbaseBundle.message("action.add.openapi.client.dialog.inputSpec"))
-
-                    specPathTextField = textField(::specPath)
-                    specPathTextField!!.focused()
-                }
-            }
-            row {
-                cell {
-                    label(BackbaseBundle.message("action.add.openapi.client.dialog.apiPackage"))
-                    apiPackageTextField = textField(::apiPackage)
-                    apiPackageTextField!!.focused()
-                }
-            }
-            row {
-                cell {
-                    label(BackbaseBundle.message("action.add.openapi.client.dialog.modelPackage"))
-                    modelPackageTextField = textField(::modelPackage)
-                    modelPackageTextField!!.focused()
-                }
-            }
-            row {
-                checkBox(
-                    BackbaseBundle.message("action.add.openapi.client.dialog.generateConfig"),
-                    ::addRestClientConfiguration
-                )
+                checkBox(BackbaseBundle.message("action.add.openapi.client.dialog.generateConfig")).bindSelected(::addRestClientConfiguration)
             }
         }
 

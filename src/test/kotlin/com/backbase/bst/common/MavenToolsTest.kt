@@ -65,7 +65,7 @@ class MavenToolsTest : BasePlatformTestCase()  {
         rootTag.assertArtifact("thisisfun", "com.backbase", "1.0.0")
 
         rootTag.findFirstSubTag("parent")!!
-            .assertArtifact("service-sdk-starter-core", "com.backbase.buildingblocks", "12.3.0")
+            .assertArtifact("service-sdk-starter-core", "com.backbase.buildingblocks", "17.0.0")
 
         rootTag.findFirstSubTag("dependencies")!!.findFirstSubTag("dependency")!!
             .assertArtifact("test", "com.backbase")

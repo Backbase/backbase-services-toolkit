@@ -54,7 +54,7 @@ class GenerateServerApiAction : DumbAwareAction() {
 
         val dialog = GenerateServerApiDialog(project, selectedSpecFile)
         dialog.show()
-        if (dialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (dialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 
@@ -72,7 +72,6 @@ class GenerateServerApiAction : DumbAwareAction() {
                 createDomPlugin(
                     MavenDomUtil
                         .getMavenDomProjectModel(project, projectPomFile)!!.build.plugins,
-                    project,
                     dialog,
                     selectedSpecFile
                 )
@@ -103,19 +102,16 @@ class GenerateServerApiAction : DumbAwareAction() {
             }
 
             WriteCommandAction.runWriteCommandAction(project) {
-                createPluginExecution(plugin!!, project, dialog, selectedSpecFile)
+                createPluginExecution(plugin!!, dialog, selectedSpecFile)
             }
         }
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
 
     }
 
     private fun createDomPlugin(
         plugins: MavenDomPlugins?,
-        project: Project,
         dialog: GenerateServerApiDialog,
         selectedSpecFile: VirtualFile
     ): MavenDomPlugin {
@@ -123,14 +119,13 @@ class GenerateServerApiAction : DumbAwareAction() {
         plugin!!.groupId.stringValue = "com.backbase.oss"
         plugin.artifactId.stringValue = "boat-maven-plugin"
 
-        createPluginExecution(plugin, project, dialog, selectedSpecFile)
+        createPluginExecution(plugin, dialog, selectedSpecFile)
 
         return plugin
     }
 
     private fun createPluginExecution(
         plugin: MavenDomPlugin,
-        project: Project,
         dialog: GenerateServerApiDialog,
         selectedSpecFile: VirtualFile
     ): MavenDomPlugin {

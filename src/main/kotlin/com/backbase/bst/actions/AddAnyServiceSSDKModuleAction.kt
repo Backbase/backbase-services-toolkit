@@ -4,6 +4,7 @@ import com.backbase.bst.common.Library
 import com.backbase.bst.common.MavenTools
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.command.WriteCommandAction
@@ -15,7 +16,6 @@ import org.jetbrains.annotations.Nullable
 import org.jetbrains.idea.maven.model.MavenId
 import org.jetbrains.idea.maven.project.MavenProjectsManager
 import org.jetbrains.idea.maven.utils.actions.MavenActionUtil
-import kotlin.collections.HashMap
 
 class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
 
@@ -56,7 +56,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
         val modulesDialog = AddAnyServiceSSDKModuleDialog(project, libraries)
         modulesDialog.show()
 
-        if (modulesDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (modulesDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 
@@ -109,9 +109,7 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
 
         actionEventDependencies(project, file, e.dataContext, libraries)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun actionEventDependencies(project: Project, file: VirtualFile, dataContext: DataContext,
@@ -134,6 +132,10 @@ class AddAnyServiceSSDKModuleAction : DumbAwareAction() {
             }
 
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 
 }

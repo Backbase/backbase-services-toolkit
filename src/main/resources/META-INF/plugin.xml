@@ -51,21 +51,21 @@
 
         <action class="com.backbase.bst.actions.openapi.GenerateClientAction" id="actions.GenerateClientAction"
                 description="Generate clients from OpenAPI specs"
-                text="Generate clients from OpenAPI specs" icon="/icons/openapi_icon_132133.svg">
+                text="Generate Clients from OpenAPI Specs" icon="/icons/openapi_icon_132133.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
 
         </action>
 
         <action class="com.backbase.bst.actions.openapi.GenerateServerApiAction" id="actions.GenerateServerApiAction"
-                description="Generate Server Api from OpenAPI spec"
-                text="Generate Server Api from OpenAPI spec" icon="/icons/openapi_icon_132133.svg">
+                description="Generate server api from openAPI spec"
+                text="Generate Server Api from OpenAPI Spec" icon="/icons/openapi_icon_132133.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
 
         </action>
 
         <action class="com.backbase.bst.actions.extensions.GenerateHooksAction" id="actions.GenerateHooksAction"
                 description="Generate new behaviour extension hooks"
-                text="Generate new behaviour extension hooks" icon="/icons/camel.svg">
+                text="Generate New Behaviour Extension Hooks" icon="/icons/camel.svg">
             <add-to-group group-id="ProjectViewPopupBackbaseMenu"/>
 
         </action>

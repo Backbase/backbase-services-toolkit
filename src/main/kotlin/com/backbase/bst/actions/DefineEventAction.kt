@@ -9,6 +9,7 @@ import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -21,7 +22,9 @@ import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.ui.GotItMessage
+
 import com.intellij.ui.awt.RelativePoint
+
 import com.intellij.util.xml.DomElement
 import com.intellij.util.xml.reflect.DomCollectionChildDescription
 import org.jetbrains.annotations.NotNull
@@ -46,7 +49,7 @@ class DefineEventAction : DumbAwareAction(){
         val persistenceDialog = DefineEventDialog(project)
         persistenceDialog.show()
 
-        if (persistenceDialog.exitCode === DialogWrapper.CANCEL_EXIT_CODE) {
+        if (persistenceDialog.exitCode == DialogWrapper.CANCEL_EXIT_CODE) {
             return
         }
 
@@ -65,7 +68,7 @@ class DefineEventAction : DumbAwareAction(){
 
         val pluginId = MavenId("com.backbase.codegen", "jsonschema-events-maven-plugin", "")
         if(!MavenTools.findPluginOnBom(project, file, pluginId)) {
-            addingMavenPlugin(project, file, e)
+            addingMavenPlugin(project, file)
             Notification("Backbase notification group", "Define an Event", "Adding plugin jsonschema-events-maven-plugin on pom.xml",
                 NotificationType.INFORMATION).notify(project)
         }
@@ -83,25 +86,19 @@ class DefineEventAction : DumbAwareAction(){
         file: VirtualFile,
         e: AnActionEvent
     ) {
-
         actionEventDependencies(project, file, e.dataContext)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun addingMavenPlugin(
         project: @Nullable Project,
-        file: VirtualFile,
-        e: AnActionEvent
+        file: VirtualFile
     ) {
 
-        actionEventPlugin(project, file, e.dataContext)
+        actionEventPlugin(project, file)
         val mavenProjectManager = MavenProjectsManager.getInstance(project)
-        mavenProjectManager.forceUpdateProjects(mavenProjectManager.projects)
-
-        mavenProjectManager.waitForPostImportTasksCompletion()
+        mavenProjectManager.forceUpdateAllProjectsOrFindAllAvailablePomFiles()
     }
 
     private fun actionEventDependencies(project: Project, file: VirtualFile, dataContext: DataContext) {
@@ -115,11 +112,9 @@ class DefineEventAction : DumbAwareAction(){
         }
     }
 
-    private fun actionEventPlugin(project: Project, file: VirtualFile, dataContext: DataContext) {
+    private fun actionEventPlugin(project: Project, file: VirtualFile) {
         val mavenModel = MavenDomUtil
             .getMavenDomProjectModel(project, file)
-
-
         WriteCommandAction.runWriteCommandAction(project) {
             createDomPlugin(mavenModel!!.build.plugins, project)
 
@@ -212,5 +207,8 @@ class DefineEventAction : DumbAwareAction(){
         }
     }
 
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
 
 }
