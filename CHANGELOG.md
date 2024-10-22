@@ -2,11 +2,11 @@
 
 # backbase-services-toolkit Changelog
 
+## [Unreleased]
 
-## Unreleased
-## 1.0.1
-- Bug fix - Remove usage of Internal request 
+## [1.0.1]
 
+- Bug fix - Remove usage of Internal request
 
 ## [1.0.0]
 
@@ -98,7 +98,8 @@
 - Generate clients and API from open-api specs.
 - Synchronize with scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Backbase/backbase-services-toolkit/compare/v0.0.12...v1.0.0
 [0.0.12]: https://github.com/Backbase/backbase-services-toolkit/compare/v0.0.11...v0.0.12
 [0.0.11]: https://github.com/Backbase/backbase-services-toolkit/compare/v0.0.10...v0.0.11
