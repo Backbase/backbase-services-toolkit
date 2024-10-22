@@ -2,7 +2,11 @@
 
 # backbase-services-toolkit Changelog
 
-## [Unreleased]
+
+## Unreleased
+## 1.0.1
+- Bug fix - Remove usage of Internal request 
+
 
 ## [1.0.0]
 
