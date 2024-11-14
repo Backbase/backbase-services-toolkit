@@ -21,7 +21,7 @@ object JavaTools {
         val psiJavaFile = psiClass!!.containingFile as PsiJavaFile
         val classModifierList = psiClass.modifierList
         val annotations =  qualifiedNameAnnotations.filter { !classModifierList!!.hasAnnotation(it) }
-        ReadonlyStatusHandler.getInstance(project).ensureFilesWritable()
+        ReadonlyStatusHandler.ensureFilesWritable(project)
         val javaCodeStyleManager = JavaCodeStyleManager.getInstance(project)
         val codeStyleManager = CodeStyleManager.getInstance(project)
         if(annotations.isNotEmpty()) {
