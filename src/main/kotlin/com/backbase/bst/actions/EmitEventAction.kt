@@ -16,14 +16,16 @@ class EmitEventAction  : DumbAwareAction() {
 
         val template = TemplateSettings.getInstance().getTemplate("emitevent", "backbase")
 
-        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+        val editor = e.getData(CommonDataKeys.EDITOR)
 
-        TemplateManager.getInstance(project).startTemplate(editor, template!!)
+        if (editor != null) {
+            TemplateManager.getInstance(project).startTemplate(editor, template!!)
+        }
 
     }
 
     override fun update(e: AnActionEvent) {
-        val psiFile = e.getRequiredData(CommonDataKeys.PSI_FILE)
+        val psiFile = e.getData(CommonDataKeys.PSI_FILE)
 
         if (psiFile is PsiJavaFile) {
 
