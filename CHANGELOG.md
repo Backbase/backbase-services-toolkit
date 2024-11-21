@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2024-11-21
+
+Intellij Service Tool 2024.3 upgrade
+
 ## [1.0.1]
 
 - Bug fix - Remove usage of Internal request
@@ -98,7 +102,8 @@
 - Generate clients and API from open-api specs.
 - Synchronize with scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Backbase/backbase-services-toolkit/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Backbase/backbase-services-toolkit/compare/v0.0.12...v1.0.0
 [0.0.12]: https://github.com/Backbase/backbase-services-toolkit/compare/v0.0.11...v0.0.12
