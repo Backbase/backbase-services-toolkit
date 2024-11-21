@@ -51,6 +51,19 @@ jobs:
           distribution: zulu
           java-version: 17
 
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+
+            # all of these default to true, but feel free to set to
+            # "false" if necessary for your workflow
+            android: true
+            dotnet: true
+            haskell: true
+            large-packages: true
+            docker-images: true
+            swap-storage: false
+
       # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
