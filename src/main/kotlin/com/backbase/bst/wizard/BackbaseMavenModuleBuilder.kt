@@ -64,7 +64,7 @@ class BackbaseMavenModuleBuilder(private val myProjectId: MavenId, private val m
             VfsUtil.createDirectories(root.path + "/src/test/java")
 
             //Create java main file
-            val projectName = project.name.lowercase().replace("-", "")
+            val projectName = project.name.toLowerCase().replace("-", "")
             val packageName = myProjectId.groupId + "." + projectName
             val directoryPath = packageName.replace(".", "/")
             val directory = VfsUtil.createDirectories(root.path + "/src/main/java/" + directoryPath)

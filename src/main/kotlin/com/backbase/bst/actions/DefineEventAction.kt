@@ -170,7 +170,7 @@ class DefineEventAction : DumbAwareAction(){
         configuration.ensureTagExists()
 
 
-        val packageName =  SsdkUtils.cleanPackageName(project.name.lowercase())
+        val packageName =  SsdkUtils.cleanPackageName(project.name.toLowerCase())
         addElement(configuration, "inputFile", "\${project.basedir}/src/main/resources/events")
         addElement(configuration, "outputFile", "\${project.build.directory}/generated-sources/events")
         addElement(configuration, "basePackageName", "\${project.groupId}")
