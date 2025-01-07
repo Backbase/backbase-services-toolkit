@@ -2,22 +2,13 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
-
-fun properties(key: String) = project.findProperty(key).toString()
-
 plugins {
-    // Java support
-    id("java")
-    // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij.platform") version "2.1.0"
-    // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.2.1"
-    // Gradle Qodana Plugin
-    id("org.jetbrains.qodana") version "2024.2.3"
-    // Kover
-    id("org.jetbrains.kotlinx.kover") version "0.8.3"
+    id("java") // Java support
+    alias(libs.plugins.kotlin) // Kotlin support
+    alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
+    alias(libs.plugins.changelog) // Gradle Changelog Plugin
+    alias(libs.plugins.qodana) // Gradle Qodana Plugin
+    alias(libs.plugins.kover) // Gradle Kover Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -25,7 +16,7 @@ version = providers.gradleProperty("pluginVersion").get()
 
 // Set the JVM language level used to build the project. Use Java 17 for 2022.2+ and Java 21 for 2024.2+ .
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 
 }
 
@@ -44,18 +35,22 @@ repositories {
 dependencies {
 
     val junitVersion = "5.10.2"
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
+    implementation("org.asciidoctor:asciidoctorj:2.5.3")
+    implementation("com.azure:azure-search-documents:11.7.0") {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    }
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.vintage:junit-vintage-engine:$junitVersion")
 
     intellijPlatform {
-
-        // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
-
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
 
-        // create(IntelliJPlatformType.IntellijIdeaUltimate, providers.gradleProperty("platformVersion"))
         // Plugin Dependencies. Uses `platformBundledPlugins` property from the gradle.properties file for bundled IntelliJ Platform plugins.
         bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
 
@@ -71,7 +66,6 @@ dependencies {
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
 intellijPlatform {
-
     pluginConfiguration {
         version = providers.gradleProperty("pluginVersion")
 
@@ -106,19 +100,21 @@ intellijPlatform {
             untilBuild = providers.gradleProperty("pluginUntilBuild")
         }
     }
+
     signing {
         certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
         privateKey = providers.environmentVariable("PRIVATE_KEY")
         password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
     }
+
     publishing {
         token = providers.environmentVariable("PUBLISH_TOKEN")
         // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
-        channels = providers.gradleProperty("pluginVersion")
-            .map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
+        channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
+
     pluginVerification {
         ides {
             recommended()
@@ -128,26 +124,17 @@ intellijPlatform {
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
-
     groups.empty()
-    version = providers.gradleProperty("pluginVersion")
-    repositoryUrl = providers.gradleProperty("pluginRepositoryUrl") //NA
-
+    repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
 }
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
-// (Kover is a set of solutions for collecting test coverage of Kotlin code compiled for JVM and Android platforms. )
 kover {
     reports {
         total {
             xml {
                 onCheck = true
             }
-        }
-    }
-    currentProject {
-        instrumentation {
-            excludedClasses.add("org.apache.velocity.*")
         }
     }
 }
@@ -171,7 +158,7 @@ intellijPlatformTesting {
                         "-Drobot-server.port=8082",
                         "-Dide.mac.message.dialogs.as.sheets=false",
                         "-Djb.privacy.policy.text=<!--999.999-->",
-                        "-Djb.consents.confirmation.enabled=false"
+                        "-Djb.consents.confirmation.enabled=false",
                     )
                 }
             }
@@ -182,5 +169,3 @@ intellijPlatformTesting {
         }
     }
 }
-
-

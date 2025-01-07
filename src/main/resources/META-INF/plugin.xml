@@ -86,6 +86,9 @@
                        id="BEHAVIOUR_EXTENSION"
                        order="after BACKBASE_STEP"/>
         <moduleType implementationClass="com.backbase.bst.common.extensions.BehaviourExtensionsModuleType" id="BehaviourExtensionsModuleType"/>
+
+        <toolWindow id="Backbase AI" factoryClass="com.backbase.bst.ai.ChatToolWindowFactory" anchor="right"/>
+
     </extensions>
 
     <change-notes><![CDATA[	Change notes will be filled by gradle build ]]> </change-notes>
