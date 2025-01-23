@@ -1,5 +1,4 @@
 # nonk8s
-# yaml-language-server: $schema=https://software.backbase.eu/schema.json#/definitions/InternalComponent
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
