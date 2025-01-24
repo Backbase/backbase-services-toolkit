@@ -5,6 +5,8 @@ metadata:
   name: backbase-services-toolkit
   description: An IntelliJ Plugin to help you to create and maintain your own Backbase backend services. It would make it easier for you to follow Community Backbase Documentation.
   annotations:
+    jira/maint-component: Backend DevKit
+    jira/maint-subcomponent: Backbase Services Toolkit
     jira/project-key: BEFOUND
     slack/conversation-id: C037FUQMXF0
   tags:
@@ -32,4 +34,4 @@ metadata:
 spec:
   type: internal
   lifecycle: experimental
-  owner: de/backend-foundation
+  owner: DE - Backend Foundation
